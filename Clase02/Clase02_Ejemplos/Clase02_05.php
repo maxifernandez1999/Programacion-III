@@ -1,13 +1,13 @@
 <?php
 require_once "namespace/varios.php";
 
-$obj = new mi_namespace\Clase();
+//$obj = new mi_namespace\Clase();
 
-echo mi_namespace\Clase::test() . "<br/>";
+//echo mi_namespace\Clase::test() . "<br/>";
 
-echo mi_namespace\funcion();
+//echo mi_namespace\funcion();
 
-$valor = mi_namespace\CONSTANTE;
+//$valor = mi_namespace\CONSTANTE;
 
 echo "<br/>" . $valor;
 

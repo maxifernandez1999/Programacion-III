@@ -30,10 +30,10 @@
 
         public function __construct($marca,$color,$precio = 0,$fecha = '')
         {
-            $this->_marca;
-            $this->_color;
-            $this->_precio;
-            $this->_fecha;
+            $this->_marca = $marca;
+            $this->_color = $color;
+            $this->_precio = $precio;
+            $this->_fecha = $fecha;
         }
         // public function __construct1($marca,$color,$precio)
         // {
@@ -51,9 +51,9 @@
         }
 
         public static function MostrarAuto($auto){
-            echo $auto->_color;
-            echo $auto->_precio;
-            echo $auto->_marca;
+            echo $auto->_color.'<br>';
+            echo $auto->_precio.'<br>';
+            echo $auto->_marca.'<br>';
             echo $auto->_fecha;
             
         }
