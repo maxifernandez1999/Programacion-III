@@ -1,35 +1,42 @@
 <?php
     abstract class Persona{
-        private $_apellido;
-        private $_dni;
-        private $_nombre;
-        private $_sexo;
+        private $apellido;
+        private $dni;
+        private $nombre;
+        private $sexo;
 
-        public function __construct($nombre,$apellido,$dni,$sexo)
+        public function __construct($nombre = '',$apellido = '',$dni = 0,$sexo = '')
         {
-            $this->_nombre = $nombre;
-            $this->_dni = $dni;
-            $this->_apellido = $apellido;
-            $this->_sexo = $sexo;
+            if (is_string($nombre) && is_string($apellido) && is_string($sexo)) {
+                $this->nombre = $nombre;
+                $this->apellido = $apellido;
+                $this->sexo = $sexo;
+            }
+            if (is_numeric($dni)) {
+                $this->dni = $dni;
+            }
+            
+            
+            
         }
 
         public function GetDni(){
-            return $this->_dni;
+            return $this->dni;
         }
         public function GetApellido(){
-            return $this->_apellido;
+            return $this->apellido;
         }
         public function GetSexo(){
-            return $this->_sexo;
+            return $this->sexo;
         }
         public function GetNombre(){
-            return $this->_nombre;
+            return $this->nombre;
         }
         public abstract function Hablar($idioma);
 
         public function ToString(){
-            return $this->_nombre.'-'.$this->_apellido.'-'.
-            $this->_dni.'-'.$this->_sexo;
+            return $this->nombre.'-'.$this->apellido.'-'.
+            $this->dni.'-'.$this->sexo;
         }
             
         

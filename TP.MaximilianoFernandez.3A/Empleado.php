@@ -1,19 +1,26 @@
 <?php
     class Empleado extends Persona{
-        protected $_legajo;
-        protected $_sueldo;
-        protected $_turno;
+        protected $legajo;
+        protected $sueldo;
+        protected $turno;
 
-        public function __construct($nombre,$apellido,$dni,$sexo,$legajo,$sueldo,$turno)
+        public function __construct($nombre,$apellido,$dni,$sexo,$legajo = 0,$sueldo = 0,$turno = '')
         {
             parent::__construct($nombre,$apellido,$dni,$sexo);
-            $this->_legajo = $legajo;
-            $this->_sueldo = $sueldo;
-            $this->_turno = $turno;
+            if (is_numeric($legajo) && is_numeric($sueldo)) {
+                $this->legajo = $legajo;
+                $this->sueldo = $sueldo;
+            }
+            if (is_string($turno)) {
+                $this->turno = $turno;
+            }
+            
+            
         }
 
         public function Hablar($idioma)
         {
+            $cadena = '';
             if (is_array($idioma)) {
                 $cadena = 'El empleado habla ';
                 foreach ($idioma as $valor) {
@@ -24,18 +31,18 @@
             }
         }
         public function GetLegajo(){
-            return $this->_legajo;
+            return $this->legajo;
         }
         public function GetSueldo(){
-            return $this->_sueldo;
+            return $this->sueldo;
         }
         public function GetTurno(){
-            return $this->_turno;
+            return $this->turno;
         }
         public function ToString()
         {
-            return parent::ToString().'-'.$this->_legajo.'-'.$this->_sueldo.'-'.
-            $this->_turno;
+            return parent::ToString().'-'.$this->legajo.'-'.$this->sueldo.'-'.
+            $this->turno;
         }
         
     }

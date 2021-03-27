@@ -1,51 +1,58 @@
 <?php
     class Fabrica{
-        private $_cantidadMaxima;
-        private $_empleados;
-        private $_razonSocial;
+        private $cantidadMaxima;
+        private $empleados;
+        private $razonSocial;
 
-        public function __construct($empleados,$razonSocial)
+        public function __construct($razonSocial = '')
         {
-            $this->_cantidadMaxima = 5;
-            $this->_empleados = $empleados;
-            $this->_razonSocial = $razonSocial;
+            $this->cantidadMaxima = 5;
+            if (is_string($razonSocial)) {
+                $this->razonSocial = $razonSocial;
+            }
+            
+            $this->empleados = array();
         }
 
         public function AgregarEmpleado($emp){
-            if (is_a($emp,'Empleado') && count($this->_empleados) < $this->_cantidadMaxima) {
-                array_push($this->_empleados,$emp);
+            if (is_a($emp,'Empleado') && count($this->empleados) < $this->cantidadMaxima) {
+                array_push($this->empleados,$emp);
                 $this->EliminarEmpleadosRepetidos();
             }
         }
         public function CalcularSueldos(){
             $acumulador = 0;
-            foreach ($this->_empleados as $value) {
-                $acumulador = $acumulador + $value->_sueldo;
+            foreach ($this->empleados as $value) {
+                $acumulador = $acumulador + $value->GetSueldo();
             }
             return $acumulador;
         }
         public function EliminarEmpleado($emp){
+            $cadena = 'El empleado no se encuentra en la lista<br>';
             if (is_a($emp,'Empleado')){
-                foreach ($this->_empleados as $value) {
+                foreach ($this->empleados as $key => $value) {
                     if ($value == $emp) {
-                        unset($emp);
-                    }else{
-                        echo 'El empleado no se encuentra en la lista';
+                        unset($this->empleados[$key]);
+                        $cadena = 'Empleado eliminado<br>';
+                        echo $cadena;
+                        break;
                     }
                 }
             }
         }
 
         private function EliminarEmpleadosRepetidos(){
-            array_unique($this->_empleados);
+            $arrayModificado = array_unique($this->empleados,SORT_REGULAR);
+            $this->empleados = $arrayModificado;
+             
         }
         public function ToString(){
             $cadenaEmpleados = '';
-            foreach ($this->_empleados as $emp) {
+            foreach ($this->empleados as $emp) {
                 
                 $cadenaEmpleados = $cadenaEmpleados . $emp->ToString().'<br>';
             }
-            $cadena = 'Cantidad maxima de empleados: '.$this->_cantidadMaxima.'- '.'Razon Social: '.$this->_razonSocial.'- '.'Empleados: '.'- '.$cadenaEmpleados;
+            $cadena = 'Cantidad maxima de empleados: '.$this->cantidadMaxima.'- '.'Razon Social: '.$this->razonSocial.'- '.'Empleados: '.'- '.$cadenaEmpleados;
             return $cadena;
         }
         
