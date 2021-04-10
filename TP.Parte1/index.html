@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 5 – Formulario Alta Empleado</title>
+</head>
+<body>
+    <h2>Alta Empleados</h2>
+    <table align="center">
+        <form action="administracion.php" method="POST">
+        <tbody>
+            <thead>
+                <tr>
+                    <th><h4>Datos Personales</h4><hr></tr>
+                </tr>
+                <tr>
+                    <td>DNI:</td>
+                    <td  style="text-align:left;padding-left:15px">
+						<input id="txtDni" type="number" min="1000000" max="55000000" name="txtDni" value="" />
+					</td>
+                </tr>
+                <tr>
+                    <td>Apellido:</td>
+                    <td  style="text-align:left;padding-left:15px">
+						<input id="apellido" type="text" name="txtApellido" value="" />
+					</td>
+                </tr>
+                <tr>
+                    <td>Nombre:</td>
+                    <td  style="text-align:left;padding-left:15px">
+						<input id="nombre" type="text" name="txtNombre" value="" />
+					</td>
+                </tr>
+                <tr>
+                    <td>Sexo:</td>
+                    <td style="text-align:left;padding-left:15px">
+                        <select id="cboSexo" name="cboSexo">
+                            <option value="---">Seleccione</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><h4>Datos Laborales</h4><hr></th>
+                </tr>
+                <tr>
+                    <td>Legajo:</td>
+                    <td  style="text-align:left;padding-left:15px">
+                        <input type="number" min="100" max="550" name="txtLegajo" value="" id="txtLegajo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sueldo:</td>
+                    <td  style="text-align:left;padding-left:15px">
+                        <input type="number" min="8000" max="20000" step="500" name="txtSueldo" value="" id="txtSueldo" />
+                    </td>
+                </tr>
+                <tr>
+                    
+                    <td>Turno:</td>
+                    <tr>					
+                        <td  style="text-align:right;padding-left:15px">
+                            <input type="radio" name="rdoTurno" value="Mañana" checked="checked" />						
+                        </td>
+                        <td style="text-align: left;">Ma&ntilde;ana</td>
+                    </tr>
+                    <tr>
+                        <td  style="text-align:right;padding-left:15px">
+                            <input type="radio" name="rdoTurno" value="Tarde" />						
+                        </td>
+                        <td style="text-align: left;">Tarde</td>
+                    </tr>
+                    <tr>
+                        <td  style="text-align:right;padding-left:15px">
+                            <input type="radio" name="rdoTurno" value="Noche" />						
+                        </td>
+                        <td style="text-align: left;">Noche</td>
+                    </tr>
+                    		
+                </tr>
+                <tr><td><hr></td></tr>
+                <tr>
+					<td colspan="2" align="right">
+						<input type="reset" value="Limpiar" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right">
+						<input type="submit" onclick="AdministrarValidaciones()" id="btnEnviar" value="Enviar" />
+					</td>
+				</tr>
+            </thead>       
+        </tbody>
+    </form>
+    </table>
+    
+</body>
+</html>
