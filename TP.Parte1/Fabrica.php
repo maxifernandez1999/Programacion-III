@@ -23,7 +23,7 @@
                         $archivotxt = trim(fgets($archivo));
                         $arrayEmpleados = explode('-',$archivotxt);
                             if ($arrayEmpleados[0] != null) {
-                            $objEmpleado = new Empleado($arrayEmpleados[0],$arrayEmpleados[1],$arrayEmpleados[2],$arrayEmpleados[3],$arrayEmpleados[4],$arrayEmpleados[5],$arrayEmpleados[6]);
+                            $objEmpleado = new Empleado($arrayEmpleados[0],$arrayEmpleados[1],$arrayEmpleados[2],$arrayEmpleados[3],$arrayEmpleados[4],$arrayEmpleados[5],$arrayEmpleados[6],$arrayEmpleados[7]);
                             $this->AgregarEmpleado($objEmpleado);
                         }
                     }
@@ -69,6 +69,7 @@
                 foreach ($this->empleados as $key => $value) {
                     if ($value == $emp) {
                         unset($this->empleados[$key]);
+                        unlink($emp->GetPathFoto());
                         $retorno = true;
                         break;
                     }
@@ -82,10 +83,12 @@
             $this->empleados = $arrayModificado;
              
         }
+        public function GetEmpleados(){
+            return $this->empleados;
+        }
         public function ToString(){
             $cadenaEmpleados = '';
             foreach ($this->empleados as $emp) {
-                
                 $cadenaEmpleados = $cadenaEmpleados . $emp->ToString().'<br>';
             }
             $cadena = 'Cantidad maxima de empleados: '.$this->cantidadMaxima.'- '.'Razon Social: '.$this->razonSocial.'- '.'Empleados: '.'- '.$cadenaEmpleados;

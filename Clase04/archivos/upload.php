@@ -37,6 +37,7 @@ $esImagen = getimagesize($_FILES["archivo"]["tmp_name"]);
 
 if($esImagen === FALSE) {//NO ES UNA IMAGEN
 
+	
 	//SOLO PERMITO CIERTAS EXTENSIONES
 	if($tipoArchivo != "doc" && $tipoArchivo != "txt" && $tipoArchivo != "rar") {
 		echo "Solo son permitidos archivos con extension DOC, TXT o RAR.";

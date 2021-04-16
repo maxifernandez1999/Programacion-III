@@ -9,7 +9,7 @@
         $archivotxt = trim(fgets($archivo));
         $arrayEmpleados = explode('-',$archivotxt);
         if ($arrayEmpleados[0] != 0) {
-            $objEmpleado = new Empleado($arrayEmpleados[0],$arrayEmpleados[1],$arrayEmpleados[2],$arrayEmpleados[3],$arrayEmpleados[4],$arrayEmpleados[5],$arrayEmpleados[6]);
+            $objEmpleado = new Empleado($arrayEmpleados[0],$arrayEmpleados[1],$arrayEmpleados[2],$arrayEmpleados[3],$arrayEmpleados[4],$arrayEmpleados[5],$arrayEmpleados[6],$arrayEmpleados[7]);
             if($objEmpleado->GetLegajo() == $valor){
                 $objFabrica = new Fabrica('RiotGames');
                 $objFabrica->TraerDeArchivo('archivos/empleados.txt');
@@ -20,7 +20,7 @@
                     echo 'no se ha podido eliminar el empleado';
                 }
                 $retorno = false;
-                break;
+                //break;
                 break;
             }else{
                 $retorno = true;

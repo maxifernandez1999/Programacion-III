@@ -1,4 +1,5 @@
 <?php
+    include('backend/validarSesion.php');
     include('Persona.php');
     include('Empleado.php');
     include('Fabrica.php');
@@ -25,6 +26,8 @@
     $sueldo = $objFabrica->CalcularSueldos();
 
     echo $sueldo;
+
+    echo "<br><a href='cerrarSesion.php'>desloguearse</a>"
     //echo $cadenaFabrica;
 
     
