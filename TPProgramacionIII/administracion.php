@@ -71,9 +71,7 @@
 
         //MUEVO EL ARCHIVO DEL TEMPORAL AL DESTINO FINAL
         $archivoFinal = 'fotos/'.$dni.'_'.$apellido.'.'.$tipoArchivo;
-        if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $archivoFinal)) {
-            echo "<br/>El archivo ". basename( $_FILES["archivo"]["name"]). " ha sido subido exitosamente.";
-            $fabrica = new Fabrica('EASports');
+        $fabrica = new Fabrica('EASports');
             //carga la fabrica con los empleados en el txt
             $fabrica->TraerDeArchivo('archivos/empleados.txt');
             if ($hidden != '') {
@@ -84,6 +82,9 @@
                     }
                 }
             }
+        if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $archivoFinal)) {
+            echo "<br/>El archivo ". basename( $_FILES["archivo"]["name"]). " ha sido subido exitosamente.";
+            
             $empleado = new Empleado($nombre,$apellido,$dni,$sexo,$legajo,$sueldo,$turno,$archivoFinal);
             //agrega un empleado al array de empleados
             if($fabrica->AgregarEmpleado($empleado)){

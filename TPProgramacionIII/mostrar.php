@@ -26,12 +26,12 @@
             $objFabrica = new Fabrica('Marvel');
             $arrayEmpleados = $objFabrica->GetEmpleados();
             while(!feof($archivo)) {
-            if(feof($archivo)){
+            if(feof($archivo)){//depurar
                 break;
             }
             $archivotxt = fgets($archivo);
             $arrayEmpleadosExplode = explode('-',$archivotxt);
-            if ($arrayEmpleadosExplode[0] != null) {
+            if ($arrayEmpleadosExplode[0] != null) {//ver
                 $objEmpleado = new Empleado($arrayEmpleadosExplode[0],$arrayEmpleadosExplode[1],$arrayEmpleadosExplode[2],$arrayEmpleadosExplode[3],$arrayEmpleadosExplode[4],$arrayEmpleadosExplode[5],$arrayEmpleadosExplode[6],$arrayEmpleadosExplode[7]);
                 array_push($arrayEmpleados,$objEmpleado);
 
@@ -43,12 +43,8 @@
                 echo '<td>'."<a href='eliminar.php?txtLegajo=$legajo'>Eliminar</a>".'<td>';
                 echo '<td>'."<img src='$pathFoto' alt=' ' width='90px' height='90px'>".'<td>';
                 echo '<td>'."<input type='button' onclick='AdministrarModificar(".$objetoDni.")' value='Modificar'>".'<td>';
-        
                 echo '</tr>';
             }
-            // if ($arrayEmpleados[0] != null) {
-            //     $objEmpleado = new Empleado($arrayEmpleados[0],$arrayEmpleados[1],$arrayEmpleados[2],$arrayEmpleados[3],$arrayEmpleados[4],$arrayEmpleados[5],$arrayEmpleados[6],$arrayEmpleados[7]);
-                
             
                 }
             

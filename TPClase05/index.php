@@ -9,63 +9,56 @@
     // *-UNA VEZ TESTEADO EN EL ENTORNO LOCAL, SUBIR BASE Y PAGINA AL HOST REMOTO.
     // *-VERIFICAR EL BUEN FUNCIONAMIENTO (RETOCAR DE SER NECESARIO).
     // *-PUBLICAR LA URL DEL HOST PARA SER TESTEADO POR EL PROFESOR.
-    $host = "sql308.epizy.com";	
-    $user = "epiz_28384977";
-    $password = "O32nJMvRBG";
-    $database = "epiz_28384977_usuarios_test";
+    $host = "tphosting.orgfree.com";	
+    $user = "tphosting.orgfree.com";
+    $password = "maxidelmillo12";
+    $database = "267774";
     if (isset($_POST['opcion']) && isset($_POST['correo']) && isset($_POST['clave'])){
         switch ($_POST['opcion']) {
             case 'login':
                 $conexion = @mysqli_connect($host, $user, $password,$database);
-                $sql = "SELECT * FROM usuarios";
-                $rs = $conexion->query($sql);
-                $i = 0;
-                while ($row = $rs->fetch_assoc()){ 
-                    $user_arr[] = $row;
+                $sqlInnerJoin = 'SELECT * FROM `usuarios` INNER JOIN `perfiles` ON `usuarios.id`= `perfiles.id`';
+                $rt= $conexion->query($sqlInnerJoin);
+                while($rows = $rt->fetch_object()){
+                    $user_array[] = $rows;
                 }
-                while ($i < count($user_arr)) {
-                    if ($user_arr[$i]['correo'] == $_POST['correo'] && $user_arr[$i]['clave'] == $_POST['clave']) {
-                        $sqlInnerJoin = "SELECT * FROM usuarios INNER JOIN perfiles ON usuarios.id = perfiles.id;";
-                        $rt= $conexion->query($sqlInnerJoin);
-                        while($rows = $rt->fetch_assoc()){
-                            $user_array[] = $rows;
-                        }
+                foreach ($user_array as $value) {
+                    if ($value->correo == $_POST['correo'] && $value->clave == $_POST['clave']) {
                         echo 'Se ha encontrado coincidencia: <br>';
-                        echo 'Nombre: '.$user_array[$i]['nombre'];
+                        echo 'Nombre: '.$value->nombre;
                         echo '<br>';
-                        echo 'Descripcion: '.$user_array[$i]['descripcion'];
+                        echo 'Descripcion: '.$value->descripcion;
                         $retorno = true;
                         break;
                     }else{
                         $retorno = false;
                     }
-                    $i++;
                 }
                 if($retorno == false){
                     echo 'El usuario no se encuentra en la BD';
                 }
                 mysqli_close($conexion);
             break;
-            // (ID, CORREO, CLAVE, NOMBRE, PERFIL (CODIGO) Y PERFIL (DESCRIPCION))
             case 'mostrar':
-                $i = 0;
                 $conexion = @mysqli_connect($host, $user, $password,$database);
                 $sql = "SELECT * FROM usuarios INNER JOIN perfiles ON usuarios.id = perfiles.id;";
                 $rs = $conexion->query($sql);
-                while ($row = $rs->fetch_assoc()){ 
+                while ($row = $rs->fetch_object()){ 
                     $user_arr[] = $row;
                 }
-                while ($i < count($user_arr)){
+                foreach ($user_arr as $value) {
                     echo 'USUARIO'.'<br>';
                     echo '<hr>';
-                    echo 'ID: '.$user_arr[$i]['id'].'<br>'.'Correo: '.$user_arr[$i]['correo'].'<br>'.'Clave: '.$user_arr[$i]['clave'].'<br>'.'Nombre: '.$user_arr[$i]['nombre'].'<br>'.'Perfil (Codigo): '.$user_arr[$i]['perfil'].'<br>'.'Descripcion: '.$user_arr[$i]['descripcion'].'<br><br>';
-                    $i++;
+                    echo 'ID: '.$value->id.'<br>'.'Correo: '.$value->correo.'<br>'.'Clave: '.$value->clave.'<br>'.'Nombre: '.$value->nombre.'<br>'.'Perfil (Codigo): '.$value->perfil.'<br>'.'Descripcion: '.$value->descripcion.'<br><br>';
                 }
+                    
                 mysqli_close($conexion);
             break;
             
             default:
-                # code...
-                break;
+                echo ':(';
+            break;
         }
+    }else{
+        echo 'No existen las KEYS opcion, correo y clave';
     }
