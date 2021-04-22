@@ -2,10 +2,11 @@ function AdministrarModificar(dni) {
     document.getElementById('txtHidden').value = dni;
     document.getElementById("FormModificar").submit();
 }
-function AdministrarValidaciones(event) {
+//FUNCION QUE ADMINISTRA LAS VALIDACIONES
+function AdministrarValidaciones() {
     var checked = true;
     //validaciones campos vacios
-    if (!ValidarCamposVacios(document.getElementById('file').value)) {
+    if (!ValidarCamposVacios(document.getElementById('archivo').value)) {
         var elementoSpan = document.getElementById('spanFile');
         if (elementoSpan.style.display == 'none') {
             elementoSpan.style.display = 'block';
@@ -19,7 +20,7 @@ function AdministrarValidaciones(event) {
         }
         checked = false;
     }
-    if (!ValidarCamposVacios(document.getElementById('nombre').value)) {
+    if (!ValidarCamposVacios(document.getElementById('Nombre').value)) {
         var elementoSpan = document.getElementById('spanNombre');
         if (elementoSpan.style.display == 'none') {
             elementoSpan.style.display = 'block';
@@ -90,13 +91,16 @@ function AdministrarValidaciones(event) {
         }
         checked = false;
     }
-    if (checked == false) {
-        event.preventDefault();
-    }
+    // if (checked == false) {
+    //     event.preventDefault();
+    // }
+    return checked;
 }
 function ValidarCamposVacios(campo) {
-    if (campo.length != 0) {
-        return true;
+    if (campo != undefined) {
+        if (campo.length != 0) {
+            return true;
+        }
     }
     else {
         return false;

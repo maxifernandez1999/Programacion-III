@@ -1,7 +1,9 @@
 
 function ValidarCamposVacios(campo:string):boolean{
-    if (campo.length != 0) {
-        return true;
+    if(campo != undefined){
+        if (campo.length != 0) {
+            return true;
+        }
     }else{
         return false;
     }

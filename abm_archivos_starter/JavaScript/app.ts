@@ -13,10 +13,7 @@ namespace Main{
             let parametros:string = `queHago=mostrarGrilla`;
             
             //RUTA RELATIVA
-            ajax.Post("../administracion.php", 
-                        MostrarGrillaSuccess, 
-                        parametros, 
-                        Fail);            
+            ajax.Post("http://localhost/Programacion-III/abm_archivos_starter/administracion.php", MostrarGrillaSuccess, parametros, Fail);            
         }
 
         //OBTIENE EL INPUT FORM Y LE AGREGA EL ACTION Y EL METHOD 
@@ -40,7 +37,7 @@ namespace Main{
 
             let parametros:string = `queHago=eliminar&codBarra=${codBarra}`;
             
-            ajax.Post("http://localhost/lab_3/abm_ajax_archivos/abm_archivos_starter/administracion.php", 
+            ajax.Post("http://localhost/Programacion-III/abm_archivos_starter/administracion.php", 
             DeleteSuccess, 
             parametros, 
             Fail);

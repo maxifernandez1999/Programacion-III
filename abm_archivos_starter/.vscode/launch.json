@@ -5,16 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-node",
+            "name": "Listen for Xdebug",
+            "type": "php",
             "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
+            "port": 9003
+        },
+        {
+            "name": "Launch currently open script",
+            "type": "php",
+            "request": "launch",
             "program": "${file}",
-            "outFiles": [
-                "${workspaceFolder}/**/*.js"
-            ]
+            "cwd": "${fileDirname}",
+            "port": 9003
         }
     ]
 }

@@ -2,11 +2,11 @@ function AdministrarModificar(dni:string){
     (<HTMLInputElement>document.getElementById('txtHidden')).value = dni;
     (<HTMLFormElement>document.getElementById("FormModificar")).submit();
 }
-
-function AdministrarValidaciones(event:Event){
+//FUNCION QUE ADMINISTRA LAS VALIDACIONES
+function AdministrarValidaciones():boolean{
     var checked:boolean = true;
     //validaciones campos vacios
-    if(!ValidarCamposVacios((<HTMLInputElement>document.getElementById('file')).value)){
+    if(!ValidarCamposVacios((<HTMLInputElement>document.getElementById('archivo')).value)){
         let elementoSpan:HTMLElement = (<HTMLInputElement>document.getElementById('spanFile'));
         if (elementoSpan.style.display == 'none') {
             elementoSpan.style.display = 'block';
@@ -20,7 +20,7 @@ function AdministrarValidaciones(event:Event){
         }
         checked = false;
     }
-    if(!ValidarCamposVacios((<HTMLInputElement>document.getElementById('nombre')).value)){
+    if(!ValidarCamposVacios((<HTMLInputElement>document.getElementById('Nombre')).value)){
         
         let elementoSpan:HTMLElement = (<HTMLInputElement>document.getElementById('spanNombre'));
         if (elementoSpan.style.display == 'none') {
@@ -96,9 +96,10 @@ function AdministrarValidaciones(event:Event){
         }
         checked = false;
     }
-    if (checked == false) {
-        event.preventDefault();
-    }
+    // if (checked == false) {
+    //     event.preventDefault();
+    // }
+    return checked;
 }
     
 

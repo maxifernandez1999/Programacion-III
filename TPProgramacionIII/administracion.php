@@ -105,7 +105,7 @@
         }
     
     }else{
-        echo 'Ha ocurrido un error con la subida de la imagen';
+        //echo 'Ha ocurrido un error con la subida de la imagen';
     }
 
     

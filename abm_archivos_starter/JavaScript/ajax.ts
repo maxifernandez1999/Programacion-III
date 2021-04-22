@@ -46,6 +46,8 @@ class Ajax {
     
                 if (this._xhr.readyState === Ajax.DONE) {
                     if (this._xhr.status === Ajax.OK) {
+                        console.log(this._xhr.readyState);
+                        console.log(this._xhr.status);
                         success(this._xhr.responseText);
                     } else {
                         if (error !== undefined){

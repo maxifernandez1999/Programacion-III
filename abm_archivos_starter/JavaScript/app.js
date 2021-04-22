@@ -1,4 +1,3 @@
-"use strict";
 /// <reference path="ajax.ts" />
 window.onload = function () {
     Main.MostrarGrilla();
@@ -9,7 +8,7 @@ var Main;
     function MostrarGrilla() {
         var parametros = "queHago=mostrarGrilla";
         //RUTA RELATIVA
-        ajax.Post("../administracion.php", MostrarGrillaSuccess, parametros, Fail);
+        ajax.Post("http://localhost/Programacion-III/abm_archivos_starter/administracion.php", MostrarGrillaSuccess, parametros, Fail);
     }
     Main.MostrarGrilla = MostrarGrilla;
     //OBTIENE EL INPUT FORM Y LE AGREGA EL ACTION Y EL METHOD 
@@ -27,7 +26,7 @@ var Main;
             return;
         }
         var parametros = "queHago=eliminar&codBarra=" + codBarra;
-        ajax.Post("http://localhost/lab_3/abm_ajax_archivos/abm_archivos_starter/administracion.php", DeleteSuccess, parametros, Fail);
+        ajax.Post("http://localhost/Programacion-III/abm_archivos_starter/administracion.php", DeleteSuccess, parametros, Fail);
     }
     Main.EliminarProducto = EliminarProducto;
     function ModificarProducto(codBarra, nombre) {
@@ -54,4 +53,3 @@ var Main;
         alert("Ha ocurrido un ERROR!!!");
     }
 })(Main || (Main = {}));
-//# sourceMappingURL=app.js.map

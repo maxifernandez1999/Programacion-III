@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="javascript/funciones.js"></script>
+    <script src="javascript/ajax.js" ></script>
+    <script src="javascript/appAjax.js" ></script>
     <title>Pagina principal - AJAX</title>
 </head>
 <body style="background-color: beige;">
     <div style="background-color: chocolate;" id="nombre">Maximiliano Fernandez</div>
     <div style="background-color:coral;" id="form-list">
         <div style="background-color:darkgrey;float:left;position:relative;width:30%;" id="formulario">
-            <form action="administracion.php" method="POST" enctype="multipart/form-data">
+            <!--<form action="administracion.php" method="POST" enctype="multipart/form-data">-->
                 <table align="center">
                     <tbody>
                         <thead>
@@ -26,13 +29,13 @@
                             <tr>
                                 <td>Apellido:</td>
                                 <td  style="text-align:left;padding-left:15px">
-                                    <input id="apellido" type="text" name="txtApellido" value="" /><span id="spanApellido" style="display: none;"> * </span>
+                                    <input id="apellido" type="text" name="txtApellido" value=""/><span id="spanApellido" style="display: none;"> * </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Nombre:</td>
                                 <td  style="text-align:left;padding-left:15px">
-                                    <input id="nombre" type="text" name="txtNombre" value="" /><span id="spanNombre" style="display: none;"> * </span>
+                                    <input id="Nombre" type="text" name="txtNombre" value=""/><span id="spanNombre" style="display: none;"> * </span>
                                 </td>
                             </tr>
                             <tr>
@@ -84,7 +87,7 @@
                             </tr>
                             <tr>
                                 <td>Foto: </td>
-                                <td><input type="file" name="archivo" id="file"><span id="spanFile" style="display: none;"> * </span>
+                                <td><input type="file" name="archivo" id="archivo" value=""><span id="spanFile" style="display: none;"> * </span>
                                 </td>
                             </tr>
                             <tr><td colspan="2"><hr></td></tr>
@@ -95,7 +98,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" align="right">
-                                    <input type="submit" onclick="AdministrarValidaciones(event)" id="btnEnviar" value="Enviar" />
+                                    <input type="button" onclick="Main.AltaEmpleado()" id="btnEnviar" value="Enviar" />
                                 </td>
                             </tr>
                             <tr>
@@ -104,49 +107,14 @@
                         </thead>       
                     </tbody>
                 </table>
-                </form>
+                <!--</form>-->
         </div>
         <div style="background-color:darkkhaki;float:left;position:relative;width:70%;" id="listado">
-            <h2>Listado de Empleados</h2>
+        <h2>Listado de Empleados</h2>
         <table align="center">
-        <form action="index.php" method="POST" id="FormModificar">
-            <input type="hidden" name="txtHidden" id="txtHidden">
-        </form>
             <section style="text-align:center;"><h4>Info</h4></section>
-            <?php
-            include_once('Empleado.php');
-            include_once('Fabrica.php');
-            $archivo = fopen("archivos/empleados.txt","r");
-            echo '<hr>';
-            $objFabrica = new Fabrica('Marvel');
-            $arrayEmpleados = $objFabrica->GetEmpleados();
-            while(!feof($archivo)) {
-            if(feof($archivo)){//depurar
-                break;
-            }
-            $archivotxt = fgets($archivo);
-            $arrayEmpleadosExplode = explode('-',$archivotxt);
-            if ($arrayEmpleadosExplode[0] != null) {//ver
-                $objEmpleado = new Empleado($arrayEmpleadosExplode[0],$arrayEmpleadosExplode[1],$arrayEmpleadosExplode[2],$arrayEmpleadosExplode[3],$arrayEmpleadosExplode[4],$arrayEmpleadosExplode[5],$arrayEmpleadosExplode[6],$arrayEmpleadosExplode[7]);
-                array_push($arrayEmpleados,$objEmpleado);
-
-                $legajo = $objEmpleado->GetLegajo();
-                $pathFoto = $objEmpleado->GetPathFoto();
-                $objetoDni = $objEmpleado->GetDni();
-                echo '<tr>';
-                echo '<td>'.$objEmpleado->ToString().'<td>';
-                echo '<td>'."<a href='eliminar.php?txtLegajo=$legajo'>Eliminar</a>".'<td>';
-                echo '<td>'."<img src='$pathFoto' alt=' ' width='90px' height='90px'>".'<td>';
-                echo '<td>'."<input type='button' onclick='AdministrarModificar(".$objetoDni.")' value='Modificar'>".'<td>';
-                echo '</tr>';
-            }
-            
-                }
-            
-            fclose($archivo);
-            echo "<br><a href='backend/cerrarSesion.php'>desloguearse</a>"
-            ?>
-            
+            <div id="cont-listado">
+            </div>
         </table>
         </div>
     </div>

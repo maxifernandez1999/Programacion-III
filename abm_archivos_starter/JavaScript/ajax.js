@@ -1,4 +1,3 @@
-"use strict";
 var Ajax = /** @class */ (function () {
     function Ajax() {
         var _this = this;
@@ -30,6 +29,8 @@ var Ajax = /** @class */ (function () {
             _this._xhr.onreadystatechange = function () {
                 if (_this._xhr.readyState === Ajax.DONE) {
                     if (_this._xhr.status === Ajax.OK) {
+                        console.log(_this._xhr.readyState);
+                        console.log(_this._xhr.status);
                         success(_this._xhr.responseText);
                     }
                     else {
@@ -46,4 +47,3 @@ var Ajax = /** @class */ (function () {
     }
     return Ajax;
 }());
-//# sourceMappingURL=ajax.js.map

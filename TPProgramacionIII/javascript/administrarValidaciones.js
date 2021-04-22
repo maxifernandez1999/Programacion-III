@@ -1,26 +1,52 @@
-"use strict";
+function AdministrarModificar(dni) {
+    document.getElementById('txtHidden').value = dni;
+    document.getElementById("FormModificar").submit();
+}
+//FUNCION QUE ADMINISTRA LAS VALIDACIONES
 function AdministrarValidaciones() {
+    var checked = true;
     //validaciones campos vacios
-    //DNI
+    if (!ValidarCamposVacios(document.getElementById('archivo').value)) {
+        var elementoSpan = document.getElementById('spanFile');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
+    }
     if (!ValidarCamposVacios(document.getElementById('txtDni').value)) {
-        alert('El campo DNI se encuentra vacio, por favor ingrese un Dni');
+        var elementoSpan = document.getElementById('spanDni');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
-
-    //NOMBRE
-    if (!ValidarCamposVacios(document.getElementById('nombre').value)) {
-        alert('El campo NOMBRE se encuentra vacio, por favor ingrese un nombre');
+    if (!ValidarCamposVacios(document.getElementById('Nombre').value)) {
+        var elementoSpan = document.getElementById('spanNombre');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
-    //APELLIDO
     if (!ValidarCamposVacios(document.getElementById('apellido').value)) {
-        alert('El campo APELLIDO se encuentra vacio, por favor ingrese un apellido');
+        var elementoSpan = document.getElementById('spanApellido');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
-    //LEGAJO
     if (!ValidarCamposVacios(document.getElementById('txtLegajo').value)) {
-        alert('El campo LEGAJO se encuentra vacio, por favor ingrese un legajo');
+        var elementoSpan = document.getElementById('spanLegajo');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
-    //SUELDO
     if (!ValidarCamposVacios(document.getElementById('txtSueldo').value)) {
-        alert('El campo SUELDO se encuentra vacio, por favor ingrese un sueldo');
+        var elementoSpan = document.getElementById('spanSueldo');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
     //validacion rango numerico
     //DNI
@@ -28,27 +54,45 @@ function AdministrarValidaciones() {
     var numeroMinDni = parseInt(document.getElementById('txtDni').min);
     var numeroMaxDni = parseInt(document.getElementById('txtDni').max);
     if (!ValidarRangoNumerico(numeroValidarDni, numeroMinDni, numeroMaxDni)) {
-        alert('El valor del DNI no esta en el rango correcto');
+        var elementoSpan = document.getElementById('spanDni');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
     //LEGAJO
     var numeroValidarLegajo = parseInt(document.getElementById('txtLegajo').value);
     var numeroMinLegajo = parseInt(document.getElementById('txtLegajo').min);
     var numeroMaxLegajo = parseInt(document.getElementById('txtLegajo').max);
     if (!ValidarRangoNumerico(numeroValidarLegajo, numeroMinLegajo, numeroMaxLegajo)) {
-        alert('El valor del Legajo no esta en el rango correcto');
+        var elementoSpan = document.getElementById('spanLegajo');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
     //SUELDO
     var numeroValidarSueldo = parseInt(document.getElementById('txtSueldo').value);
     var numeroMinSueldo = parseInt(document.getElementById('txtSueldo').min);
     var numeroMaxSueldo = ObtenerSueldoMaximo(ObtenerTurnoSeleccionado());
     if (!ValidarRangoNumerico(numeroValidarSueldo, numeroMinSueldo, numeroMaxSueldo)) {
-        alert('El valor del Sueldo no esta en el rango correcto');
+        var elementoSpan = document.getElementById('spanLegajo');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
-    
     //validar combobox
     var valorCombo = document.getElementById('cboSexo').value;
     if (!ValidarCombo(valorCombo, '---')) {
-        alert('NO ha seleccionado un sexo');
+        var elementoSpan = document.getElementById('spanCboSexo');
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        checked = false;
     }
+    // if (checked == false) {
+    //     event.preventDefault();
+    // }
+    return checked;
 }
-//# sourceMappingURL=administrarValidaciones.js.map

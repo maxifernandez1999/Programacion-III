@@ -116,16 +116,25 @@ class Producto
 	public static function Eliminar($codBarra)
 	{
 		$resultado = TRUE;
-		
 		//OBTENGO TODOS LOS PRODUCTOS
-		//RECORRO Y BUSCO LA IMAGEN ANTERIOR. 
+		$ListaDeProductosLeidos = Producto::TraerTodosLosProductos();
+		
+		//RECORRO Y BUSCO LA IMAGEN ANTERIOR.
 		//BORRO LA IMAGEN ANTERIOR
 		
-		//ABRO EL ARCHIVO
-		//ESCRIBO EN EL ARCHIVO
+		foreach ($ListaDeProductosLeidos as $obj) {
+			if ($obj->GetCodBarra() == $codBarra) {
+				unlink("archivos/".$obj->GetPathFoto());
+				unset($obj);
+			}
+		} 
+		//unlink("archivos/productos.txt");
+		// foreach ($ListaDeProductosLeidos as $key => $obj) {
+		// 	Producto::Guardar($obj);
+		// }
 		//CIERRO EL ARCHIVO
-		
 		return $resultado;
 	}
 //--------------------------------------------------------------------------------//
 }
+?>

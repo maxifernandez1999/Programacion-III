@@ -1,7 +1,8 @@
-"use strict";
 function ValidarCamposVacios(campo) {
-    if (campo.length != 0) {
-        return true;
+    if (campo != undefined) {
+        if (campo.length != 0) {
+            return true;
+        }
     }
     else {
         return false;
@@ -25,11 +26,16 @@ function ValidarCombo(valorCorrecto, valorIncorrecto) {
 }
 function ObtenerTurnoSeleccionado() {
     var coleccion = document.getElementsByName('rdoTurno');
+    var retorno = '';
     for (var index = 0; index < coleccion.length; index++) {
-        var valorColeccion = coleccion[index];
-        alert(valorColeccion);
+        var elemento = coleccion[index];
+        if (elemento.checked) {
+            var valorElemento = elemento.value;
+            retorno = valorElemento;
+            break;
+        }
     }
-    return '';
+    return retorno;
 }
 function ObtenerSueldoMaximo(turno) {
     var retorno = 0;
@@ -51,4 +57,3 @@ function ObtenerSueldoMaximo(turno) {
     }
     return retorno;
 }
-//# sourceMappingURL=validaciones.js.map
