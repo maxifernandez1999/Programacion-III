@@ -39,7 +39,6 @@ class Ajax {
         let parametros:string = params.length > 0 ? params : "";
 
         this._xhr.open('POST', ruta, asincronic);
-        //if (fileID !== undefined) {
             
             let form : FormData = new FormData();
             form.append('archivo', archivo.files[0]);
@@ -48,14 +47,8 @@ class Ajax {
                 var newArray:string[] = array[index].split("=");
                 form.append(newArray[0], newArray[1]);    
             }
-
-            
-            
             this._xhr.setRequestHeader("enctype", "multipart/form-data");
-            //this._xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
             this._xhr.send(form);
-        //}
-        // this._xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
 
         this._xhr.onreadystatechange = ():void => {
 
@@ -73,25 +66,3 @@ class Ajax {
     };
 
 }
-
-//     public SubirFoto = (ruta: string, success: Function, error?: Function):void => {
-
-    
-//         //RECUPERO LA IMAGEN SELECCIONADA POR EL USUARIO
-        
-    
-//         //FUNCION CALLBACK
-//         this._xhr.onreadystatechange = ():void => {
-
-//             if (this._xhr.readyState === Ajax.DONE) {
-//                 if (this._xhr.status === Ajax.OK) {
-//                     success(this._xhr.responseText);
-//                 } else {
-//                     if (error !== undefined){
-//                         error(this._xhr.status);
-//                     }
-//                 }
-//             }
-//         };
-//     }
-// }

@@ -9,7 +9,7 @@ function ValidarCamposVacios(campo) {
     }
 }
 function ValidarRangoNumerico(numValidar, min, max) {
-    if (numValidar > min && numValidar < max) {
+    if (numValidar >= min && numValidar <= max) {
         return true;
     }
     else {

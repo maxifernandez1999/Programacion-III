@@ -24,7 +24,6 @@ var Ajax = /** @class */ (function () {
             if (params === void 0) { params = ""; }
             var parametros = params.length > 0 ? params : "";
             _this._xhr.open('POST', ruta, asincronic);
-            //if (fileID !== undefined) {
             var form = new FormData();
             form.append('archivo', archivo.files[0]);
             var array = parametros.split("?");
@@ -33,10 +32,7 @@ var Ajax = /** @class */ (function () {
                 form.append(newArray[0], newArray[1]);
             }
             _this._xhr.setRequestHeader("enctype", "multipart/form-data");
-            //this._xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
             _this._xhr.send(form);
-            //}
-            // this._xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
             _this._xhr.onreadystatechange = function () {
                 if (_this._xhr.readyState === Ajax.DONE) {
                     if (_this._xhr.status === Ajax.OK) {
@@ -56,19 +52,3 @@ var Ajax = /** @class */ (function () {
     }
     return Ajax;
 }());
-//     public SubirFoto = (ruta: string, success: Function, error?: Function):void => {
-//         //RECUPERO LA IMAGEN SELECCIONADA POR EL USUARIO
-//         //FUNCION CALLBACK
-//         this._xhr.onreadystatechange = ():void => {
-//             if (this._xhr.readyState === Ajax.DONE) {
-//                 if (this._xhr.status === Ajax.OK) {
-//                     success(this._xhr.responseText);
-//                 } else {
-//                     if (error !== undefined){
-//                         error(this._xhr.status);
-//                     }
-//                 }
-//             }
-//         };
-//     }
-// }

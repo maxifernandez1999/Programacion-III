@@ -10,7 +10,7 @@ function ValidarCamposVacios(campo:string):boolean{
 }
 
 function ValidarRangoNumerico(numValidar:number,min:number,max:number):boolean{
-    if (numValidar > min && numValidar < max) {
+    if (numValidar >= min && numValidar <= max) {
         return true;      
     }else{
         return false;
@@ -44,15 +44,12 @@ function ObtenerSueldoMaximo(turno:string):number{
     switch (turno) {
         case 'Mañana':
             retorno = 20000;
-            //(<HTMLInputElement>document.getElementById('Sueldo')).max = '20000';
         break;
         case 'Tarde':
             retorno = 18500;
-            //(<HTMLInputElement>document.getElementById('Sueldo')).min = '18500';
         break;
         case 'Noche':
             retorno = 25000;
-            //(<HTMLInputElement>document.getElementById('Sueldo')).max = '25000';
         break;
         default:
         break;

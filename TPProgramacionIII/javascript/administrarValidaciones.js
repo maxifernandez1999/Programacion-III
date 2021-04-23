@@ -91,8 +91,5 @@ function AdministrarValidaciones() {
         }
         checked = false;
     }
-    // if (checked == false) {
-    //     event.preventDefault();
-    // }
     return checked;
 }

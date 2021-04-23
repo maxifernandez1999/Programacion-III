@@ -17,8 +17,9 @@
             </tr>
         </table>
     </div>
+    <br>
     <div id="links">
-        <a href='backend/cerrarSesion.php'>desloguearse</a>
+    <a style="font-size:large;color:black;font-weight:500;text-decoration:none;padding:20px;margin:20px;" href="backend/cerrarSesion.php">Desloguearse</a>
         <hr>
     </div>
 

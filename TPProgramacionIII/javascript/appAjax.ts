@@ -1,9 +1,7 @@
 /// <reference path="ajax.ts" />
 /// <reference path="validaciones.ts" />
 /// <reference path="administrarValidaciones.ts" />
-// window.onload = ():void => {
-//     Main.MostrarEmpleados();
-// }; 
+
 namespace Main{
 
     let ajax : Ajax = new Ajax();
@@ -23,7 +21,7 @@ namespace Main{
                 }
             }
             let foto : HTMLInputElement = (<HTMLInputElement> document.getElementById('archivo'));
-            var parametros:string = "txtNombre="+nombre+"?"+ "txtApellido="+apellido+"?"+"txtDni="+dni+"?"+"CboSexo="+sexo+"?"+"txtLegajo="+legajo+"?"+"txtSueldo="+sueldo+"?"+"rdoTurno="+turnoSeleccionado;
+            var parametros:string = "txtNombre="+nombre+"?"+ "txtApellido="+apellido+"?"+"txtDni="+dni+"?"+"cboSexo="+sexo+"?"+"txtLegajo="+legajo+"?"+"txtSueldo="+sueldo+"?"+"rdoTurno="+turnoSeleccionado;
     
             ajax.Post("http://localhost/Programacion-III/TPProgramacionIII/administracion.php",ReponseSend,parametros,foto,true,Errores);
             
@@ -64,7 +62,6 @@ namespace Main{
                     break;
                 }
             }
-        //(<HTMLInputElement> document.getElementById('archivo')).value = arrayResponse[7];
         MostrarEmpleados();
     }
     function ReponseSend(responseText:string) : void{
