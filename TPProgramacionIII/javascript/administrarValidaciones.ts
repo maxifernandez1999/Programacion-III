@@ -6,6 +6,7 @@ function AdministrarModificar(dni:string){
 function AdministrarValidaciones():boolean{
     var checked:boolean = true;
     //validaciones campos vacios
+
     if(!ValidarCamposVacios((<HTMLInputElement>document.getElementById('archivo')).value)){
         let elementoSpan:HTMLElement = (<HTMLInputElement>document.getElementById('spanFile'));
         if (elementoSpan.style.display == 'none') {
@@ -96,9 +97,6 @@ function AdministrarValidaciones():boolean{
         }
         checked = false;
     }
-    // if (checked == false) {
-    //     event.preventDefault();
-    // }
     return checked;
 }
     

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML5 - Formulario Login</title>
-    
+    <script src="javascript/funcionesLogin.js"></script>
 </head>
 <body>
     <h2>Login</h2>
@@ -29,11 +29,11 @@
             </tr>
             <tr>
                 <td colspan="2" align="right">
-                    <input type="submit" name="btnEnviar" id="btnEnviar" onclick="return AdministrarValidacionesLogin()">
+                    <input type="submit" name="btnEnviar" id="btnEnviar" onclick="AdministrarValidacionesLogin(event)">
                 </td>
             </tr>
         </table>
     </form>
-    <script src="javascript/funcionesLogin.js"></script>
+    
 </body>
 </html>

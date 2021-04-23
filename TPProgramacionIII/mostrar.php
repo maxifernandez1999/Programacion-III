@@ -10,62 +10,62 @@
     <script src="javascript/appAjax.js" ></script>
     <title>HTML5 - Listado de Empleados</title>
 </head>
-<body>
-    <header>   
+<body> 
+    <h2 style="text-align: center;">Listado de Empleados</h2>
         <!--<form action="index.php" method="POST" id="FormModificar">
             <input type="hidden" name="txtHidden" id="txtHidden">
         </form>-->
-            <table align="center">  
-            <tr>
-                <th style="text-align: left;" colspan="2"><h2>Listado de Empleados</h2></th>
-            </tr>
-            <tr>
-                <td style="text-align: left;"><h4>Info</h4></td>
-            </tr>
-            <?php
-            include_once('Persona.php');
-            include_once('Empleado.php');
-            include_once('Fabrica.php');
-            if (file_exists("archivos/empleados.txt") && filesize("archivos/empleados.txt") > 0) {
-                $archivo = fopen("archivos/empleados.txt","r");
-                $objFabrica = new Fabrica('Marvel');
-                $arrayEmpleados = $objFabrica->GetEmpleados();
-                while(!feof($archivo)) {
-                if(feof($archivo)){//depurar
-                    break;
-                }
-                $archivotxt = fgets($archivo);
-                $arrayEmpleadosExplode = explode('-',$archivotxt);
-                if ($arrayEmpleadosExplode[0] != "") {//ver
-                    $objEmpleado = new Empleado($arrayEmpleadosExplode[0],$arrayEmpleadosExplode[1],$arrayEmpleadosExplode[2],$arrayEmpleadosExplode[3],$arrayEmpleadosExplode[4],$arrayEmpleadosExplode[5],$arrayEmpleadosExplode[6],$arrayEmpleadosExplode[7]);
-                    array_push($arrayEmpleados,$objEmpleado);
+        <table align="center">  
+            <tbody>
+                <thead>
+                    <tr>
+                        <th><h4 style="text-align: center;">Info</h4></th>
+                    </tr>
+                    <hr>
+                    <?php
+                    include_once('Persona.php');
+                    include_once('Empleado.php');
+                    include_once('Fabrica.php');
+                    $size = filesize("archivos/empleados.txt");
+                    if (file_exists("archivos/empleados.txt") && filesize("archivos/empleados.txt") > 0) {  
+                        $archivo = fopen("archivos/empleados.txt","r");
+                        $objFabrica = new Fabrica('Marvel');
+                        $arrayEmpleados = $objFabrica->GetEmpleados();
+                        while(!feof($archivo)) {
+                            if(feof($archivo)){//depurar
+                                break;
+                            }
+                            $archivotxt = fgets($archivo);
+                            $arrayEmpleadosExplode = explode('-',$archivotxt);
+                            if ($arrayEmpleadosExplode[0] != "") {//ver
+                                $objEmpleado = new Empleado($arrayEmpleadosExplode[0],$arrayEmpleadosExplode[1],$arrayEmpleadosExplode[2],$arrayEmpleadosExplode[3],$arrayEmpleadosExplode[4],$arrayEmpleadosExplode[5],$arrayEmpleadosExplode[6],$arrayEmpleadosExplode[7]);
+                                array_push($arrayEmpleados,$objEmpleado);
 
-                    $legajo = $objEmpleado->GetLegajo();
-                    $pathFoto = $objEmpleado->GetPathFoto();
-                    $objetoDni = $objEmpleado->GetDni();
-                    echo '<tr>';
-                    echo '<td>'.$objEmpleado->ToString().'<td>';
+                                $legajo = $objEmpleado->GetLegajo();
+                                $pathFoto = $objEmpleado->GetPathFoto();
+                                $objetoDni = $objEmpleado->GetDni();
+                                echo '<tr>';
+                                echo '<td>'.$objEmpleado->ToString().'<td>';
                 
-                    echo '<td>'."<input type='button' onclick='Main.EliminarEmpleado(".$legajo.")' value='Eliminar'>".'<td>';
-                    echo '<td>'."<img src='$pathFoto' alt=' ' width='90px' height='90px'>".'<td>';
-                    echo '<td>'."<input type='button' onclick='Main.ModificarEmpleado(".$objetoDni.")' value='Modificar'>".'<td>';
-                    echo '</tr>';
-                    echo '<br>';
-                }
-            //echo <a href='eliminar.php?txtLegajo=$legajo
-                }
+                                echo '<td>'."<input type='button' onclick='Main.EliminarEmpleado(".$legajo.")' value='Eliminar'>".'<td>';
+                                echo '<td>'."<img src='$pathFoto' alt=' ' width='90px' height='90px'>".'<td>';
+                                echo '<td>'."<input type='button' onclick='Main.ModificarEmpleado(".$objetoDni.")' value='Modificar'>".'<td>';
+                                echo '</tr>';
+                                echo '<br>';
+                            }
+                        }
             
-            fclose($archivo);
-            //include('backend/validarSesion.php');
-            }else{
-                echo '<td><td>El archivo se encuentra vacio<td><td>';
-            }
-            
-            ?>
-            </table>
- 
-        
-    </header>
+                        fclose($archivo);
+                        
+                    }else{
+                        echo '<td><td style="font-weight: 500;font-size:30px;">El archivo se encuentra vacio<td><td>';
+                    }
+                    //include('backend/validarSesion.php');
+                    ?>
+                </thead>
+            </tbody>
+        </table>
+        <hr>
 </body>
 </html>
 

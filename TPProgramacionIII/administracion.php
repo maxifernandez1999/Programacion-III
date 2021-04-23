@@ -74,14 +74,7 @@
         $fabrica = new Fabrica('EASports');
             //carga la fabrica con los empleados en el txt
             $fabrica->TraerDeArchivo('archivos/empleados.txt');
-            if ($hidden != '') {
-                $emp = $fabrica->GetEmpleados();
-                foreach ($emp as $key => $value) {
-                    if ($value->GetDni().'/' == $hidden) {
-                        $fabrica->EliminarEmpleado($value);
-                    }
-                }
-            }
+            
         if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $archivoFinal)) {
             echo "<br/>El archivo ". basename( $_FILES["archivo"]["name"]). " ha sido subido exitosamente.";
             

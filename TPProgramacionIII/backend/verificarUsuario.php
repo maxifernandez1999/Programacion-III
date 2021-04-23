@@ -18,7 +18,7 @@
                         if ($arrayEmpleados[1] == $apellido && $arrayEmpleados[2] == $dni) {
                             $_SESSION['DNIEmpleado'] = $dni;
                             $retorno = true;
-                            header("Location: http://localhost/Programacion-III/TP.Parte1/mostrar.php");
+                            header("Location: http://localhost/Programacion-III/TPProgramacionIII/principal.php");
                             
                             break;
                         }else{
@@ -27,9 +27,9 @@
                     }
                     }
                     if ($retorno == false) {
-                        echo 'No existe el empleado en el archivo de texto<br>';
                         ?>
-                            <a href="../login.html">Volver a login.php</a>
+                            <h1 style="font-size: 25px;color:black;">No existe el empleado en el archivo de texto!</h1><hr>
+                            <a style="font-size:large;color:black;font-weight:500;text-decoration:none;" href="../login.html">Volver a LOGIN</a>
                         <?php
                     }
                 }

@@ -1,34 +1,38 @@
-function AdministrarValidacionesLogin() {
+function AdministrarValidacionesLogin(event) {
+    var retorno = true;
     if (!ValidarCamposVacios(document.getElementById('txtApellido').value)) {
-        // alert('El campo APELLIDO se encuentra vacio, por favor ingrese un apellido');
         var elementoSpan = document.getElementById('spanApellido');
         if (elementoSpan.style.display == 'none') {
             elementoSpan.style.display = 'block';
-            
         }
-        return false;
+        retorno = false;
     }
     if (!ValidarCamposVacios(document.getElementById('txtDni').value)) {
-        // alert('El campo DNI se encuentra vacio, por favor ingrese un Dni');
         var elementoSpan = document.getElementById('spanDni');
         if (elementoSpan.style.display == 'none') {
             elementoSpan.style.display = 'block';
-            
         }
-        return false;
+        retorno = false;
     }
     var numeroValidarDni = parseInt(document.getElementById('txtDni').value);
     var numeroMinDni = parseInt(document.getElementById('txtDni').min);
     var numeroMaxDni = parseInt(document.getElementById('txtDni').max);
     if (!ValidarRangoNumerico(numeroValidarDni, numeroMinDni, numeroMaxDni)) {
         var elementoSpan = document.getElementById('spanDni');
-        elementoSpan.style.display = 'block';
-        return false;
+        if (elementoSpan.style.display == 'none') {
+            elementoSpan.style.display = 'block';
+        }
+        retorno = false;
+    }
+    if (retorno == false) {
+        event.preventDefault();
     }
 }
 function ValidarCamposVacios(campo) {
-    if (campo.length != 0) {
-        return true;
+    if (campo != undefined) {
+        if (campo.length != 0) {
+            return true;
+        }
     }
     else {
         return false;
