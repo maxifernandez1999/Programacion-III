@@ -19,7 +19,7 @@
             <tbody>
                 <thead>
                     <tr>
-                        <th><h4 style="text-align: center;">Info</h4></th>
+                        <th><h4 style="text-align: left;">Info</h4></th>
                     </tr>
                     <hr>
                     <?php
@@ -45,7 +45,7 @@
                                 $pathFoto = $objEmpleado->GetPathFoto();
                                 $objetoDni = $objEmpleado->GetDni();
                                 echo '<tr>';
-                                echo '<td>'.$objEmpleado->ToString().'<td>';
+                                echo '<td style="font-weight: 300;font-size:18px;">'.$objEmpleado->ToString().'<td>';
                 
                                 echo '<td>'."<input type='button' onclick='Main.EliminarEmpleado(".$legajo.")' value='Eliminar'>".'<td>';
                                 echo '<td>'."<img src='$pathFoto' alt=' ' width='90px' height='90px'>".'<td>';
