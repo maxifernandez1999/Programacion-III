@@ -40,7 +40,6 @@
             $archivo = fopen($nombreArchivo,"w");
             foreach ($this->empleados as $empleado) {
             $valor = fwrite($archivo,$empleado->ToString()."\r\n");
-            //$valor = fputs($archivo,$empleado->ToString()."\r\n",strlen($empleado->ToString()));
                 if ($valor < 0) {
                     echo 'Error en la escritura';
                 }
@@ -85,6 +84,9 @@
         }
         public function GetEmpleados(){
             return $this->empleados;
+        }
+        public function GetCantidadMaxima(){
+            return $this->cantidadMaxima;
         }
         public function ToString(){
             $cadenaEmpleados = '';

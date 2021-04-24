@@ -12,9 +12,6 @@
 </head>
 <body> 
     <h2 style="text-align: center;">Listado de Empleados</h2>
-        <!--<form action="index.php" method="POST" id="FormModificar">
-            <input type="hidden" name="txtHidden" id="txtHidden">
-        </form>-->
         <table align="center">  
             <tbody>
                 <thead>
@@ -52,6 +49,9 @@
                                 echo '<td>'."<input type='button' onclick='Main.ModificarEmpleado(".$objetoDni.")' value='Modificar'>".'<td>';
                                 echo '</tr>';
                                 echo '<br>';
+                                if (count($arrayEmpleados) == $objFabrica->GetCantidadMaxima()) {
+                                    echo '<td>'.'<h2>Ya no se pueden ingresar mas empleados, se ha superado la cantidad maxima</h2>'.'<td>';
+                                }
                             }
                         }
             

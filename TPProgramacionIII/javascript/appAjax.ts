@@ -5,9 +5,12 @@
 namespace Main{
 
     let ajax : Ajax = new Ajax();
+    export function Reset(){
+        (<HTMLFormElement>document.getElementById('reset')).reset;
+    }
     export function AltaEmpleado(){
         if(AdministrarValidaciones()){
-            let nombre:string = (<HTMLInputElement>document.getElementById('Nombre')).value; //cambio la mayuscula
+            let nombre:string = (<HTMLInputElement>document.getElementById('Nombre')).value;
             let apellido:string = (<HTMLInputElement>document.getElementById('apellido')).value; 
             let dni:string = (<HTMLInputElement>document.getElementById('txtDni')).value; 
             let sexo:string = (<HTMLInputElement>document.getElementById('cboSexo')).value; 

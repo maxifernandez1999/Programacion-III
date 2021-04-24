@@ -42,15 +42,12 @@ function ObtenerSueldoMaximo(turno) {
     switch (turno) {
         case 'Mañana':
             retorno = 20000;
-            //(<HTMLInputElement>document.getElementById('Sueldo')).max = '20000';
             break;
         case 'Tarde':
             retorno = 18500;
-            //(<HTMLInputElement>document.getElementById('Sueldo')).min = '18500';
             break;
         case 'Noche':
             retorno = 25000;
-            //(<HTMLInputElement>document.getElementById('Sueldo')).max = '25000';
             break;
         default:
             break;

@@ -4,9 +4,13 @@
 var Main;
 (function (Main) {
     var ajax = new Ajax();
+    function Reset() {
+        document.getElementById('reset').reset;
+    }
+    Main.Reset = Reset;
     function AltaEmpleado() {
         if (AdministrarValidaciones()) {
-            var nombre = document.getElementById('Nombre').value; //cambio la mayuscula
+            var nombre = document.getElementById('Nombre').value;
             var apellido = document.getElementById('apellido').value;
             var dni = document.getElementById('txtDni').value;
             var sexo = document.getElementById('cboSexo').value;
