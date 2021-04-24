@@ -60,7 +60,7 @@
                     }else{
                         echo '<td><td style="font-weight: 500;font-size:30px;">El archivo se encuentra vacio<td><td>';
                     }
-                    //include('backend/validarSesion.php');
+                    
                     ?>
                 </thead>
             </tbody>

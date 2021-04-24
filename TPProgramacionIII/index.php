@@ -1,5 +1,4 @@
-
-        <!DOCTYPE html>
+       <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
@@ -11,7 +10,7 @@
             <script src="javascript/appAjax.js" ></script>
         </head>
         <body>
-            <h2>Alta Empleado</h2>
+            <h2 id="titulo">Alta Empleado</h2>
             <form id="reset">
             <table align="center">
                 <tbody>

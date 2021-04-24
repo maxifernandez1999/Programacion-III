@@ -4,6 +4,10 @@
     // Archivos::WriteFile("archivos.txt","w","",$array);
     // Archivos::FileRead("archivos.txt");
     //Archivos::UploadImage("","file",1000000);
-    Archivos::UploadMultipleImages("","file",1000000);
+    //Archivos::UploadMultipleImages("","file",1000000);
+    //Archivos::DeleteFile("archivos.txt");
+    //Archivos::CopyFile("archivo.txt","archivo2.txt");//mismo directorio
+    
+
 
 ?>

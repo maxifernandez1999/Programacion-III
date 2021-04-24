@@ -1,9 +1,6 @@
 <?php
 class Archivos
 {
-        private $nameFile;
-        private $modo;
-
         public static function WriteFile($nameFile,$modo,$text = null,$arrayText = null){
 
             $archivo = fopen($nameFile,$modo);
@@ -75,6 +72,16 @@ class Archivos
             }else{
                 echo "<br/>NO SE PUDO SUBIR EL ARCHIVO.";
             }
+        }
+
+        public static function CopyFile($origen, $destino){
+            $copy = copy($origen,$destino) == true ? "Copiado" : "Fallo la copia";
+            
+        }
+        
+
+        public static function DeleteFile($file){
+            $delete = unlink($file) == true ? "success" : "fail";
         }
         
         public static function UploadMultipleImages($directory,$keyFile,$sizeFile){
