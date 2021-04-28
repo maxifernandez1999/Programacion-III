@@ -29,7 +29,7 @@
                     if ($retorno == false) {
                         ?>
                             <h1 style="font-size: 25px;color:black;">No existe el empleado en el archivo de texto!</h1><hr>
-                            <a style="font-size:large;color:black;font-weight:500;text-decoration:none;" href="../login.html">Volver a LOGIN</a>
+                            <a style="font-size:large;color:black;font-weight:500;text-decoration:none;" href="../index.php">Volver a LOGIN</a>
                         <?php
                     }
                 }

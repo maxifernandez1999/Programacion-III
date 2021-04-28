@@ -50,12 +50,12 @@ namespace Main{
         
     }
     function ResponseEliminar(responseText:string) : void{
-        alert(responseText);
+        console.log(responseText);
         MostrarEmpleados();
     }
     function ResponseModificar(responseText:string) : void{
         var arrayResponse:string[] = responseText.split("-");
-        alert(responseText);
+        console.log(responseText);
         (<HTMLInputElement>document.getElementById('Nombre')).value = arrayResponse[0];
         (<HTMLInputElement>document.getElementById('apellido')).value = arrayResponse[1]; 
         (<HTMLInputElement>document.getElementById('txtDni')).value = arrayResponse[2];

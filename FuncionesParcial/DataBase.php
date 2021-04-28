@@ -12,11 +12,27 @@ class DataBase{
         $this->user = $user;
         $this->pass = $pass;
         $this->base = $base;
-        $this->conexion = @mysqli_connect($this->host, $this->user, $this->pass, $this->base);
+        //$this->conexion = @mysqli_connect($this->host, $this->user, $this->pass, $this->base);
     }
+
+    //si la query es un SELECT retorna un array de objetos sql
+    //si es distinto de SELECT retorna true OK, false, ERROR
     public function Query($secuenciaSQL){
-        $ResponseSQL = $this->conexion->query($secuenciaSQL);
-        return $ResponseSQL;
+        $sqlExplode = explode(" ",$secuenciaSQL);
+        foreach ($sqlExplode as $value) {
+            if ($value == "SELECT") {
+                $ResponseSQL = $this->conexion->query($secuenciaSQL);
+                $consulta = $this->ShowConsulta($ResponseSQL);
+                //$this->CloseDB();
+                return $consulta;
+            }else{
+                $valorRetorno = $this->conexion->query($secuenciaSQL) == true ? true : false;
+                return $valorRetorno;
+            }  
+        }
+    }
+    public function Connection(){
+        $this->conexion = @mysqli_connect($this->host, $this->user, $this->pass, $this->base);
     }
 
     //retorno un array de objetos
@@ -24,7 +40,7 @@ class DataBase{
         while ($row = $ResponseSQL->fetch_object()){ 
             $user_arr[] = $row;
         }       
-        return $user_arr; 
+        return $user_arr;
     }
     public function CloseDB(){
         mysqli_close($this->conexion);

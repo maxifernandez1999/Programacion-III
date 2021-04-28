@@ -46,12 +46,12 @@ var Main;
     }
     Main.MostrarEmpleados = MostrarEmpleados;
     function ResponseEliminar(responseText) {
-        alert(responseText);
+        console.log(responseText);
         MostrarEmpleados();
     }
     function ResponseModificar(responseText) {
         var arrayResponse = responseText.split("-");
-        alert(responseText);
+        console.log(responseText);
         document.getElementById('Nombre').value = arrayResponse[0];
         document.getElementById('apellido').value = arrayResponse[1];
         document.getElementById('txtDni').value = arrayResponse[2];

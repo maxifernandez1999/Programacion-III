@@ -1,5 +1,4 @@
-//en el namespace Main poner el reference path
-/// //<reference path="ajax.ts" />
+
 class Ajax {
 
     private _xhr: XMLHttpRequest;
@@ -18,7 +17,7 @@ class Ajax {
         let parametros:string = params.length > 0 ? params : "";
         ruta = params.length > 0 ? ruta + "?" + parametros : ruta;
 
-        this._xhr.open('GET', ruta, true);
+        this._xhr.open('GET', ruta);
         this._xhr.send();
 
         this._xhr.onreadystatechange = () => {
@@ -36,23 +35,13 @@ class Ajax {
         };
     };
 
-    public Post = (ruta: string, success: Function, params: string = "", error?: Function,archivo?:HTMLInputElement):void => {
+    public Post = (ruta: string, success: Function, params: string = "", error?: Function):void => {
 
         let parametros:string = params.length > 0 ? params : "";
 
         this._xhr.open('POST', ruta, true);
-        let form : FormData = new FormData();
-
-        archivo != null ? form.append('archivo', archivo.files[0]): null;
-        
-        var array:string[] = parametros.split("?");
-        for (let index = 0; index < array.length; index++) {
-            var newArray:string[] = array[index].split("=");
-            form.append(newArray[0], newArray[1]);    
-        }
-
-        this._xhr.setRequestHeader("enctype", "multipart/form-data");
-        this._xhr.send(form);
+        this._xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+        this._xhr.send(parametros);
 
         this._xhr.onreadystatechange = ():void => {
 
@@ -66,8 +55,5 @@ class Ajax {
                 }
             }
         };
-        
     };
-
-
 }

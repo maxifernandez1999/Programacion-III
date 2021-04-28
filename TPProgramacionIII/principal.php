@@ -15,7 +15,7 @@
             <tr><td colspan="2" style="border: grey solid;text-align: center;color:white;background-color:black;font-weight: 500;font-size:30px;">Maximiliano Fernandez</td></tr>
             <tr>
             <tr style="text-align: center;"></tr>
-                <td style="border: grey solid;margin:20px;padding:20px;"><?php include('index.php') ?></td>
+                <td style="border: grey solid;margin:20px;padding:20px;"><?php include('index_form.php') ?></td>
                 <td id="cont-listado" style="border: grey solid;margin:40px;padding:40px;"><?php include('mostrar.php') ?></td>
             </tr>
         </table>
