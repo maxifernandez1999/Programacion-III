@@ -5,14 +5,20 @@
     $correo = isset($_POST["correo"]) ? $_POST["correo"] : NULL;
     $id_perfil = isset($_POST["id_perfil"]) ? $_POST["id_perfil"] : NULL;
     $usuarioBD = Usuario::TraerUno($correo, $clave);
+    $stdClass = new stdClass();
     if ($usuarioBD == false) {
         $usuario = new Usuario(null,$nombre,$correo,$clave,$id_perfil,null);
-        $retorno = $usuario->Agregar() == true ? "{\"exito\":true,\"mensaje\":\"Se ha agregado al usuario correctamente\"}" : "Ocurrio un error con la consulta a la base de datos";
+        if($usuario->Agregar()){
+            $stdClass->exito = true;
+            $stdClass->mensaje = "Se ha agregado al usuario a la base de datos";
+        }else{
+            $stdClass->exito = false;
+            $stdClass->mensaje = "Ha ocurrido un error en la consulta";
+        }
     }else{
-        $retorno = "{\"exito\":false,\"mensaje\":\"No se ha podido agregar al usuario\"}";
+        $stdClass->exito = false;
+        $stdClass->mensaje = "No se ha podido agregar al usuario a la base de datos";
     }
-
-    
-    echo $retorno;
+    echo json_encode($stdClass);
 
 ?>

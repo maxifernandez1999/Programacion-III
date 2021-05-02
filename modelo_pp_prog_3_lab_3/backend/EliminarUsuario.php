@@ -5,26 +5,30 @@
     $accion = isset($_POST["accion"]) ? $_POST["accion"]: NULL;
     $arrayUsuarios = Usuario::TraerTodos();
     $existe = false;
-    
+    $stdClass = new stdClass();
+    //comprueba que el usuario a eliminar se encuentre en la BD
     foreach ($arrayUsuarios as $usuario) {
         if($usuario->id == $id){
             $existe = true;
             break;
         }
     }
-    
     if($id!=null && $accion == "borrar"){
         if($existe == true){
             $exito = Usuario::Eliminar($id) == true ? true : false;
             if ($exito == true) {
-                echo "{\"exito\":true,\"mensaje\":\"Se ha eliminado el usuario\"}";
+                $stdClass->exito = true;
+            $stdClass->mensaje = "Se ha eliminado el usuario";
             }else{
-                echo "Ha ocurrido un error con la consulta";
+                $stdClass->exito = false;
+                $stdClass->mensaje = "Ocurrio un error en la ejecucion";
             }
         }else{
-            echo "{\"exito\":false,\"mensaje\":\"No se ha podido eliminar el usuario\"}";
+            $stdClass->exito = false;
+            $stdClass->mensaje = "El usuario a eliminar no se encuentra en la BD";
         }
 
     }  
+    echo json_encode($stdClass);
 
 ?>

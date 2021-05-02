@@ -85,7 +85,6 @@
             return $retorno;
         }
         public function Modificar(){ 
-            //$objJSON = json_decode($obj);
             $objPDO = DB_PDO::InstanciarObjetoPDO("localhost","root","","usuarios_test");
             $consulta = $objPDO->RetornarConsulta( "UPDATE usuarios SET correo = :correo, clave = :clave, nombre = :nombre, id_perfil = :id_perfil WHERE id = :id");
             $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);

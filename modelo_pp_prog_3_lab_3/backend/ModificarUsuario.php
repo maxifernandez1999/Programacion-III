@@ -5,6 +5,8 @@
     $jsonDecode = json_decode($json);
     $arrayUsuarios = Usuario::TraerTodos();
     $existe = false;
+    $stdClass = new stdClass();
+    //comprueba si existe el usuario a modificar
     foreach ($arrayUsuarios as $usuario) {
         if($usuario->id == $jsonDecode->id){
             $existe = true;
@@ -13,17 +15,18 @@
         }
     }
     if ($existe == true) {  
-        $exito = $obj->Modificar($json) == true ? true : false;
+        $exito = $obj->Modificar() == true ? true : false;
         if ($exito == true) {
-            echo "{\"exito\":$exito,\"mensaje\":\"Se ha modificado el usuario\"}";
+            $stdClass->exito = true;
+            $stdClass->mensaje = "Se ha modificado el usuario";
         }else{
-            echo "Error en la ejecucion de la consulta";
+            $stdClass->exito = true;
+            $stdClass->mensaje = "Error en la ejecucion de la consulta";
         }
     }else{
-        echo "{\"exito\":$existe,\"mensaje\":\"No se ha podido modificar el usuario\"}";
+        $stdClass->exito = false;
+        $stdClass->mensaje = "El usuario a modificar no existe en la base de datos";
     }
-    
-    
-    //{"id":10,"correo":"maxi@maxi.com","clave":"11234","nombre":"maxi","id_perfil":1}
+    echo json_encode($stdClass);
 
 ?>

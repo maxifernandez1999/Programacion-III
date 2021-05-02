@@ -17,8 +17,7 @@
                         <td>$usuario->perfil</td>
                         <td>$usuario->nombre</td>
                         <td>$usuario->id_perfil</td>
-                    </tr>";
-                    
+                    </tr>";          
             } 
         echo "</table>";  
     }else{
