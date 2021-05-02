@@ -20,34 +20,55 @@
             $this->clave = $clave;
             $this->correo = $correo;
         }
-        public function toJSON(){ 
-            $json = "{\"nombre\":\"$this->nombre\",\"correo\":\"$this->correo\",\"clave\":\"$this->clave\"}";
-            return $json;
+        public function toJSON(){
+            $stdClass = new stdClass();
+            $stdClass->nombre = $this->nombre;
+            $stdClass->correo = $this->correo;
+            $stdClass->clave = $this->clave;
+            return json_encode($stdClass);
+            
         }
 
         public function GuardarEnArchivo(){
+            $stdClass = new stdClass();
             $archivo = fopen('./archivos/usuarios.json','a');
             $obj = json_encode($this);
             $retorno = fwrite($archivo,$obj."\r\n");
             $exito = $retorno != false ? true : false;
+            if ($exito == true) {
+                $stdClass->exito = true;
+                $stdClass->mensaje = "Se pudo escribir en el archivo JSON";
+            }else{
+                $stdClass->exito = false;
+                $stdClass->mensaje = "No se pudo escribir en el archivo";
+            }
             fclose($archivo);
-            $mensaje = $exito == false ? "No se pudo escribir en el archivo" : "Se pudo escribir en el archivo JSON";
-            return "{'exito':$exito,'mensaje':$mensaje}";
+            return json_encode($stdClass);
         }
+        // Método de clase TraerTodosJSON(), que retornará un array de objetos de tipo Usuario, recuperado del 
+        // archivo usuarios.json.
         public static function TraerTodosJSON(){
-            $arrayObjetosJSON = array();
+            $arrayObjetosUsuario = array();
             $nameFile = './archivos/usuarios.json';
             if (file_exists($nameFile)) {
                 if(filesize($nameFile) > 0){
                     $archivo = fopen($nameFile,"r");
                     while(!feof($archivo)){
+                        if (feof($archivo)) {
+                            break;
+                        }
                         $file = fgets($archivo);
-                        array_push($arrayObjetosJSON,$file);
+                        if ($file != false) {
+                            $json = json_decode($file);
+                            $usuario = new Usuario($json->id,$json->nombre,$json->correo,$json->clave,$json->id,$json->id_perfil,$json->perfil);
+                            array_push($arrayObjetosUsuario,$usuario);
+                        }
+                        
                     }
                     fclose($archivo);
                 }
             }
-            return $arrayObjetosJSON;
+            return $arrayObjetosUsuario;
         }
 
         public function Agregar(){//id autoincremental

@@ -7,33 +7,28 @@
     // Se retornará un JSON que contendrá: éxito(bool) y mensaje(string) indicando lo acontecido.
     include_once("clases/Empleado.php");
     $json = isset($_POST["empleado_json"]) ? $_POST["empleado_json"] : NULL;
-    $file = $_FILES["foto"];
+    $file = isset($_FILES["foto"]) ? $_FILES["foto"] : NULL;
     $jsonDecode = json_decode($json);
     $stdClass = new stdClass();
     $arrayEmpleados = Empleado::TraerTodos();
     $changeFoto = true;
     $existe = false;
+    //compruebo si el empleado a modificar existe
     foreach ($arrayEmpleados as $empleado) {
         if($empleado->id == $jsonDecode->id){
             $existe = true;
-            if(file_exists("empleados/fotos/".$empleado->foto)){
-                if ($empleado->foto == "./backend/empleados/fotos/".$jsonDecode->foto) {
-                    $changeFoto = false;
-                }else{
-                    $changeFoto = true;
-                    unlink($empleado->foto);
-                }
-            }
             break;
         }
     }
-    $tipoArchivo = pathinfo("./backend/empleados/fotos/".$file["name"], PATHINFO_EXTENSION);
-    $foto = "./backend/empleados/fotos/".$jsonDecode->nombre.'.'.date('His').'.'.$tipoArchivo;
-    $destino = "empleados/fotos/".$jsonDecode->nombre.'.'.date('His').'.'.$tipoArchivo;
+    if($file !=null){
+        $tipoArchivo = pathinfo("./backend/empleados/fotos/".$file["name"], PATHINFO_EXTENSION);
+        $foto = "./backend/empleados/fotos/".$jsonDecode->nombre.'.'.date('His').'.'.$tipoArchivo;
+        $destino = "empleados/fotos/".$jsonDecode->nombre.'.'.date('His').'.'.$tipoArchivo; 
+    }
     
     
     if ($existe == true) {
-        if ($changeFoto == true) { 
+        if ($file != null) { 
             if(move_uploaded_file($file["tmp_name"], $destino)){
                 $obj = new Empleado($jsonDecode->id,$jsonDecode->nombre,$jsonDecode->correo,$jsonDecode->clave,$jsonDecode->id_perfil,null,$foto,$jsonDecode->sueldo);
                 $exito = $obj->Modificar() == true ? true : false;
