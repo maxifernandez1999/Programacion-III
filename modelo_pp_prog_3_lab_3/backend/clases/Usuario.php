@@ -31,11 +31,11 @@
 
         public function GuardarEnArchivo(){
             $stdClass = new stdClass();
-            $archivo = fopen('./archivos/usuarios.json','a');
-            $obj = json_encode($this);
-            $retorno = fwrite($archivo,$obj."\r\n");
-            $exito = $retorno != false ? true : false;
-            if ($exito == true) {
+            $arrayjson = self::TraerTodosJSON();
+            array_push($arrayjson,$this);
+            $archivo = fopen('./archivos/usuarios.json','w');
+            $retorno = fwrite($archivo,json_encode($arrayjson)/*."\r\n"*/);
+            if ($retorno == true) {
                 $stdClass->exito = true;
                 $stdClass->mensaje = "Se pudo escribir en el archivo JSON";
             }else{
@@ -45,29 +45,61 @@
             fclose($archivo);
             return json_encode($stdClass);
         }
+        // public function GuardarEnArchivo(){
+        //     $stdClass = new stdClass();
+        //     $archivo = fopen('./archivos/usuarios.json','a');
+        //     $obj = json_encode($this);
+        //     $retorno = fwrite($archivo,$obj."\r\n");
+        //     $exito = $retorno != false ? true : false;
+        //     if ($exito == true) {
+        //         $stdClass->exito = true;
+        //         $stdClass->mensaje = "Se pudo escribir en el archivo JSON";
+        //     }else{
+        //         $stdClass->exito = false;
+        //         $stdClass->mensaje = "No se pudo escribir en el archivo";
+        //     }
+        //     fclose($archivo);
+        //     return json_encode($stdClass);
+        // }
         // Método de clase TraerTodosJSON(), que retornará un array de objetos de tipo Usuario, recuperado del 
         // archivo usuarios.json.
+        // public static function TraerTodosJSON(){
+        //     $arrayObjetosUsuario = array();
+        //     $nameFile = './archivos/usuarios.json';
+        //     if (file_exists($nameFile)) {
+        //         if(filesize($nameFile) > 0){
+        //             $archivo = fopen($nameFile,"r");
+        //             while(!feof($archivo)){
+        //                 $file = fgets($archivo);
+        //                 if ($file != false) {
+        //                     $json = json_decode($file);
+        //                     $usuario = new Usuario($json->id,$json->nombre,$json->correo,$json->clave,$json->id,$json->id_perfil,$json->perfil);
+        //                     array_push($arrayObjetosUsuario,$usuario);
+        //                 }
+                        
+        //             }
+        //             fclose($archivo);
+        //         }
+        //     }
+        //     return $arrayObjetosUsuario;
+        // }
         public static function TraerTodosJSON(){
             $arrayObjetosUsuario = array();
             $nameFile = './archivos/usuarios.json';
             if (file_exists($nameFile)) {
                 if(filesize($nameFile) > 0){
                     $archivo = fopen($nameFile,"r");
-                    while(!feof($archivo)){
-                        if (feof($archivo)) {
-                            break;
-                        }
-                        $file = fgets($archivo);
-                        if ($file != false) {
-                            $json = json_decode($file);
-                            $usuario = new Usuario($json->id,$json->nombre,$json->correo,$json->clave,$json->id,$json->id_perfil,$json->perfil);
-                            array_push($arrayObjetosUsuario,$usuario);
-                        }
-                        
-                    }
-                    fclose($archivo);
+                    $contenido = fread($archivo, filesize($nameFile));
+                    $arrayUsuarios = json_decode($contenido);
+                    foreach ($arrayUsuarios as $objeto) {
+                        $usuario = new Usuario($objeto->id,$objeto->nombre,$objeto->correo,$objeto->clave,$objeto->id,$objeto->id_perfil,$objeto->perfil);
+                        array_push($arrayObjetosUsuario,$usuario);
+                    }  
+                    fclose($archivo); 
                 }
+                    
             }
+            
             return $arrayObjetosUsuario;
         }
 
@@ -78,7 +110,6 @@
             $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
             $consulta->bindValue(':id_perfil', $this->id_perfil, PDO::PARAM_INT);
             $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
-            //$consulta->bindValue(':id', $this->clave, PDO::PARAM_STR);
             $success = $consulta->execute() == true ? true : false;
             return $success;
         }

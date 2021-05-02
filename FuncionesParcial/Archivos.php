@@ -1,6 +1,9 @@
 <?php
 class Archivos
 {
+        //escribe sobre un archivo de texto
+        //si es una cadena, escribo en la primer linea
+        //si es un array, escribo cada elemento en lineas distintas
         public static function WriteFile($nameFile,$modo,$text = null,$arrayText = null){
 
             $archivo = fopen($nameFile,$modo);
@@ -14,7 +17,8 @@ class Archivos
             }
             fclose($archivo);
         }
-    
+        //leo un archivo mientras exista el mismo,
+        //sino crea el archivo de texto para su posterior escritura
         public static function FileRead($nameFile){
             if (file_exists($nameFile)) {
                 if(filesize($nameFile) > 0){
@@ -32,7 +36,10 @@ class Archivos
                 echo 'Se ha creado un archivo de texto';
             }
         }
-
+        //subo una imagen si se cumplen las validaciones
+        //SIZE
+        //SI ES UNA IMAGEN
+        //SI LA IMAGEN ES DE ALGUNA DE LAS EXTENSIONES DADAS
         public static function UploadImage($directory,$keyFile,$sizeFile){
             $uploadOk = true;
             $destino = $directory == "" ? $_FILES[$keyFile]["name"] : $directory."/".$_FILES[$keyFile]["name"];
@@ -40,12 +47,10 @@ class Archivos
 
             //VERIFICO QUE EL ARCHIVO NO EXISTA
             if (file_exists($destino)) {
-                echo "El archivo ya existe. Verifique!!!";
                 $uploadOk = false;
             }
             //VERIFICO EL TAMAÑO MAXIMO QUE PERMITO SUBIR
             if ($_FILES[$keyFile]["size"] > $sizeFile) {
-                echo "El archivo es demasiado grande. Verifique!!!";
                 $uploadOk = false;
             }
 
@@ -53,33 +58,34 @@ class Archivos
             //IMAGEN, RETORNA FALSE
             $esImagen = getimagesize($_FILES[$keyFile]["tmp_name"]);
             if($esImagen === false) {
-                echo "El archivo no es una imagen";
+                $uploadOk = false;
             }else{
                 //SOLO PERMITO CIERTAS EXTENSIONES
                 if($tipoArchivo != "jpg" && $tipoArchivo != "jpeg" && $tipoArchivo != "gif"
                 && $tipoArchivo != "png") {
-                echo "Solo son permitidas imagenes con extension JPG, JPEG, PNG o GIF.";
-                $uploadOk = false;
+                    $uploadOk = false;
                 }
             }
             //VERIFICO SI HUBO ALGUN ERROR, CHEQUEANDO $uploadOk
             if ($uploadOk === true) {
                 if (move_uploaded_file($_FILES[$keyFile]["tmp_name"], $destino)){
-                    echo "<br/>El archivo ". basename( $_FILES[$keyFile]["name"]). " ha sido subido exitosamente.";
+                    echo "El archivo ". basename( $_FILES[$keyFile]["name"]). " ha sido subido exitosamente.";
                 }else{
-                    echo "<br/>Lamentablemente ocurri&oacute; un error y no se pudo subir el archivo.";
+                    echo "Lamentablemente ocurrio un error y no se pudo subir el archivo.";
                 }
             }else{
-                echo "<br/>NO SE PUDO SUBIR EL ARCHIVO.";
+                echo "No se pudo subir el archivo(verifique tamaño, y si es una imagen o imagen permitida)";
             }
         }
-
+        //copia un archivo un otra
+        //retorna que sucedio 
         public static function CopyFile($origen, $destino){
             $copy = copy($origen,$destino) == true ? "Copiado" : "Fallo la copia";
             
         }
         
-
+        //elimina un archivo
+        //retorna que sucedio 
         public static function DeleteFile($file){
             $delete = unlink($file) == true ? "success" : "fail";
         }
@@ -98,22 +104,21 @@ class Archivos
 	            array_push($destinos, $destino);
 	            array_push($tiposArchivo, pathinfo($destino, PATHINFO_EXTENSION));
             }
-            
+            //si un solo archivo ya existe entonces no puedo subir ninguno
             foreach($destinos as $destino){
 	            if (file_exists($destino)) {
-		            echo "El archivo {$destino} ya existe. Verifique!!!";
 		            $uploadOk = false;
 		            break;
 	            }
             }
+            //verifico el size de todos los archivos
             foreach($sizes as $size){
 	            if ($size > $sizeFile) {
-		            echo "Archivo demasiado grande. Verifique!!!";
 		            $uploadOk = false;
 		            break;
 	            }
             }
-
+            //comprueba si todos son imagenes
             $tmpsNames = $_FILES[$keyFile]["tmp_name"];
             $i=0;
             foreach($tmpsNames as $tmpName){
@@ -121,7 +126,6 @@ class Archivos
 	            if($esImagen === true){ 
                     if($tiposArchivo[$i] != "jpg" && $tiposArchivo[$i] !=   "jpeg" && $tiposArchivo[$i] != "gif"
                     && $tiposArchivo[$i] != "png") {
-                        echo "Solo son permitidas imagenes con extension JPG, JPEG, PNG o GIF.";
                         $uploadOk = false;
                         break;
 		            }
@@ -133,13 +137,13 @@ class Archivos
             if ($uploadOk === true) {
                 for($i=0;$i<count($tmpsNames);$i++){
                     if (move_uploaded_file($tmpsNames[$i], $destinos[$i])) {
-                        echo "<br/>El archivo ". basename( $tmpsNames[$i]). " ha sido subido exitosamente.";
+                        echo "El archivo ". basename( $tmpsNames[$i]). " ha sido subido exitosamente.";
                     }else{
-                        echo "<br/>Lamentablemente ocurri&oacute; un error y no se pudo subir el archivo ". basename( $tmpsNames[$i]).".";
+                        echo "Lamentablemente ocurrio un error y no se pudo subir el archivo ". basename( $tmpsNames[$i]).".";
                     }
                 }
             }else{
-	            echo "<br/>NO SE PUDIERON SUBIR LOS ARCHIVOS.";
+	            echo "No se pudieron subir los archivo(verifique tamaño, y si es una imagen o imagen permitida)";
             }
         }
 }

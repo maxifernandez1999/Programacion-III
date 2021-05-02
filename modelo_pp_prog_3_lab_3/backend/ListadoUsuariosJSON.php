@@ -1,6 +1,6 @@
 <?php
     include_once("clases/Usuario.php");
-    var_dump(json_encode(Usuario::TraerTodosJSON()));
+    echo json_encode(Usuario::TraerTodosJSON());
 
     
     

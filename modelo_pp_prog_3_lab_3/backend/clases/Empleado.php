@@ -23,7 +23,7 @@
             }
             return $arrayObjetos;
         }
-        public function Agregar(){//id autoincremental
+        public function Agregar(){
             $objPDO = DB_PDO::InstanciarObjetoPDO("localhost","root","","usuarios_test");
             $consulta = $objPDO->RetornarConsulta("INSERT INTO empleados (nombre, correo, clave,id_perfil,foto,sueldo) VALUES(:nombre, :correo, :clave,:id_perfil,:foto,:sueldo)");
             $consulta->bindValue(':correo', $this->correo, PDO::PARAM_STR);
@@ -32,7 +32,6 @@
             $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
             $consulta->bindValue(':foto', $this->foto, PDO::PARAM_STR);
             $consulta->bindValue(':sueldo', $this->sueldo, PDO::PARAM_STR);
-            //$consulta->bindValue(':id', $this->clave, PDO::PARAM_STR);
             $success = $consulta->execute() == true ? true : false;
             return $success;
         }
