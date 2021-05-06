@@ -10,7 +10,7 @@
                     <th>NOMBRE</th>
                     <th>ID_PERFIL</th>
                 </tr>";
-            foreach ($arrayUsuarios as $usuario) {
+            foreach ($arrayUsuarios as $usuario) {//agregar clave
                 echo"<tr>
                         <td>$usuario->id</td>
                         <td>$usuario->correo</td>
