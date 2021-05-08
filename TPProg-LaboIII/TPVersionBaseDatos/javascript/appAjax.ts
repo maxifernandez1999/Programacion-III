@@ -38,9 +38,9 @@ namespace Main{
         }
         
     }
-    export function EliminarEmpleado(legajo:number,dni:number){
+    export function EliminarEmpleado(legajo:number,id:number){
         //http://localhost/Programacion-III/TPProg-LaboIII/TPVersionBaseDatos/eliminar_pdo.php
-        ajax.Get("./eliminar_pdo.php",ResponseEliminar,"txtLegajo="+legajo+"&"+"txtDni="+dni,true,Errores);
+        ajax.Get("./eliminar_pdo.php",ResponseEliminar,"txtLegajo="+legajo+"&"+"id="+id,true,Errores);
         
     }
     export function ModificarEmpleado(dni:number){

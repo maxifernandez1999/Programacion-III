@@ -68,47 +68,54 @@
         $uploadOk = false;
     }
     if (!($uploadOk === false)) {
-
+        $objFabrica = new Fabrica("Riot");
         $obj_json = isset($_POST['obj_json']) ? json_decode($_POST['obj_json']) : NULL;
+        $existe = false;
+        $consulta = $objFabrica->SelectEmpleados();
+        $resultado = $consulta->fetchAll();
+        // if ($consulta != null) {
+        //     foreach ($resultado as $empleado) {
+        //         if ($empleado["legajo"] == $obj_json->txtLegajo) {
+        //             $existe = true;
+        //             break;
+        //         }
+        //     }
+        // }else{
+        //     $existe = false;
+        // }
+        
         //MUEVO EL ARCHIVO DEL TEMPORAL AL DESTINO FINAL
         $archivoFinal = 'fotos/'.$obj_json->txtDni.'_'.$obj_json->txtApellido.'.'.$tipoArchivo;
-        if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $archivoFinal)) {
-            echo "<br/>El archivo ". basename( $_FILES["archivo"]["name"]). " ha sido subido exitosamente.";
-
-            $objFabrica = new Fabrica("Riot");
-            $empleado = new Empleado($obj_json->txtNombre,
-            $obj_json->txtApellido,
-            $obj_json->txtDni,
-            $obj_json->cboSexo,
-            $obj_json->txtLegajo,
-            $obj_json->txtSueldo,
-            $obj_json->rdoTurno,
-            $archivoFinal);
-            if($objFabrica->InsertEmpleado($empleado)){
-                ?>
-                    <a href="mostrar.php">Volver a mostrar.php</a>
-                <?php
-            }else{
-                ?>
-                    <a href="index.html">Volver a index.html</a>
-                <?php
+        if ($existe == false) {
+            if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $archivoFinal)) {
+                echo "<br/>El archivo ". basename( $_FILES["archivo"]["name"]). " ha sido subido exitosamente.";
+                $empleado = new Empleado($obj_json->txtNombre,
+                $obj_json->txtApellido,
+                $obj_json->txtDni,
+                $obj_json->cboSexo,
+                $obj_json->txtLegajo,
+                $obj_json->txtSueldo,
+                $obj_json->rdoTurno,
+                $archivoFinal);
+                if($objFabrica->InsertEmpleado($empleado)){
+                    ?>
+                        <a href="mostrar.php">Volver a mostrar.php</a>
+                    <?php
+                }else{
+                    ?>
+                        <a href="index.html">Volver a index.html</a>
+                    <?php
+                }     
+            } else {
+                echo "<br/>Lamentablemente ocurri&oacute; un error y no se pudo subir el archivo.";
             }
-            //agrega un empleado al array de empleados
-            //if($fabrica->AgregarEmpleado($empleado)){
-                //$fabrica->GuardarEnArchivo('archivos/empleados.txt');
-                
-            //}else{
-                //echo 'no se pudo guardar en el archivo de texto<br>';
-                
-           // }
-            
-            
-        } else {
-            echo "<br/>Lamentablemente ocurri&oacute; un error y no se pudo subir el archivo.";
+        }else{
+            echo "Ya existe en la base de datos un empleado con el mismo legajo. No se pudo agregar";
         }
+        
     
     }else{
-        //echo 'Ha ocurrido un error con la subida de la imagen';
+        echo 'Ha ocurrido un error con la subida de la imagen';
     }
 
     

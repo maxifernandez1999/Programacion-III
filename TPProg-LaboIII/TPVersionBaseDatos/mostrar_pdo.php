@@ -39,7 +39,7 @@
                         echo '<tr>';
                                 echo '<td style="font-weight: 300;font-size:18px;">'.$objEmpleado->ToString().'<td>';
                 
-                                echo '<td>'."<input type='button' onclick='Main.EliminarEmpleado(".$legajo.','.$objetoDni.")' value='Eliminar'>".'<td>';
+                                echo '<td>'."<input type='button' onclick='Main.EliminarEmpleado(".$legajo.','.$value["id"].")' value='Eliminar'>".'<td>';
                                 echo '<td>'."<img src='$pathFoto' alt=' ' width='90px' height='90px'>".'<td>';
                                 echo '<td>'."<input type='button' onclick='Main.ModificarEmpleado(".$objetoDni.")' value='Modificar'>".'<td>';
                                 echo '</tr>';

@@ -56,25 +56,11 @@
     
         }
     
-        public function DeleteEmpleado($legajoEliminar,$idEliminar)
-        {   
-            if ($idEliminar == NULL) {
-                $consulta = $this->objetoAccesoDato->RetornarConsulta("DELETE FROM empleados WHERE legajo = :legajo");
-                $consulta->bindValue(':legajo', $legajoEliminar, PDO::PARAM_INT);
-                $consulta->execute();
-            }
-            if ($legajoEliminar == NULL) {
-                $consulta = $this->objetoAccesoDato->RetornarConsulta("DELETE FROM empleados WHERE id = :id");
-                $consulta->bindValue(':id', $legajoEliminar, PDO::PARAM_INT);
-                $consulta->execute();
-            }
-            $consulta = $this->objetoAccesoDato->RetornarConsulta("DELETE FROM empleados WHERE id = :id AND legajo = :legajo");
-            $consulta->bindValue(':legajo', $legajoEliminar, PDO::PARAM_INT);
+        public function DeleteEmpleado($idEliminar){   
+            
+            $consulta = $this->objetoAccesoDato->RetornarConsulta("DELETE FROM empleados WHERE id = :id");
             $consulta->bindValue(':id', $idEliminar, PDO::PARAM_INT);
             $consulta->execute();
-
-
-            
         }
 
         ////////////////////////////////////////

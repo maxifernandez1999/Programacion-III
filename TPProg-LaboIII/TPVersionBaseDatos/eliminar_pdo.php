@@ -4,15 +4,15 @@
     include_once('Fabrica.php');
     include_once("DB_PDO.php");
     $legajo = ($_GET["txtLegajo"]);
-    $dni = ($_GET["txtDni"]);
+    $id = ($_GET["id"]);
     $retorno = false;
     $objFabrica = new Fabrica("xd");
     $consultaSelect = $objFabrica->SelectEmpleados();
     $resultado = $consultaSelect->fetchAll();
     foreach ($resultado as $value) {
         if ($value["legajo"] == $legajo) {
-            if($value["dni"] == $dni){
-                $consultaDelete = $objFabrica->DeleteEmpleado($value["legajo"],$value["id"]);
+            if($value["id"] == $id){
+                $consultaDelete = $objFabrica->DeleteEmpleado($id);
                 unlink($value["pathfoto"]);
                 break;
             }

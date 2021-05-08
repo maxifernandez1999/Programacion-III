@@ -35,9 +35,9 @@ var Main;
         }
     }
     Main.AltaEmpleado = AltaEmpleado;
-    function EliminarEmpleado(legajo, dni) {
+    function EliminarEmpleado(legajo, id) {
         //http://localhost/Programacion-III/TPProg-LaboIII/TPVersionBaseDatos/eliminar_pdo.php
-        ajax.Get("./eliminar_pdo.php", ResponseEliminar, "txtLegajo=" + legajo + "&" + "txtDni=" + dni, true, Errores);
+        ajax.Get("./eliminar_pdo.php", ResponseEliminar, "txtLegajo=" + legajo + "&" + "id=" + id, true, Errores);
     }
     Main.EliminarEmpleado = EliminarEmpleado;
     function ModificarEmpleado(dni) {
