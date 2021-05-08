@@ -54,7 +54,7 @@ var Main;
         MostrarEmpleados();
     }
     function ResponseModificar(responseText) {
-        alert(responseText);
+        //alert(responseText);
         var objJSON = JSON.parse(responseText);
         //var arrayResponse:string[] = responseText.split("-");
         console.log(responseText);

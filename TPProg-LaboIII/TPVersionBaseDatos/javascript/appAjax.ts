@@ -57,7 +57,7 @@ namespace Main{
         MostrarEmpleados();
     }
     function ResponseModificar(responseText:string) : void{
-        alert(responseText);
+        //alert(responseText);
          var objJSON:any = JSON.parse(responseText);
         //var arrayResponse:string[] = responseText.split("-");
         console.log(responseText);

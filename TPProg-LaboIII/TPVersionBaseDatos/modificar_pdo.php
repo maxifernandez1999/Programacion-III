@@ -9,17 +9,23 @@
     //$consultaSelect->setFetchMode(PDO::FETCH_INTO, new Empleado);
                         
     //foreach ($consultaSelect as $obj) {
-        //$empleado = new Empleado($obj->nombre,$obj->apellido,$obj->dni,$obj->sexo,$obj->legajo,$obj->sueldo,$obj->turno,$obj->pathfoto);
-        //$objson =  json_encode($empleado);
-        //echo $objson;
+        // $empleado = new Empleado($obj->nombre,$obj->apellido,$obj->dni,$obj->sexo,$obj->legajo,$obj->sueldo,$obj->turno,$obj->pathfoto);
+        // $objson =  json_encode($empleado);
+        // echo $objson;
     //}
     while ($obj = $consultaSelect->fetch(PDO::FETCH_LAZY)) {
         if($obj->dni == $valorGET){
-            $objFabrica->DeleteEmpleado($obj->legajo);
-            $arrayEmpleados = array('nombre'=>$obj->nombre,'apellido'=>$obj->apellido,'dni'=>$obj->dni,'sexo'=>$obj->sexo,'legajo'=>$obj->legajo,'sueldo'=>$obj->sueldo,'turno'=>$obj->turno,'pathfoto'=>$obj->pathfoto);
+            //$objFabrica->DeleteEmpleado($obj->id);
+            $empleado = new Empleado($obj->nombre,$obj->apellido,$obj->dni,$obj->sexo,$obj->legajo,$obj->sueldo,$obj->turno,$obj->pathfoto);
             unlink($obj->pathfoto);
-            $objson =  json_encode($arrayEmpleados);
+            $objson =  json_encode($empleado);
+            $objFabrica->DeleteEmpleado($obj->id);
             echo $objson;
+            //$arrayEmpleados = array('nombre'=>$obj->nombre,'apellido'=>$obj->apellido,'dni'=>$obj->dni,'sexo'=>$obj->sexo,'legajo'=>$obj->legajo,'sueldo'=>$obj->sueldo,'turno'=>$obj->turno,'pathfoto'=>$obj->pathfoto);
+            
+            // $objson =  json_encode($arrayEmpleados);
+            // echo $objson;
+            break;
         }
     }
                 

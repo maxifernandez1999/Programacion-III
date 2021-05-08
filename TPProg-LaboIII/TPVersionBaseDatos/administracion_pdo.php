@@ -73,16 +73,20 @@
         $existe = false;
         $consulta = $objFabrica->SelectEmpleados();
         $resultado = $consulta->fetchAll();
-        // if ($consulta != null) {
-        //     foreach ($resultado as $empleado) {
-        //         if ($empleado["legajo"] == $obj_json->txtLegajo) {
-        //             $existe = true;
-        //             break;
-        //         }
-        //     }
-        // }else{
-        //     $existe = false;
-        // }
+        if ($consulta != null) {
+            $legajo = strval($obj_json->txtLegajo);
+            $dni = strval($obj_json->txtDni);
+            $sueldo = strval($obj_json->txtSueldo);
+
+            foreach ($resultado as $empleado) {
+                if ($empleado["legajo"] == $legajo && $empleado["nombre"] == $obj_json->txtNombre && $empleado["apellido"] == $obj_json->txtApellido && $empleado["dni"] == $dni && $empleado["sueldo"] == $sueldo && $empleado["turno"] == $obj_json->rdoTurno && $empleado["sexo"] == $obj_json->cboSexo) {
+                    $existe = true;
+                    break;
+                }
+            }
+        }else{
+            $existe = false;
+        }
         
         //MUEVO EL ARCHIVO DEL TEMPORAL AL DESTINO FINAL
         $archivoFinal = 'fotos/'.$obj_json->txtDni.'_'.$obj_json->txtApellido.'.'.$tipoArchivo;
@@ -110,7 +114,7 @@
                 echo "<br/>Lamentablemente ocurri&oacute; un error y no se pudo subir el archivo.";
             }
         }else{
-            echo "Ya existe en la base de datos un empleado con el mismo legajo. No se pudo agregar";
+            echo "Ya existe en la base de datos el empleado";
         }
         
     
