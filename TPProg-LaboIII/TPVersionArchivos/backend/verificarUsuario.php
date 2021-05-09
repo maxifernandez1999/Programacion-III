@@ -18,7 +18,7 @@
                         if ($arrayEmpleados[1] == $apellido && $arrayEmpleados[2] == $dni) {
                             $_SESSION['DNIEmpleado'] = $dni;
                             $retorno = true;
-                            header("Location: http://localhost/Programacion-III/TPProg-LaboIII/TPVersionArchivos/principal.php");
+                            header("Location: ../principal.php");
                             
                             break;
                         }else{

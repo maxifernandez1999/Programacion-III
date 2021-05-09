@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina Principal</title>
     <?php
-        //include('backend/validarSesion.php');
+        include('backend/validarSesion.php');
     ?>
 </head>
 <body>

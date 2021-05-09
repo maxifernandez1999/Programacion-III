@@ -27,22 +27,22 @@ var Main;
             document.getElementById('txtDni').readOnly = false;
             document.getElementById('txtLegajo').readOnly = false;
             var parametros = "txtNombre=" + nombre + "?" + "txtApellido=" + apellido + "?" + "txtDni=" + dni + "?" + "cboSexo=" + sexo + "?" + "txtLegajo=" + legajo + "?" + "txtSueldo=" + sueldo + "?" + "rdoTurno=" + turnoSeleccionado;
-            ajax.Post("http://localhost/Programacion-III/TPProgramacionIII/administracion.php", ReponseSend, parametros, foto, true, Errores);
+            ajax.Post("./administracion.php", ReponseSend, parametros, foto, true, Errores);
             document.getElementById('titulo').innerHTML = "Alta Empleado";
         }
     }
     Main.AltaEmpleado = AltaEmpleado;
     function EliminarEmpleado(legajo) {
-        ajax.Get("http://localhost/Programacion-III/TPProgramacionIII/eliminar.php", ResponseEliminar, "txtLegajo=" + legajo, true, Errores);
+        ajax.Get("./eliminar.php", ResponseEliminar, "txtLegajo=" + legajo, true, Errores);
     }
     Main.EliminarEmpleado = EliminarEmpleado;
     function ModificarEmpleado(dni) {
-        ajax.Get("http://localhost/Programacion-III/TPProgramacionIII/modificar.php", ResponseModificar, "txtDni=" + dni, true, Errores);
+        ajax.Get("./modificar.php", ResponseModificar, "txtDni=" + dni, true, Errores);
         document.getElementById('titulo').innerHTML = "Modificar Empleado";
     }
     Main.ModificarEmpleado = ModificarEmpleado;
     function MostrarEmpleados() {
-        ajax.Get("http://localhost/Programacion-III/TPProgramacionIII/mostrar.php", ResponseShow, "", true, Errores);
+        ajax.Get("./mostrar.php", ResponseShow, "", true, Errores);
     }
     Main.MostrarEmpleados = MostrarEmpleados;
     function ResponseEliminar(responseText) {

@@ -38,7 +38,7 @@ class Ajax {
 
         let parametros:string = params.length > 0 ? params : "";
 
-        this._xhr.open('POST', ruta, asincronic);
+        this._xhr.open('POST', ruta, true);
             
             let form : FormData = new FormData();
             form.append('archivo', archivo.files[0]);
