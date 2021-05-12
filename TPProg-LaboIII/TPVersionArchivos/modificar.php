@@ -8,7 +8,6 @@
         $objFabrica->TraerDeArchivo('archivos/empleados.txt');
         foreach ($objFabrica->GetEmpleados() as $objEmpleado) {
             if ($objEmpleado->GetDni() == $valorGET) {
-                
                 if($objFabrica->EliminarEmpleado($objEmpleado)){
                     $objFabrica->GuardarEnArchivo('archivos/empleados.txt');
                     echo $objEmpleado->ToString();

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +19,7 @@
                     </tr>
                     <hr>
                     <?php
+                    //header('Access-Control-Allow-Origin: *');
                     include_once('Persona.php');
                     include_once('Empleado.php');
                     include_once('Fabrica.php');

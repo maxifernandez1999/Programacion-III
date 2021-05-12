@@ -1,3 +1,6 @@
+<?php
+    include('backend/validarSesion.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagina Principal</title>
-    <?php
-        include('backend/validarSesion.php');
-    ?>
+    
 </head>
 <body>
     <div id="tablas">
@@ -23,7 +24,8 @@
     <br>
     <div id="links">
     <a style="font-size:large;color:black;font-weight:500;text-decoration:none;padding:20px;margin:20px;" href="backend/cerrarSesion.php">Desloguearse</a>
-        <hr>
+    <a style="font-size:large;color:black;font-weight:500;text-decoration:none;padding:20px;margin:20px;" href="pdf.php">Crear PDF</a>
+    <hr>
     </div>
 
 </body>

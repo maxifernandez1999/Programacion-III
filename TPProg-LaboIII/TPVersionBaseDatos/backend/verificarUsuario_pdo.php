@@ -1,13 +1,11 @@
 <?php
     session_start();
-    include("../DB_PDO.php");
+    include("../Fabrica.php");
     if (isset($_POST['txtDni']) && isset($_POST['txtApellido'])){
         $dni = $_POST['txtDni'];
         $apellido = $_POST['txtApellido'];
-
-        $objPDO = DB_PDO::InstanciarObjetoPDO("localhost","root","","tpproglaboiii");
-        $consulta = $objPDO->RetornarConsulta("SELECT * FROM empleados");
-        $consulta->execute();
+        $objFabrica = new Fabrica("xd");
+        $consulta = $objFabrica->SelectEmpleados();
         $resultado = $consulta->fetchAll();
         foreach ($resultado as $value) {
             if($value["dni"] == $dni && $value["apellido"] == $apellido){

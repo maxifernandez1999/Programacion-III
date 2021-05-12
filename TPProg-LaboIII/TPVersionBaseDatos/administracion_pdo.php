@@ -52,7 +52,7 @@
         $uploadOk = false;
     }
 
-    if ($_FILES["archivo"]["size"] > 1000000) {
+    if ($_FILES["archivo"]["size"] > 10000000) {
         $uploadOk = false;
     }
     //determina si es una imagen

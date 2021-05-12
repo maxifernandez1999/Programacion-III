@@ -13,7 +13,7 @@
             if (is_string($razonSocial)) {
                 $this->razonSocial = $razonSocial;
             }
-            $this->objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","tpproglaboiii");
+            $this->objetoAccesoDato = DB_PDO::InstanciarObjetoPDO('localhost','root','','tpproglaboiii');
             $this->empleados = array();
         }
         public function SelectEmpleados()
@@ -25,7 +25,7 @@
         
         public function InsertEmpleado($empleado)
         {
-            $consulta = $this->objetoAccesoDato->RetornarConsulta("INSERT INTO empleados (nombre, apellido, dni, sexo,legajo,sueldo,turno,pathfoto) VALUES(:nombre, :apellido, :dni, :sexo, :legajo,:sueldo,:turno,:pathfoto)");
+            $consulta = $this->objetoAccesoDato->RetornarConsulta('INSERT INTO empleados (nombre, apellido, dni, sexo,legajo,sueldo,turno,pathfoto) VALUES(:nombre, :apellido, :dni, :sexo, :legajo,:sueldo,:turno,:pathfoto)');
             
             $consulta->bindValue(':nombre', $empleado->GetNombre(), PDO::PARAM_STR);
             $consulta->bindValue(':apellido', $empleado->GetApellido(), PDO::PARAM_STR);
@@ -41,7 +41,7 @@
         
         public function UpdateEmpleado($empleado)
         {
-            $consulta = $this->objetoAccesoDato->RetornarConsulta("UPDATE empleados SET nombre = :nombre, apellido = :apellido, sexo = :sexo, legajo = :legajo, sueldo = :sueldo, turno = :turno,pathfoto = :pathfoto WHERE dni = :dni");
+            $consulta = $this->objetoAccesoDato->RetornarConsulta('UPDATE empleados SET nombre = :nombre, apellido = :apellido, sexo = :sexo, legajo = :legajo, sueldo = :sueldo, turno = :turno,pathfoto = :pathfoto WHERE dni = :dni');
             
             $consulta->bindValue(':nombre',$empleado->nombre, PDO::PARAM_STR);
             $consulta->bindValue(':apellido', $empleado->apellido, PDO::PARAM_STR);
@@ -58,7 +58,7 @@
     
         public function DeleteEmpleado($idEliminar){   
             
-            $consulta = $this->objetoAccesoDato->RetornarConsulta("DELETE FROM empleados WHERE id = :id");
+            $consulta = $this->objetoAccesoDato->RetornarConsulta('DELETE FROM empleados WHERE id = :id');
             $consulta->bindValue(':id', $idEliminar, PDO::PARAM_INT);
             $consulta->execute();
         }

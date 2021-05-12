@@ -7,8 +7,8 @@
         private function __construct($host,$user,$pass,$dataBase)
         {
             try {
-                $clave = $pass != "" ? $pass : ""; 
-                $this->_objetoPDO = new PDO("mysql:host=$host;dbname=$dataBase;charset=utf8", $user, $clave);
+                //$clave = $pass != "" ? $pass : ""; 
+                $this->_objetoPDO = new PDO("mysql:host=$host;dbname=$dataBase;charset=utf8", $user, $pass);
      
             } catch (PDOException $e) {
                 print "Error!!!<br/>" . $e->getMessage();
