@@ -28,25 +28,22 @@ var Main;
             document.getElementById('txtLegajo').readOnly = false;
             //AGREGAR JSON
             var paramJson = "obj_json=" + ("{\"txtNombre\":\"" + nombre + "\",\"txtApellido\":\"" + apellido + "\",\"txtDni\":" + dni + ",\"cboSexo\":\"" + sexo + "\",\"txtLegajo\":" + legajo + ",\"txtSueldo\":" + sueldo + ",\"rdoTurno\":\"" + turnoSeleccionado + "\"}");
-            //var parametros:string = "txtNombre="+nombre+"?"+ "txtApellido="+apellido+"?"+"txtDni="+dni+"?"+"cboSexo="+sexo+"?"+"txtLegajo="+legajo+"?"+"txtSueldo="+sueldo+"?"+"rdoTurno="+turnoSeleccionado;
-            //http://localhost/Programacion-III/TPProg-LaboIII/TPVersionBaseDatos/administracion_pdo.php
-            ajax.Post("./administracion_pdo.php", ReponseSend, paramJson, foto, true, Errores);
+            ajax.Post("../backend/administracion_pdo.php", ReponseSend, paramJson, foto, true, Errores);
             document.getElementById('titulo').innerHTML = "Alta Empleado";
         }
     }
     Main.AltaEmpleado = AltaEmpleado;
     function EliminarEmpleado(legajo, id) {
-        //http://localhost/Programacion-III/TPProg-LaboIII/TPVersionBaseDatos/eliminar_pdo.php
-        ajax.Get("./eliminar_pdo.php", ResponseEliminar, "txtLegajo=" + legajo + "&" + "id=" + id, true, Errores);
+        ajax.Get("../backend/eliminar_pdo.php", ResponseEliminar, "txtLegajo=" + legajo + "&" + "id=" + id, true, Errores);
     }
     Main.EliminarEmpleado = EliminarEmpleado;
     function ModificarEmpleado(dni) {
-        ajax.Get("./modificar_pdo.php", ResponseModificar, "txtDni=" + dni, true, Errores);
+        ajax.Get("../backend/modificar_pdo.php", ResponseModificar, "txtDni=" + dni, true, Errores);
         document.getElementById('titulo').innerHTML = "Modificar Empleado";
     }
     Main.ModificarEmpleado = ModificarEmpleado;
     function MostrarEmpleados() {
-        ajax.Get("http://localhost/Programacion-III/TPProg-LaboIII/TPVersionBaseDatos/mostrar_pdo.php", ResponseShow, "", true, Errores);
+        ajax.Get("../backend/mostrar_pdo.php", ResponseShow, "", true, Errores);
     }
     Main.MostrarEmpleados = MostrarEmpleados;
     function ResponseEliminar(responseText) {

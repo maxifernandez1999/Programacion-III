@@ -23,7 +23,7 @@ var Ajax = /** @class */ (function () {
         this.Post = function (ruta, success, params, archivo, asincronic, error) {
             if (params === void 0) { params = ""; }
             var parametros = params.length > 0 ? params : "";
-            _this._xhr.open('POST', ruta, asincronic);
+            _this._xhr.open('POST', ruta, true);
             var form = new FormData();
             form.append('archivo', archivo.files[0]);
             var array = parametros.split("=");

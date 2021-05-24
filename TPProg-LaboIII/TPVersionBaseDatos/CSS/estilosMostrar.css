@@ -1,0 +1,22 @@
+#tabla{
+    background-color: whitesmoke;
+    text-align: center;
+    border-collapse:collapse;
+}
+#tabla td{
+    background-color: grey;
+    border: 1px solid rgba(255, 0, 0, 0.562);
+    padding:10px;
+}
+#tabla th{
+    border: 1px solid rgba(255, 0, 0, 0.562);
+    padding:10px;
+    background-color: black;
+    color: white;
+}
+#table tr{
+    border: 1px solid rgba(255, 0, 0, 0.562);
+}
+h2{
+    text-align: center;
+}
