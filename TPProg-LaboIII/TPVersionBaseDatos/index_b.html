@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--<link rel="stylesheet" href="CSS/estilosLogin.css">-->
+    <title>HTML5 - Formulario Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="javascript/funcionesLogin.js"></script>
+    
+    
+</head>
+<body>
+    <h2 class="text-center fst-italic">Login</h2>
+    <form action="backend/verificarUsuario_pdo.php" method="POST">
+        <div class="container">
+        <table class="table table-hover">
+            <tr>
+                <th colspan="2"><h4>Ingreso de creedenciales<hr></h4></th>
+            </tr>
+            <tr>
+                <td class="text-danger">DNI: </td>
+                <td class="input form-control"><input type="number" name="txtDni" id="txtDni" min="1000000" max="55000000"><span id="spanDni" style="display: none;"> * </span></td>
+            </tr>
+            <tr>
+                <td class="text-danger">Apellido: </td>
+                <td class="input"><input type="text" id="txtApellido" name="txtApellido"><span id="spanApellido" style="display: none;"> * </span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr><input class="btn btn-outline-success btn-lg" type="reset" value="Limpiar" name="btnLimpiar">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input class="btn btn-outline-success btn-lg" type="submit" name="btnEnviar" id="btnEnviar" onclick="AdministrarValidacionesLogin(event)"><br><br>
+                    <span class="material-icons">logout</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+    
+</body>
+</html>

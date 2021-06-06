@@ -16,9 +16,13 @@ td{
     color: white;
     font-size:18px;
 }
-input[type=button],input[type=reset],input[type=file]{
+input[type=button],input[type=reset]{
     font-size: 20px;
     width: 100px;
+}
+input[type=file]{
+    font-size: 15px;
+    width: 150px;
 }
 input[type=button]:hover,input[type=reset]:hover{
     font-size: 20px;

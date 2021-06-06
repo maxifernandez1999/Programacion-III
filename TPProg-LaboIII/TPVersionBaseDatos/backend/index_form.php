@@ -13,7 +13,7 @@
         <body>
             <h2 id="titulo">Alta Empleado</h2>
             <form id="reset">
-            <table align="center">
+            <table id="tablaForm" align="center">
                 <tbody>
                     <thead>
                         <tr>

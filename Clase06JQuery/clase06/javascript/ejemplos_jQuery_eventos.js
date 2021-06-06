@@ -10,7 +10,7 @@ $(function(){
 
     $("#btnId").on("click", function(){
 
-        var contenidoAnterior = $("#idP").html();
+        var keyPressed = $("#idP").html();
         alert(contenidoAnterior);
         $("#idP").html("Establezco un nuevo contenido en el elemento HTML.");
 
