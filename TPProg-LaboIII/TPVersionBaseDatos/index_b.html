@@ -15,11 +15,17 @@
 </head>
 <style>
     .image{
-        background-image: url("IMG/cancha.jpg");
+        width: 100%;
+        background: url("IMG/cancha.jpg");
+        background-color: rgba(0,0,0,.3);
+        background-blend-mode: soft-light;
+        background-size: cover;
+        background-position: center;
+        box-sizing: border-box;
     }
 </style>
 <body class="image">
-    <form class="was-validated" action="backend/verificarUsuario_pdo.php" method="POST">
+    <form action="backend/verificarUsuario_pdo.php" method="POST">
         <div class="container border border-dark rounded-start mt-3 border-4 bg-light">
         <h2 class="text-center fst-italic">Login</h2>
         <table class="table table-hover">
@@ -42,13 +48,7 @@
                     </div>
                     <input class="btn btn-outline-danger btn-lg float-end m-2" type="submit" name="btnEnviar" id="btnEnviar" onclick="AdministrarValidacionesLogin(event)"><input class="btn btn-outline-danger btn-lg float-end m-2" type="reset" value="Limpiar" name="btnLimpiar">
                 </td>
-            </tr>
-            <tr class="border border-white">
-                <td colspan="2" class="float-end">
-                  </td>
-                
-            </tr>
-            
+            </tr>   
         </table>
     </div>
     </form>
