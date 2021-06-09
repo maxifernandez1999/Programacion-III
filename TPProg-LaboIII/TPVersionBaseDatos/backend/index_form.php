@@ -19,8 +19,18 @@
         <body>
             <div class="container">
 
-            
-            <form class="was-validated">
+       
+
+
+    <!--     <div class="col-md-4"><label for="validationCustom01" class="form-label">First name</label>
+    <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>-->
+
+    <!-- -->
+      
+            <form class="was-validated" id="reset" >
                 <h2 id="titulo">Alta Empleado</h2>
                 <h4>Datos Personales</h4><hr>
                     <div class="form-group">
@@ -29,7 +39,7 @@
                             required>
                             <span id="spanDni" style="display: none;"> * </span>
                         <div class="valid-feedback">Válido.</div>
-                        <div class="invalid-feedback">Valor requerido.</div>
+                        <div class="invalid-feedback">DNI requerido.</div>
                     </div>
                     <div class="form-group">
                         <label for="pwd">Apellido:</label>
@@ -37,7 +47,7 @@
                             name="pswd" required>
                             <span id="spanApellido" style="display: none;"> * </span>
                         <div class="valid-feedback">Válido.</div>
-                        <div class="invalid-feedback">Valor requerido.</div>
+                        <div class="invalid-feedback">Apellido requerido.</div>
                     </div>
                     <div class="form-group">
                         <label for="pwd">Nombre:</label>
@@ -45,7 +55,7 @@
                             name="pswd" required>
                             <span id="spanNombre" style="display: none;"> * </span>
                         <div class="valid-feedback">Válido.</div>
-                        <div class="invalid-feedback">Valor requerido.</div>
+                        <div class="invalid-feedback">Nombre requerido.</div>
                     </div>
                     <div class="form-group">
                         <label for="pwd">Sexo:</label>
@@ -66,7 +76,7 @@
                             required>
                             <span id="spanLegajo" style="display: none;"> * </span>
                         <div class="valid-feedback">Válido.</div>
-                        <div class="invalid-feedback">Valor requerido.</div>
+                        <div class="invalid-feedback">Legajo requerido.</div>
                     </div>
                     <div class="form-group">
                         <label for="uname">Sueldo:</label>
@@ -74,7 +84,7 @@
                             required>
                             <span id="spanSueldo" style="display: none;"> * </span>
                         <div class="valid-feedback">Válido.</div>
-                        <div class="invalid-feedback">Valor requerido.</div>
+                        <div class="invalid-feedback">Sueldo requerido.</div>
                     </div>
 
 
@@ -97,7 +107,7 @@
                                 </td>
                                 <td class="turnoDescription">Noche</td>
                             </tr>-->
-
+                            
                     <div class="form-group">
                         <label for="uname">Turno:</label>
                         <div class="form-check">
@@ -123,23 +133,32 @@
                         </label>
                         </div>
                     </div>
-                    
-  
-
-
-
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="remember" required> Acepto
-                            términos.
-                            <div class="valid-feedback">Válido.</div>
-                            <div class="invalid-feedback">Aceptar términos para continuar.</div>
-                        </label>
+                    <div class="mb-3">
+                        <label for="formFileSm" class="form-label">Foto:</label>
+                        <input class="form-control form-control-sm" id="archivo" type="file" name="archivo">
+                        <span id="spanFile" style="display: none;"> * </span>
                     </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </form>
+
+
+
+
+
+
+                    <!--<td>Foto: </td>
+                            <td><input type="file"  //id="archivo">
+                            </td>-->
+
+                            <!--<input type="reset" value="Limpiar"  />
+                            <input type="button"   value="Enviar" />id="reset"-->
+                            
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="reset" onclick="Main.Reset()">Limpiar</button>
+                            <button class="btn btn-primary" type="button" onclick="Main.AltaEmpleado()" id="btnEnviar">Enviar</button>
+                        </div>
+
+                        </form>
                 </div>
-            <!--<form id="reset">
+            <!--<form >
             <table id="tablaForm" align="center">
                 <tbody>
                     <thead>
@@ -188,19 +207,17 @@
                                     
                         </tr>
                         <tr>
-                            <td>Foto: </td>
-                            <td><input type="file" name="archivo" id="archivo"><span id="spanFile" style="display: none;"> * </span>
-                            </td>
+                            
                         </tr>
                         <tr><td colspan="2"><hr></td></tr>
                         <tr>
                             <td colspan="2" align="right">
-                                <input type="reset" value="Limpiar" id="reset" onclick="Main.Reset()"/>
+                                
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2" align="right">
-                                <input type="button" onclick="Main.AltaEmpleado()" id="btnEnviar" value="Enviar" />
+                                
                             </td>
                         </tr>
                     </thead>       
