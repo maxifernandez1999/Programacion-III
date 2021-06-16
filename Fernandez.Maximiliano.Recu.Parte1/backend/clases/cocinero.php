@@ -14,6 +14,27 @@
             $this->clave = $clave;
             
         }
+
+        // public function GetEspecialidad(){
+        //     return $this->especialidad;
+        // }
+        // public function GetEmail(){
+        //     return $this->email;
+        // }
+        // public function GetClave(){
+        //     return $this->clave;
+        // }
+
+        // public function SetEspecialidad($especialidad){
+        //     $this->especialidad = $especialidad;
+        // }
+        // public function SetEmail($email){
+        //     $this->email = $email;
+        // }
+        // public function SetClave($clave){
+        //     $this->clave = $clave;
+        // }
+
         public function toJSON(){
             return json_encode($this);
             
@@ -21,6 +42,8 @@
         public function GuardarEnArchivo($path){
             $stdClass = new stdClass();
             $arrayjson = self::TraerTodos($path);
+            //$cocinero = new Cocinero($this->GetEspecialidad(),$this->GetEmail(),$this->GetClave());
+            
             array_push($arrayjson,$this);
             $archivo = fopen($path,'w');
             $retorno = fwrite($archivo,json_encode($arrayjson)/*."\r\n"*/);
@@ -36,7 +59,6 @@
         }
         public static function TraerTodos($path){
             $arrayObjetos = array();
-            //$nameFile = './archivos/productos.json';
             $nameFile = $path;
             if (file_exists($nameFile)) {
                 if(filesize($nameFile) > 0){
@@ -44,8 +66,8 @@
                     $contenido = fread($archivo, filesize($nameFile));
                     $array = json_decode($contenido);
                     foreach ($array as $objeto) {
-                        $producto = new Cocinero($objeto->especialidad,$objeto->email,$objeto->clave);
-                        array_push($arrayObjetos,$producto);
+                        $cocinero = new Cocinero($objeto->especialidad,$objeto->email,$objeto->clave);
+                        array_push($arrayObjetos,$cocinero);
                     }  
                     fclose($archivo); 
                 }

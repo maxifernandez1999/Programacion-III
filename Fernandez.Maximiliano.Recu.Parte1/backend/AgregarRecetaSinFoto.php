@@ -5,8 +5,7 @@
     $tipo = isset($_POST["tipo"]) ? $_POST["tipo"] : NULL;
     $stdClass = new stdClass();
     
-    $receta = new Receta(null,
-    $nombre,$ingredientes,$tipo,null);
+    $receta = new Receta(null,$nombre,$ingredientes,$tipo,null);
     
     if ($receta->Agregar()) {
         $stdClass->exito = true;

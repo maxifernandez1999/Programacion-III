@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="frontend/ajax.js"></script>
+    <script src="frontend/Receta.js"></script>
+    <script src="frontend/Cocinero.js"></script>
+    <script src="frontend/Manejadora.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="especialidad" value="especialidad">
+    <input type="text" id="email" value="email">
+    <input type="text" id="clave" value="clave">
+    <input type="button" value="enviar" onclick="RecuperatorioPrimerParcial.objCocinero.AltaCocinero()">
+    <div id="divTabla"></div>
+    <input type="button" value="tabla" onclick="RecuperatorioPrimerParcial.objCocinero.MostrarCocinerosJSON()">
+    <input type="button" value="VerificarCocinero" onclick="RecuperatorioPrimerParcial.objCocinero.VerificarCocinero()">
+    <div id="divTabla"></div>
+    <input type="button" value="MostrarCookie" onclick="RecuperatorioPrimerParcial.objCocinero.MostrarInfoCookie()">
+    <input type="text" id="ingredientes" value="ingredientes">
+    <input type="text" id="nombre" value="nombre">
+    <input type="text" id="tipo" value="tipo">
+    <input type="button" value="AgregarRecetaSinFoto" onclick="RecuperatorioPrimerParcial.objCocinero.AgregarRecetaSinFoto()">
+    <input type="button" value="ListadoRecetas" onclick="RecuperatorioPrimerParcial.objCocinero.ListadoRecetas()">
+</body>
+</html>
