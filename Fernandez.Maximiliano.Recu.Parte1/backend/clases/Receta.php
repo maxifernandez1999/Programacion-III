@@ -47,14 +47,43 @@
         }
 
         public function Modificar(){ 
+            // $objDatos = DB_PDO::InstanciarObjetoPDO("localhost","root","","recetas_bd");
+            
+            //  // //nombre,ingredientes,tipo,path_foto
+            //  $consulta = $objDatos->RetornarConsulta("UPDATE recetas SET nombre=:nombre,ingredientes=:ingredientes,tipo=:tipo,path_foto=:foto WHERE recetas.id = :id ");
+
+            //  $consulta->bindValue(':nombre',$this->nombre);
+            //  $consulta->bindValue(':ingredientes',$this->ingredientes);
+            //  $consulta->bindValue(':tipo',$this->tipo);
+            //  $consulta->bindValue(':foto',$this->pathFoto);
+
+            //  $consulta->bindValue(':id',$this->id);
+
+            //  $consulta->execute();
+
+            //  if($consulta->rowCount()>0)
+            //  {
+            //      return true;
+            //  }else{
+            //      echo'No se pudo modificar';
+            //  }
+
+            //  return false;
             $objPDO = DB_PDO::InstanciarObjetoPDO("localhost","root","","recetas_bd");
-            $consulta = $objPDO->RetornarConsulta( "UPDATE recetas SET nombre = :nombre, ingredientes = :ingredientes, tipo = :tipo, path_foto = :path_foto WHERE id = :id");
-            $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);
-            $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
-            $consulta->bindValue(':origen', $this->ingredientes, PDO::PARAM_STR);
-            $consulta->bindValue(':precio', $this->tipo, PDO::PARAM_STR);
-            $consulta->bindValue(':path_foto', $this->pathFoto, PDO::PARAM_STR);
-            $retorno = $consulta->execute() != false ? true : false;
+            $consulta = $objPDO->RetornarConsulta('UPDATE recetas SET nombre = :nombre, ingredientes = :ingredientes, tipo = :tipo, path_foto = :path_foto WHERE recetas.id = :id');
+            
+            $consulta->bindValue(':nombre', $this->nombre /*PDO::PARAM_INT*/);
+            $consulta->bindValue(':origen', $this->ingredientes/*PDO::PARAM_INT*/);
+            $consulta->bindValue(':precio', $this->tipo/*PDO::PARAM_INT*/);
+            $consulta->bindValue(':path_foto', $this->pathFoto/*PDO::PARAM_INT*/);
+            $consulta->bindValue(':id', $this->id/*PDO::PARAM_INT*/);
+            var_dump($this->id);
+            $consulta->execute();
+            if($consulta->rowCount() > 0){
+                $retorno = true;
+            }else{
+                $retorno = false;
+            }
             return $retorno;
         }
 
@@ -71,14 +100,14 @@
             return $retorno;
         }
         public function Eliminar(){
-            $objPDO = DB_PDO::InstanciarObjetoPDO("localhost","root","","productos_db");
-            $consulta = $objPDO->RetornarConsulta( "DELETE FROM productos WHERE nombre = :nombre AND tipo = :tipo");
+            $objPDO = DB_PDO::InstanciarObjetoPDO("localhost","root","","recetas_db");
+            $consulta = $objPDO->RetornarConsulta("DELETE FROM recetas WHERE nombre=:nombre AND tipo=:tipo");
             $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
             $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
             if($consulta->execute()){
                 return true;
             }else{
-                false;
+                return false;
             }
             
         }
@@ -86,10 +115,14 @@
             $stdClass = new stdClass();
             $archivo = fopen('./archivos/recetas_borradas.txt','a');
             //$obj = json_encode($this);
-            $newLine = $this->nombre."-".$this->origen."-".$this->id."-".$this->codigoBarra."-".$this->precio."-".$this->pathFoto;
-            $retorno = fwrite($archivo,$newLine."\r\n");
-            $exito = $retorno != false ? true : false;
-            if ($exito == true) {
+            $ubicacionOriginal = "./recetas/imagenes/".$this->pathFoto;
+            $extension = pathinfo($ubicacionOriginal,PATHINFO_EXTENSION);
+            $nuevaUbicacion = $this->id.".".$this->nombre."."."borrado".date('His').$extension;
+            $nuevoPath = "./recetasBorradas/".$this->id.".".$this->nombre."."."borrado".date('His').$extension;
+            $newLine = $this->id."-".$this->nombre."-".$this->ingredientes."-".$this->tipo."-".$nuevoPath;
+            if (fwrite($archivo,$newLine."\r\n") > 0 ) {
+                copy($ubicacionOriginal,$nuevaUbicacion);
+                unlink($ubicacionOriginal);
                 $stdClass->exito = true;
                 $stdClass->mensaje = "Se pudo escribir en el archivo txt";
             }else{

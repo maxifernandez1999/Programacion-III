@@ -11,16 +11,27 @@
     //obtengo ubicacion original
     foreach ($array as $obj) {
         if($obj->id == $jsonDecode->id){
-            $ubicacion = $obj->pathFoto;
+            $objOriginal = $obj;
             break;
         }
     }
 
     $tipoArchivoNuevo = pathinfo("./recetas/imagenes/".$file["name"], PATHINFO_EXTENSION);
 
-    $ubicacionOriginal = "./recetas/imagenes/".$ubicacion;
+    
 
-    $nuevaUbicacion = "./RecetasModificadas/".$jsonDecode->nombre.'.'.$jsonDecode->tipo.'.modificado.'.date('His').'.'.$tipoArchivoNuevo;
+    $fotoName = $jsonDecode->nombre.'.'.$jsonDecode->tipo.'.'.date('His').'.'.$tipoArchivoNuevo;
+
+    $nuevaUbicacion = "./recetas/imagenes/".$jsonDecode->nombre.'.'.$jsonDecode->tipo.'.'.date('His').'.'.$tipoArchivoNuevo;
+
+
+    $tipoArchivoAntiguo = pathinfo("./recetas/imagenes/".$obj->pathFoto, PATHINFO_EXTENSION);
+
+    $ubicacionOriginal = "./recetas/imagenes/".$obj->pathFoto;
+
+    
+
+    $nuevaUbicacionModificado = "./recetasModificadas/".$obj->nombre.'.'.$obj->tipo.'.modificado.'.date('His').'.'.$tipoArchivoAntiguo;
 
     
 
@@ -38,11 +49,12 @@
     // minutos y segundos de la modificación (Ejemplo: aceite.italia.modificado.105905.jpg).
     // Se retornará un JSON que contendrá: éxito(bool) y mensaje(string) indicando lo acontecido.
 
-    $obj = new Receta($jsonDecode->id,$jsonDecode->nombre,$jsonDecode->ingredientes,$jsonDecode->tipo,$jsonDecode->pathFoto);
-    $exito = $obj->Modificar() == true ? true : false;
-    if ($exito == true) {
-        copy($ubicacionOriginal,$nuevaUbicacion);
+    $obj = new Receta($jsonDecode->id,$jsonDecode->nombre,$jsonDecode->ingredientes,$jsonDecode->tipo,$fotoName);
+    //$exito =  == true ? true : false;
+    if ($obj->Modificar()){
+        copy($ubicacionOriginal,$nuevaUbicacionModificado);
         unlink($ubicacionOriginal);
+        move_uploaded_file($file["tmp_name"], $nuevaUbicacion);
         $stdClass->exito = true;
         $stdClass->mensaje = "Se ha modificado el producto de la BD";
     }else{
