@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="javascript/funcionesLogin.js"></script>
+</head>
+<body>
+    <table class="table table-striped table-hover text-center">
+        <thead>
+            <h2>Listado de Empleados</h2>
+            <h4>Info</h4>
+        </thead>
+        <tr>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>DNI</th>
+            <th>SEXO</th>
+            <th>LEGAJO</th>
+            <th>SUELDO</th>
+            <th>TURNO</th>
+            <th>PATHFOTO</th>
+            <th>FOTO</th>
+            <th>ACCIONES</th>
+        </tr> 
+        <tr>
+            <td class="align-text-middle">NOMBRE</td>
+            <td>APELLIDO</td>
+            <td>DNI</td>
+            <td>'.$obj->sexo.'</td>
+            <td>'.$obj->legajo.'</td>
+            <td>'.$obj->sueldo.'</td>
+            <td>'.$obj->turno.'</td>
+            <td>'.$obj->pathfoto.'</td>
+            <td><img src="../fotos/1000027_Pratto.jpg" class="img-fluid rounded-circle" title="mensaje redondo" width="70px" height="70px"></td>
+            <td><!---->
+                <div class="d-grid gap-1 col-12 mx-auto">
+                <button class="btn btn-primary" type="button" onclick="Main.EliminarEmpleado('.$obj->legajo.','.$obj->id.')">Eliminar</button>
+                <button class="btn btn-primary" type="button" onclick="Main.ModificarEmpleado('.$obj->dni.')">Modificar</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

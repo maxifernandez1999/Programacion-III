@@ -16,7 +16,7 @@ var PrimerParcial;
             var origen = document.getElementById("cboOrigen").value;
             var ajax = new Ajax();
             var param = "nombre=" + nombre + "&origen=" + origen;
-            ajax.Post("./backend/AltaProducto.php", this.Success, param, this.Fail);
+            ajax.Post("./backend/AltaProductoJSON.php", this.Success, param, this.Fail);
         };
         //         MostrarProductosJSON. Recuperará (por AJAX) todos los productos del archivo productos.json y generará un
         // listado dinámico, crear una tabla HTML con cabecera (en el FRONTEND) que mostrará toda la información de
@@ -28,10 +28,11 @@ var PrimerParcial;
             var json = "";
             ajax.Get("./backend/ListadoProductosJSON.php", function (mensaje) {
                 var arrayProductosJSON = JSON.parse(mensaje);
-                for (var index = 0; index <= arrayProductosJSON.length; index++) {
+                for (var index = 0; index < arrayProductosJSON.length; index++) {
                     json += "<tr><td>" + arrayProductosJSON[index].nombre + "</td><td>" + arrayProductosJSON[index].origen + "</td></tr>";
                 }
                 document.getElementById("divTabla").innerHTML = "<table align=center><tr><th>NOMBRE</th><th>ORIGEN</th><th>ID</th><th>CODIGO</th><th>PATHFOTO</th><th>PRECIO</th></tr>" + json + "</table>";
+                console.log("hola");
             }, "", Manejadora.Fail);
         };
         //         AgregarProductoSinFoto. Obtiene el código de barra, el nombre, el origen y el precio desde la página
@@ -45,7 +46,7 @@ var PrimerParcial;
             var codigoBarra = document.getElementById("codigoBarra").value;
             var precio = document.getElementById("precio").value;
             var ajax = new Ajax();
-            var param = "producto_json={\"nombre\":" + nombre + ",\"codigoBarra\":" + codigoBarra + ",\"origen\":" + origen + ",\"precio\":" + precio + "}";
+            var param = "producto_json={\"nombre\":\"" + nombre + "\",\"codigoBarra\":\"" + codigoBarra + "\",\"origen\":\"" + origen + "\",\"precio\":" + precio + "}";
             ajax.Post("./backend/AgregarProductoSinFoto.php", this.Success, param, this.Fail);
         };
         //         VerificarProductoJSON. Se invocará (por AJAX) a “./BACKEND/VerificarProductoJSON.php”. Se recibe por POST el
@@ -58,9 +59,8 @@ var PrimerParcial;
         Manejadora.VerificarProductoJSON = function () {
             var nombre = document.getElementById("nombre").value;
             var origen = document.getElementById("cboOrigen").value;
-            //var id_perfil:string = (<HTMLInputElement>document.getElementById("cboPerfiles")).value;
             var ajax = new Ajax();
-            var params = "nombre=" + nombre + "\"&origen\"=" + origen;
+            var params = "nombre=" + nombre + "&origen=" + origen;
             ajax.Post("./backend/VerificarProductoJSON.php", this.Success, params, this.Fail);
         };
         //         MostrarProductosEnvasados. Recuperará (por AJAX) todas los productos envasados de la base de datos,
@@ -78,7 +78,7 @@ var PrimerParcial;
                 for (var index = 0; index < arrayProductosJSON.length; index++) {
                     json += "<tr><td>" + arrayProductosJSON[index].nombre + "</td><td>" + arrayProductosJSON[index].origen + "</td><td>" + arrayProductosJSON[index].id + "</td><td>" + arrayProductosJSON[index].codigoBarra + "</td><td>" + arrayProductosJSON[index].pathFoto + "</td><td>" + arrayProductosJSON[index].precio + "</td></tr>";
                 }
-                document.getElementById("divTabla").innerHTML = "<table align=center><tr><th>ID</th><th>NOMBRE</th><th>CORREO</th><th>CLAVE</th><th>ID_PERFIL</th><th>PERFIL</th></tr>" + json + "</table>";
+                document.getElementById("divTabla").innerHTML = "<table align=center><tr><th>NOMBRE</th><th>ORIGEN</th><th>ID</th><th>CODIGOBARRA</th><th>PATHFOTO</th><th>PRECIO</th></tr>" + json + "</table>";
             }, "tabla=" + json, this.Fail);
         };
         //         MostrarInfoCookie. Se realizará una petición (por AJAX) a “./BACKEND/MostrarCookie.php” que recibe por GET
@@ -94,7 +94,7 @@ var PrimerParcial;
                 var men = JSON.parse(mensaje);
                 document.getElementById("divInfo").innerHTML = men.mensaje;
                 console.log(men.mensaje);
-            }, "\"nombre\"=" + nombre + "&\"origen=" + origen + "\"", this.Fail);
+            }, "nombre=" + nombre + "&origen=" + origen, this.Fail);
         };
         Manejadora.Success = function (mensaje) {
             console.log(mensaje);
@@ -105,6 +105,10 @@ var PrimerParcial;
             console.log("ERROR!!!");
             console.log(retorno);
             alert(retorno);
+        };
+        Manejadora.prototype.EliminarProducto = function (jsonEliminar) {
+        };
+        Manejadora.prototype.ModificarProducto = function () {
         };
         return Manejadora;
     }());

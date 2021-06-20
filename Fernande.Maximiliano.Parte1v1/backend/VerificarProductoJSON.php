@@ -11,13 +11,6 @@
         $objjson->exito;
         $objjson->mensaje;
     }
-    // $stdClass = new stdClass();
-    // if($obj != false){
-    //     $stdClass->exito = true;
-    //     $stdClass->mensaje = "Se ha encontrado el usuario";
-    // }else{
-    //     $stdClass->exito = false;
-    //     $stdClass->mensaje = "No se ha encontrado el usuario";
-    // }
+    
     echo json_encode($objjson);
 ?>

@@ -2,7 +2,7 @@
 
 namespace PrimerParcial{
     //var ajax : Ajax = new Ajax();
-    export class Manejadora{ 
+    export class Manejadora implements IParte2{ 
         
 //         AgregarProductoJSON. Obtiene el nombre y el origen desde la página producto.html y se enviará (por AJAX)
 // hacia “./BACKEND/AltaProductoJSON.php” que invoca al método GuardarJSON pasándole
@@ -14,7 +14,7 @@ namespace PrimerParcial{
             var origen:string = (<HTMLInputElement>document.getElementById("cboOrigen")).value;
             var ajax : Ajax = new Ajax();
             var param:string = `nombre=${nombre}&origen=${origen}`;
-            ajax.Post("./backend/AltaProducto.php",this.Success,param,this.Fail);
+            ajax.Post("./backend/AltaProductoJSON.php",this.Success,param,this.Fail);
 
         }
 //         MostrarProductosJSON. Recuperará (por AJAX) todos los productos del archivo productos.json y generará un
@@ -28,11 +28,13 @@ namespace PrimerParcial{
             ajax.Get("./backend/ListadoProductosJSON.php",
             (mensaje:string) => {
                 var arrayProductosJSON:any = JSON.parse(mensaje);
-                for (let index = 0; index <= arrayProductosJSON.length; index++) {
+                for (let index = 0; index < arrayProductosJSON.length; index++) {
                     json += "<tr><td>"+arrayProductosJSON[index].nombre+"</td><td>"+arrayProductosJSON[index].origen+"</td></tr>";
                     
                 }
                 (<HTMLDivElement>document.getElementById("divTabla")).innerHTML = "<table align=center><tr><th>NOMBRE</th><th>ORIGEN</th><th>ID</th><th>CODIGO</th><th>PATHFOTO</th><th>PRECIO</th></tr>"+json+"</table>";
+                console.log("hola");
+                
 
             },"",Manejadora.Fail);
         }
@@ -47,7 +49,7 @@ namespace PrimerParcial{
             var codigoBarra:string = (<HTMLInputElement>document.getElementById("codigoBarra")).value;
             var precio:string = (<HTMLInputElement>document.getElementById("precio")).value;
             let ajax : Ajax = new Ajax();
-            var param:string = `producto_json={"nombre":${nombre},"codigoBarra":${codigoBarra},"origen":${origen},"precio":${precio}}`;
+            var param:string = `producto_json={"nombre":"${nombre}","codigoBarra":"${codigoBarra}","origen":"${origen}","precio":${precio}}`;
             ajax.Post("./backend/AgregarProductoSinFoto.php",this.Success,param,this.Fail);
         }
 //         VerificarProductoJSON. Se invocará (por AJAX) a “./BACKEND/VerificarProductoJSON.php”. Se recibe por POST el
@@ -61,9 +63,9 @@ namespace PrimerParcial{
         public static VerificarProductoJSON(){
             var nombre:string = (<HTMLInputElement>document.getElementById("nombre")).value;
             var origen:string = (<HTMLInputElement>document.getElementById("cboOrigen")).value;
-            //var id_perfil:string = (<HTMLInputElement>document.getElementById("cboPerfiles")).value;
+            
             let ajax : Ajax = new Ajax();
-            var params:string = `nombre=${nombre}"&origen"=${origen}`;
+            var params:string = `nombre=${nombre}&origen=${origen}`;
             ajax.Post("./backend/VerificarProductoJSON.php",this.Success,params,this.Fail);
         }
 //         MostrarProductosEnvasados. Recuperará (por AJAX) todas los productos envasados de la base de datos,
@@ -82,7 +84,7 @@ namespace PrimerParcial{
                     json += `<tr><td>${arrayProductosJSON[index].nombre}</td><td>${arrayProductosJSON[index].origen}</td><td>${arrayProductosJSON[index].id}</td><td>${arrayProductosJSON[index].codigoBarra}</td><td>${arrayProductosJSON[index].pathFoto}</td><td>${arrayProductosJSON[index].precio}</td></tr>`;
                     
                 }
-                (<HTMLDivElement>document.getElementById("divTabla")).innerHTML = "<table align=center><tr><th>ID</th><th>NOMBRE</th><th>CORREO</th><th>CLAVE</th><th>ID_PERFIL</th><th>PERFIL</th></tr>"+json+"</table>";
+                (<HTMLDivElement>document.getElementById("divTabla")).innerHTML = "<table align=center><tr><th>NOMBRE</th><th>ORIGEN</th><th>ID</th><th>CODIGOBARRA</th><th>PATHFOTO</th><th>PRECIO</th></tr>"+json+"</table>";
 
             },`tabla=${json}`,this.Fail);
         }
@@ -103,7 +105,8 @@ namespace PrimerParcial{
                 (<HTMLDivElement>document.getElementById("divInfo")).innerHTML = men.mensaje;
                 console.log(men.mensaje);
 
-            },`"nombre"=${nombre}&"origen=${origen}"`,this.Fail);
+            },`nombre=${nombre}&origen=${origen}`,this.Fail);
+        
         }
 
 
@@ -118,6 +121,14 @@ namespace PrimerParcial{
             console.log(retorno);
             alert(retorno);
         }
+
+        public EliminarProducto(jsonEliminar:any){
+
+        }
+        
+        public ModificarProducto(){
+
+        }    
     }
 
 }

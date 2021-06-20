@@ -28,7 +28,7 @@ var Ajax = /** @class */ (function () {
             var parametros = params.length > 0 ? params : "";
             _this._xhr.open('POST', ruta, true);
             var form = new FormData();
-            archivo != null ? form.append('archivo', archivo.files[0]) : null;
+            //archivo != null ? form.append('archivo', archivo.files[0]);
             var array = parametros.split("&");
             for (var index = 0; index < array.length; index++) {
                 var newArray = array[index].split("=");

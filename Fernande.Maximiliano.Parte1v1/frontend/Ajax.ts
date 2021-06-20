@@ -43,7 +43,7 @@ class Ajax {
         this._xhr.open('POST', ruta, true);
         let form : FormData = new FormData();
 
-        archivo != null ? form.append('archivo', archivo.files[0]): null;
+        //archivo != null ? form.append('archivo', archivo.files[0]);
         
         var array:string[] = parametros.split("&");
         for (let index = 0; index < array.length; index++) {
