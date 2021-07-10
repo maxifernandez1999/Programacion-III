@@ -122,6 +122,107 @@ require_once "Autentificadora.php";
             $newResponse->getBody()->write(json_encode($datos));
             return $newResponse->withHeader('Content-Type', 'application/json');
         }
+
+        function ValidarParametrosCDAgregar(Request $request, RequestHandler $handler) : ResponseMW {
+            $datos = new stdClass();
+            $datos->status = 200;
+            $datos->mensaje = "";
+
+            if(!isset($request->getParsedBody()['titulo'])){
+                $datos->mensaje = "No existe titulo";
+                $datos->status = 403;
+            }else{
+                $response = $handler->handle($request);
+                $contenidoAPI = (string) $response->getBody();
+                $datos->mensaje = $contenidoAPI;
+            }
+
+            if(!isset($request->getParsedBody()['cantante'])){
+                $datos->mensaje = "No existe cantante";
+                $datos->status = 403;
+            }else{
+                $response = $handler->handle($request);
+                $contenidoAPI = (string) $response->getBody();
+                $datos->mensaje = $contenidoAPI;
+            }
+
+            if(!isset($request->getParsedBody()['anio'])){
+                $datos->mensaje = "No existe anio";
+                $datos->status = 403;
+            }else{
+                $response = $handler->handle($request);
+                $contenidoAPI = (string) $response->getBody();
+                $datos->mensaje = $contenidoAPI;
+            }
+
+            $newResponse = new ResponseMW();
+            $newResponse->getBody()->write(json_encode($datos));
+            return $newResponse->withHeader('Content-Type', 'application/json');
+        }
+
+
+        function ValidarParametrosCDModificar(Request $request, RequestHandler $handler) : ResponseMW {
+            $datos = new stdClass();
+            $datos->status = 200;
+            $datos->mensaje = "";
+            $objJSON = $request->getParsedBody()['obj_json'];
+
+            if(!isset($objJSON)){
+                $datos->mensaje = "No existe obj_json";
+                $datos->status = 500;
+            }else{
+                if(!isset($objJSON->cantante)){
+                    $datos->mensaje = "No existe cantante";
+                    $datos->status = 500;
+                }else{
+                    $response = $handler->handle($request);
+                    $contenidoAPI = (string) $response->getBody();
+                    $datos->mensaje = $contenidoAPI;
+                }
+    
+                if(!isset($objJSON->anio)){
+                    $datos->mensaje = "No existe anio";
+                    $datos->status = 500;
+                }else{
+                    $response = $handler->handle($request);
+                    $contenidoAPI = (string) $response->getBody();
+                    $datos->mensaje = $contenidoAPI;
+                }
+
+                if(!isset($objJSON->titulo)){
+                    $datos->mensaje = "No existe titulo";
+                    $datos->status = 500;
+                }else{
+                    $response = $handler->handle($request);
+                    $contenidoAPI = (string) $response->getBody();
+                    $datos->mensaje = $contenidoAPI;
+                }
+            }
+
+            $newResponse = new ResponseMW();
+            $newResponse->getBody()->write(json_encode($datos));
+            return $newResponse->withHeader('Content-Type', 'application/json');
+        }
+
+        function ValidarParametrosCDEliminar(Request $request, RequestHandler $handler) : ResponseMW {
+            $datos = new stdClass();
+            $datos->status = 200;
+            $datos->mensaje = "";
+            if(!isset($request->getParsedBody()['id'])){
+                $datos->mensaje = "No existe titulo";
+                $datos->status = 500;
+            }else{
+                $response = $handler->handle($request);
+                $contenidoAPI = (string) $response->getBody();
+                $datos->mensaje = $contenidoAPI;
+            }
+
+            $newResponse = new ResponseMW();
+            $newResponse->getBody()->write(json_encode($datos));
+            return $newResponse->withHeader('Content-Type', 'application/json');
+        }
+
+
         
     }
 

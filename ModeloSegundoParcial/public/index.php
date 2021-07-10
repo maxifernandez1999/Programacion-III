@@ -16,12 +16,12 @@ $app->post('/login[/]',Verificadora::class . ':VerificarUsuario')->add(Verificad
 $app->get("/login/test" ,Verificadora::class . ':ObtenerDataJWT')->add(Verificadora::class . ':ChequearJWT');
 
 $app->group('/json_bd',function (RouteCollectorProxy $grupo){
-    $grupo->get('/', \cd::class . ':TrearTodos');
-    $grupo->get('/', \cd::class . ':TraerUno');
-    $grupo->post('/', \cd::class . ':Agregar');
-    $grupo->put('/', \cd::class . ':Modificar');
-    $grupo->delete('/', \cd::class . ':Eliminar');
-});
+    $grupo->get('/', \cd::class . ':TraerTodos');
+    $grupo->get('/{id}', \cd::class . ':TraerUno');
+    $grupo->post('/', \cd::class . ':Agregar')->add(Verificadora::class . ':ValidarParametrosCDAgregar');
+    $grupo->put('/{obj_json}', \cd::class . ':Modificar')->add(Verificadora::class . ':ValidarParametrosCDModificar');
+    $grupo->delete('/{id}', \cd::class . ':Eliminar')->add(Verificadora::class . ':ValidarParametrosCDBorrar');
+})->add(Verificadora::class . ':ChequearJWT');
 
 $app->run();
 

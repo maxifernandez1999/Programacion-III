@@ -21,6 +21,10 @@ class DB_PDO
         return $this->_objetoPDO->prepare($sql);
     }
  
+    public function RetornarUltimoIdInsertado()
+    { 
+        return $this->_objetoPDO->lastInsertId(); 
+    }
     //SINGLETON
     public static function InstanciarObjetoPDO($host,$user,$pass,$dataBase)
     {

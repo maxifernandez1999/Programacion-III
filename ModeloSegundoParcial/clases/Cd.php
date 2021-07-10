@@ -2,15 +2,18 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-require_once "AccesoDatos.php";
+require_once "DB_PDO.php";
 
 
 class Cd
 {
+	public $correo;
+	public $clave;
+	public $id;
 	public $titulo;
-	public $origen;
-    public $fechaLanzamiento;
-    public $id;
+	public $cantante;
+    public $anio;
+    
 
 //*********************************************************************************************//
 /* IMPLEMENTO LAS FUNCIONES PARA SLIM */
@@ -40,11 +43,11 @@ class Cd
 	public function Agregar(Request $request, Response $response, array $args): Response 
 	{
         $arrayParams = $request->getParsedBody();
-
-		$id = $arrayParams['id'];
-        $origen = $arrayParams['origen'];
+		$correo = $arrayParams['correo'];
+		$clave = $arrayParams['clave'];
+        $cantante = $arrayParams['cantante'];
         $titulo = $arrayParams['titulo'];
-		$fechaLanzamiento = $arrayParams['fechaLanzamiento'];
+		$anio = $arrayParams['anio'];
         
 
 //*********************************************************************************************//
@@ -61,10 +64,11 @@ class Cd
 		// $finalyFile = $apellido . "." . $extension[0];
 		// $file['foto']->moveTo($destiny . $finalyFile);
 		$cd = new Cd();
-		$cd->id = $id;
-		$cd->origen = $origen;
+		$cd->correo = $correo;
+		$cd->clave = $clave;
+		$cd->cantante = $cantante;
 		$cd->titulo = $titulo;
-		$cd->fechaLanzamiento = $fechaLanzamiento;
+		$cd->anio = $anio;
 		$stdclass = new stdClass();
         $stdclass->id_agregado = $cd->AgregarDB();
 		$stdclass->mensaje = "Usuario '$stdclass->id_agregado' agregado";
@@ -75,13 +79,15 @@ class Cd
 	
 	public function Modificar(Request $request, Response $response, array $args): Response
 	{
-		$obj = json_decode(($args["cadenaJson"]));   
-
+		$obj = $args['obj_json']; 
+		$json = json_decode($obj);
 	    $cd = new Cd();
-		$cd->id = $obj->id;
-	    $cd->titulo = $obj->titulo;
-	    $cd->origen = $obj->origen;
-	    $cd->fechaLanzamiento = $obj->fechaLanzamiento;
+		$cd->id = $json->id;
+	    $cd->titulo = $json->titulo;
+	    $cd->anio = $json->anio;
+	    $cd->correo = $json->correo;
+		$cd->clave = $json->clave;
+		$cd->cantante = $json->cantante;
 		$result = $cd->ModificarDB(); 
 	   	$objResponse = new stdclass();
 		$objResponse->mensaje = $result;
@@ -89,16 +95,16 @@ class Cd
 		$newResponse = $response->withStatus(200, "OK");
 		$newResponse->getBody()->write(json_encode($objResponse));
 
-		return $newResponse->withHeader('Content-Type', 'application/json');		
+		return $newResponse->withHeader('Content-Type', 'application/json'); 		
 	}
 	
 	public function Eliminar(Request $request, Response $response, array $args): Response 
 	{		 
-     	$id = $args['id'];
+		$idEliminar = $args['id']; 
 		 
-		$User = new Cd();
-		$User->id = $id;
-     	$countDelete = $User->EliminarDB();
+		$cd = new Cd();
+		$cd->id = $idEliminar;
+     	$countDelete = $cd->EliminarDB();
      	$objResponse = new stdclass();
 		$objResponse->cantidad = $countDelete;
 		
@@ -124,30 +130,29 @@ class Cd
 	public static function TraerTodosDB()
 	{
 		$objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","databaseUsuarios"); 
-		$consulta =$objetoAccesoDato->RetornarConsulta('SELECT usuarios.id, usuarios.nombre, usuarios.apellido, usuarios.correo, usuarios.clave, usuarios.foto, usuarios.idPerfil FROM usuarios');
+		$consulta =$objetoAccesoDato->RetornarConsulta('SELECT * FROM usuarios');
 		$consulta->execute();			
-		return $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");		
+		return $consulta->fetchAll(PDO::FETCH_CLASS, "Cd");		
 	}
 
 	public static function TraerUnoDB($id) 
 	{
 		$objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","databaseUsuarios"); 
-		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT usuarios.id, usuarios.nombre, usuarios.apellido, usuarios.correo, usuarios.clave, usuarios.foto, usuarios.idPerfil FROM usuarios WHERE id = $id");
+		$consulta =$objetoAccesoDato->RetornarConsulta("SELECT * FROM usuarios WHERE id = $id");
 		$consulta->execute();
-		$buscado = $consulta->fetchObject('Usuario');
+		$buscado = $consulta->fetchObject('Cd');
 		return $buscado;		
 	}
 
 	public function AgregarDB()
 	{
 		$objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","databaseUsuarios"); 
-		$consulta = $objetoAccesoDato->RetornarConsulta('INSERT INTO usuarios (nombre,apellido,correo,clave,foto,idPerfil) VALUES (:nombre,:apellido,:correo,:clave,:foto,:idPerfil)');
-		$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
-		$consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
-		$consulta->bindValue(':correo', $this->correo, PDO::PARAM_STR);
+		$consulta = $objetoAccesoDato->RetornarConsulta('INSERT INTO usuarios (correo,clave,titulo,cantante,anio) VALUES (:correo,:clave,:titulo,:cantante,:anio)');
+		$consulta->bindValue(':correo',$this->correo, PDO::PARAM_STR);
 		$consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
-		$consulta->bindValue(':foto', $this->foto, PDO::PARAM_STR);
-		$consulta->bindValue(':idPerfil', $this->idPerfil, PDO::PARAM_INT);
+		$consulta->bindValue(':titulo', $this->titulo, PDO::PARAM_STR);
+		$consulta->bindValue(':cantante', $this->cantante, PDO::PARAM_STR);
+		$consulta->bindValue(':anio', $this->anio, PDO::PARAM_INT);
 		$consulta->execute();		
 		return $objetoAccesoDato->RetornarUltimoIdInsertado();//???
 	}
@@ -155,14 +160,14 @@ class Cd
 	public function ModificarDB()
 	{
 		$objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","databaseUsuarios"); 
-		$consulta =$objetoAccesoDato->RetornarConsulta('UPDATE usuarios SET nombre = :nombre, apellido = :apellido, correo = :correo, clave = :clave, foto = :foto, idPerfil = :idPerfil WHERE id = :id');
+		$consulta =$objetoAccesoDato->RetornarConsulta('UPDATE usuarios SET clave = :clave, correo = :correo, titulo = :titulo, cantante = :cantante, anio = :anio WHERE id = :id');
 		$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);
-		$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
-		$consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
+		$consulta->bindValue(':clave',$this->clave, PDO::PARAM_STR);
 		$consulta->bindValue(':correo', $this->correo, PDO::PARAM_STR);
-		$consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
-		$consulta->bindValue(':foto', $this->foto, PDO::PARAM_STR);
-		$consulta->bindValue(':idPerfil', $this->idPerfil, PDO::PARAM_INT);
+		$consulta->bindValue(':titulo', $this->titulo, PDO::PARAM_STR);
+		$consulta->bindValue(':cantante', $this->cantante, PDO::PARAM_STR);
+		$consulta->bindValue(':anio', $this->anio, PDO::PARAM_INT);
+
 		return $consulta->execute();
 	 }
 
