@@ -10,18 +10,20 @@ require __DIR__ . '/../src/poo/MW.php';
 $app = AppFactory::create();
 
 
-$app->post('/usuarios',Usuario::class . ':AgregarUsuario');/* ->add(Verificadora::class . ':ValidarParametrosUsuario'); */
+$app->post('/usuarios',Usuario::class . ':AgregarUsuario')->add(MW::class . ':VerificarCorreo')->add(MW::class . '::VerificaVacio')->add(MW::class . ':ValidarParametrosUsuario');/* ->add(Verificadora::class . ':ValidarParametrosUsuario'); */
 // $app->post('/login[/]',Verificadora::class . ':VerificarUsuario')->add(Verificadora::class . ':ValidarParametrosUsuario');
 
  $app->get("/" ,Usuario::class . ':TraerTodos');
 
- $app->post("/" ,Auto::class . ':AgregarAuto');
+ $app->post("/" ,Auto::class . ':AgregarAuto')->add(MW::class . ':VerificarPrecioyColor');
 
  $app->get("/autos" ,Auto::class . ':TraerTodos');
 
- $app->post("/login" ,Auto::class . ':CrearJWT')->add(MW::class . ':VerificarBD')->add(MW::class . ':VerificaVacio')->add(MW::class . ':ValidarParametrosUsuario');
+ $app->post("/login" ,Usuario::class . ':CrearJWT')->add(MW::class . ':VerificarBD')->add(MW::class . '::VerificaVacio')->add(MW::class . ':ValidarParametrosUsuario');
 
- $app->get("/login" ,Auto::class . ':ObtenerPayLoad');
+ $app->get("/login" ,Usuario::class . ':ObtenerPayLoad');
+
+ $app->delete("/" ,Auto::class . ':EliminarAuto');
  
  
 // $app->group('/json_bd',function (RouteCollectorProxy $grupo){

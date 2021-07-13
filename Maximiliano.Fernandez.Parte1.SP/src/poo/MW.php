@@ -5,7 +5,6 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Psr7\Response as ResponseMW;
 
 require_once "DB_PDO.php";
-require_once "Usuario.php";
     class MW{
         public function ValidarParametrosUsuario(Request $request, RequestHandler $handler) : ResponseMW{
             
@@ -35,12 +34,6 @@ require_once "Usuario.php";
                 }
                     $response = $handler->handle($request);
                     return $response;
-                    // $contenidoAPI = (string) $response->getBody();
-                    // $stdClass->mensaje = $contenidoAPI;
-                    // $stdClass->status = 200;
-                    // $newResponse = $response->withStatus(200);
-                    // $newResponse->getBody()->write(json_encode($contenidoAPI));
-                    // return $newResponse->withHeader('Content-Type', 'application/json');
                 
             }else{
                 $stdClass->mensaje = "no existe el JSON";  
@@ -49,11 +42,9 @@ require_once "Usuario.php";
                 return $response->withHeader('Content-Type', 'application/json');
             }
             
-            
-            // return $newResponse->withHeader('Content-Type', 'application/json');
         }
 
-        public function VerificaVacio(Request $request, RequestHandler $handler) : ResponseMW{
+        public static function VerificaVacio(Request $request, RequestHandler $handler) : ResponseMW{
             $stdClass = new stdClass();
             $datosJSON = $request->getParsedBody()['user'];
             $response = new ResponseMW();
@@ -79,12 +70,7 @@ require_once "Usuario.php";
                 }
                     $response = $handler->handle($request);
                     return $response;
-                    // $contenidoAPI = (string) $response->getBody();
-                    // $stdClass->mensaje = $contenidoAPI;
-                    // $stdClass->status = 200;
-                    // $newResponse = $response->withStatus(200);
-                    // $newResponse->getBody()->write(json_encode($stdClass));
-                    // return $newResponse->withHeader('Content-Type', 'application/json');
+                    
                 
             }else{
                 $stdClass->mensaje = "no existe el obj_json";  
@@ -95,29 +81,29 @@ require_once "Usuario.php";
 
         }
 
-        	public function VerificarBD(Request $request,RequestHandler $handler) : ResponseMW
-            {
-                $stdClass = new stdClass();
-                $newResponse = new ResponseMW();
-                $datosJSON = json_decode($request->getParsedBody()['user']);
-                $User = self::TraerUnoDB($datosJSON);
-                if($User != null){
-                    $response = $handler->handle($request);
-                    return $response;
-                    // $stdClass->mensaje = "Datos Correctos";
-                    // $stdClass->status = 200;
-                    // $newResponse->getBody()->write(json_encode($stdClass));
-                    // return $newResponse->withHeader('Content-Type', 'application/json');
-                }else{
-                    $stdClass->mensaje = "No existe la clave y el correo en la Base de Datos";
-                    $stdClass->status = 403;
-                    $newResponse->getBody()->write(json_encode($stdClass));
-                    return $newResponse->withHeader('Content-Type', 'application/json');
-                }
-
+        public function VerificarBD(Request $request,RequestHandler $handler) : ResponseMW
+        {
+            $stdClass = new stdClass();
+            $newResponse = new ResponseMW();
+            $datosJSON = json_decode($request->getParsedBody()['user']);
+            $User = self::TraerCorreoyClave($datosJSON);
+            if($User != null){
+                $response = $handler->handle($request);
+                return $response;
+                // $stdClass->mensaje = "Datos Correctos";
+                // $stdClass->status = 200;
+                // $newResponse->getBody()->write(json_encode($stdClass));
+                // return $newResponse->withHeader('Content-Type', 'application/json');
+            }else{
+                $stdClass->mensaje = "No existe la clave y el correo en la Base de Datos";
+                $stdClass->status = 403;
+                $newResponse->getBody()->write(json_encode($stdClass));
+                return $newResponse->withHeader('Content-Type', 'application/json');
             }
 
-    	public static function TraerUnoDB($datosJSON) 
+        }
+
+    	public static function TraerCorreoyClave($datosJSON) 
         {
             $correo = $datosJSON->correo;
             $clave = $datosJSON->clave;
@@ -128,6 +114,69 @@ require_once "Usuario.php";
             $consulta->execute();
             $buscado = $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
             return $buscado;		
+        }
+
+        public static function VerificarCorreo(Request $request,RequestHandler $handler) : ResponseMW
+        {
+            $stdClass = new stdClass();
+            $newResponse = new ResponseMW();
+            $datosJSON = json_decode($request->getParsedBody()['user']);
+            $User = self::TraerCorreo($datosJSON);
+            if($User != null){
+
+                $stdClass->mensaje = "El correo ya existe en la base de datos";
+                $stdClass->status = 409;
+                $newResponse->getBody()->write(json_encode($stdClass));
+                return $newResponse->withHeader('Content-Type', 'application/json');
+            }else{
+                $response = $handler->handle($request);
+                return $response;
+            }
+
+        }
+        public static function TraerCorreo($datosJSON) 
+        {
+            $correo = $datosJSON->correo;
+            $objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","concesionaria_bd"); 
+            $consulta =$objetoAccesoDato->RetornarConsulta("SELECT usuarios.correo,usuarios.clave,usuarios.nombre,usuarios.apellido,usuarios.perfil,usuarios.foto FROM usuarios WHERE usuarios.correo=:correo");
+            $consulta->bindValue(':correo',$correo, PDO::PARAM_STR);
+            $consulta->execute();
+            $buscado = $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");
+            return $buscado;		
+        }
+
+        public function VerificarPrecioyColor(Request $request,RequestHandler $handler) : ResponseMW
+        {
+            $stdClass = new stdClass();
+            $newResponse = new ResponseMW();
+            $datosJSON = json_decode($request->getParsedBody()['auto']);
+            if($datosJSON->color != "amarillo" && ($datosJSON->precio < 50000 || $datosJSON->precio > 600000)){
+                $stdClass->mensaje = "Color y rango de precio incorrecto";
+                $stdClass->status = 409;
+                $newResponse->getBody()->write(json_encode($stdClass));
+                return $newResponse->withHeader('Content-Type', 'application/json');
+                
+            }
+            if($datosJSON->color != "amarillo"){
+                $stdClass->mensaje = "Color incorrecto";
+                $stdClass->status = 409;
+                $newResponse->getBody()->write(json_encode($stdClass));
+                return $newResponse->withHeader('Content-Type', 'application/json');
+                
+            }
+            if(($datosJSON->precio < 50000 || $datosJSON->precio > 600000)){
+                $stdClass->mensaje = "Rango de precio incorrecto";
+                $stdClass->status = 409;
+                $newResponse->getBody()->write(json_encode($stdClass));
+                return $newResponse->withHeader('Content-Type', 'application/json');
+                
+            }
+            
+          
+            $response = $handler->handle($request);
+            return $response;
+            
+
         }
     }
 
