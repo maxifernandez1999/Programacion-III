@@ -90,9 +90,9 @@ class Auto
 	}
 	//////////////
 	public function EliminarAuto(Request $request, Response $response, array $args){
-		$idAuto = json_decode($request->getParsedBody());
+		$idAuto = json_decode($request->getBody())->id_auto;
 		$token = $request->getHeader("token")[0];
-
+		$datos = new stdClass();
 		try {
 
 			$payload = JWT::decode(
@@ -100,39 +100,44 @@ class Auto
 									self::$secret_key,
 									self::$encrypt
 								);
-			if($payload != null){
-				$datos->mensaje = "JWT correcto";
-				$datos->status = 200;
-				$newResponse = $response->withStatus(200);
-				$newResponse->getBody()->write(json_encode($datos));
-				return $newResponse->withHeader('Content-Type', 'application/json');
+			if($idAuto != null){
+				$datosAuto = $payload->data;
+				if($datosAuto[0]->perfil == "propietario"){
+					self::Eliminar($idAuto);
+					$datos->exito = true;
+					$datos->mensaje = "Auto Eliminado";
+					$datos->status = 200;
+				}else{
+					$datos->exito = false;
+					$datos->mensaje = $datosAuto[0]->nombre." No pudo eliminar el auto porque no es propietario";
+					$datos->status = 418;
+				}
+				
+				$response->getBody()->write(json_encode($datos));
+				return $response->withHeader('Content-Type', 'application/json');
+			}else{
+				$response->getBody()->write(json_encode($datos));
+				return $response->withHeader('Content-Type', 'application/json');
 			}
 		}catch (Exception $e) { 
 
-			$datos->mensaje = null;
-			$datos->status = 403;
-			$newResponse = $response->withStatus(403);
-			$newResponse->getBody()->write(json_encode($datos));
+			$datos->mensaje = $e->getMessage();
+			$datos->status = 418;
+			$datos->exito = false;
+			$response->getBody()->write(json_encode($datos));
 		
-			return $newResponse->withHeader('Content-Type', 'application/json');
+			return $response->withHeader('Content-Type', 'application/json');
 		}
-		$stdclass =new stdClass();
-		if(Auto::AgregarDB($objJSON) != null){
+		
+	}
 
-			$stdclass->exito = true;
-			$stdclass->mensaje = "Auto Agregado";
-			$stdclass->exito = 200;
-			$newResponse = $response->withStatus(200);
-			$newResponse->getBody()->write(json_encode($stdclass));
-		}else{
-			$stdclass->exito = false;
-			$stdclass->mensaje = "Error Agregado";
-			$stdclass->exito = 418;
-			$newResponse = $response->withStatus(418);
-			$newResponse->getBody()->write(json_encode($stdclass));
-		}
+	public static function Eliminar($idEliminar)
+	{
+		$objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","concesionaria_bd"); 
+		$consulta = $objetoAccesoDato->RetornarConsulta('DELETE FROM autos WHERE id = :id');
+		$consulta->bindValue(':id', $idEliminar, PDO::PARAM_INT);
 			
-		return $newResponse->withHeader('Content-Type', 'application/json');
+		return $consulta->execute();				
 	}
 
 	

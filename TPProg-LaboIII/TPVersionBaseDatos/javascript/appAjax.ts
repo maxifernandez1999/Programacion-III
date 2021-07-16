@@ -29,7 +29,7 @@ namespace Main{
             (<HTMLInputElement>document.getElementById('txtLegajo')).readOnly = false;
             //AGREGAR JSON
             var paramJson:string = "obj_json="+`{"txtNombre":"${nombre}","txtApellido":"${apellido}","txtDni":${dni},"cboSexo":"${sexo}","txtLegajo":${legajo},"txtSueldo":${sueldo},"rdoTurno":"${turnoSeleccionado}"}`;
-            ajax.Post("../backend/administracion_pdo.php",ReponseSend,paramJson,foto,true,Errores);
+            ajax.Post("./administracion_pdo.php",ReponseSend,paramJson,foto,true,Errores);
             (<any>document.getElementById('titulo')).innerHTML = "Alta Empleado";
             
 
@@ -37,24 +37,27 @@ namespace Main{
         
     }
     export function EliminarEmpleado(legajo:number,id:number){
-        ajax.Get("../backend/eliminar_pdo.php",ResponseEliminar,"txtLegajo="+legajo+"&"+"id="+id,true,Errores);
+        //http://localhost/Programacion-III/TPProg-LaboIII/TPVersionBaseDatos/eliminar_pdo.php
+        ajax.Get("./eliminar_pdo.php",ResponseEliminar,"txtLegajo="+legajo+"&"+"id="+id,true,Errores);
         
     }
     export function ModificarEmpleado(dni:number){
-        ajax.Get("../backend/modificar_pdo.php",ResponseModificar,"txtDni="+dni,true,Errores);
+        ajax.Get("./modificar_pdo.php",ResponseModificar,"txtDni="+dni,true,Errores);
         (<any>document.getElementById('titulo')).innerHTML = "Modificar Empleado";
         
     }
     export function MostrarEmpleados(){
-        ajax.Get("../backend/mostrar_pdo.php",ResponseShow,"",true,Errores);
+        ajax.Get("http://localhost/Programacion-III/TPProg-LaboIII/TPVersionBaseDatos/mostrar_pdo.php",ResponseShow,"",true,Errores);
         
     }
     function ResponseEliminar(responseText:string) : void{
-        console.log("Empleado preparado para modificar");
+        console.log(responseText);
         MostrarEmpleados();
     }
     function ResponseModificar(responseText:string) : void{
+        //alert(responseText);
          var objJSON:any = JSON.parse(responseText);
+        //var arrayResponse:string[] = responseText.split("-");
         console.log(responseText);
         (<HTMLInputElement>document.getElementById('Nombre')).value = objJSON.nombre;
         (<HTMLInputElement>document.getElementById('apellido')).value = objJSON.apellido;
@@ -71,7 +74,7 @@ namespace Main{
                     break;
                 }
             }
-    
+        
         MostrarEmpleados();
     }
     function ReponseSend(responseText:string) : void{

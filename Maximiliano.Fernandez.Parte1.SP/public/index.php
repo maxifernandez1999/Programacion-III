@@ -3,12 +3,31 @@
 use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollector;
 use \Slim\Routing\RouteCollectorProxy;
+//necesario para las vistas
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../src/poo/Auto.php';
 require __DIR__ . '/../src/poo/Usuario.php';
 require __DIR__ . '/../src/poo/MW.php';
+require __DIR__ . '/../src/poo/Front.php'; ///para laboratorio
 $app = AppFactory::create();
 
+
+$app = AppFactory::create();
+
+//SE TIENE QUE AGREGAR EL COMPONENTE TWIG --> composer require slim/twig-view
+//SE ESTABLECE EL PATH DE LOS TEMPLATES
+$twig = Twig::create('../src/views', ['cache' => false]);
+//SE AGREGA EL MIDDLEWARE DE TWIG
+$app->add(TwigMiddleware::create($app, $twig));
+
+//************************************************************************************************************//
+
+$app->get('/front-end',Front::class . ':EjemploFront');  
+
+  
+  
 
 $app->post('/usuarios',Usuario::class . ':AgregarUsuario')->add(MW::class . ':VerificarCorreo')->add(MW::class . '::VerificaVacio')->add(MW::class . ':ValidarParametrosUsuario');/* ->add(Verificadora::class . ':ValidarParametrosUsuario'); */
 // $app->post('/login[/]',Verificadora::class . ':VerificarUsuario')->add(Verificadora::class . ':ValidarParametrosUsuario');

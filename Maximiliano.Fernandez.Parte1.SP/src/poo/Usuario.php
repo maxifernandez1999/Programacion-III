@@ -29,7 +29,7 @@ require_once "DB_PDO.php";
                 $user = MW::TraerCorreoyClave($json);
 				$token = array(
 					'iat'=>$time,
-					 'exp' => $time + 30,
+					 'exp' => $time + (60)*5,
 					'aud' => self::$aud,
 					'data' => $user,
 					'app'=> "API REST 2021"
