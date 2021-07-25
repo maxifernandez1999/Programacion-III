@@ -8,9 +8,21 @@ use Slim\Views\Twig;
 require_once "DB_PDO.php";
 
 class Front{
-    public function EjemploFront(Request $request, Response $response, array $args){
+    public function InicioFront(Request $request, Response $response, array $args){
         $view = Twig::fromRequest($request);
         return $view->render($response, 'login.php');
 
     }
+
+    public function LoginUsuarios(Request $request, Response $response, array $args){
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'registro.php');
+
+    }
+    public function MenuPrincipal(Request $request, Response $response, array $args){
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'principal.php');
+
+    }
+    
 }

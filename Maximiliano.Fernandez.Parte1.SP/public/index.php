@@ -24,8 +24,9 @@ $app->add(TwigMiddleware::create($app, $twig));
 
 //************************************************************************************************************//
 
-$app->get('/front-end',Front::class . ':EjemploFront');  
-
+$app->get('/front-end',Front::class . ':InicioFront');  
+$app->get('/loginusuarios',Front::class . ':LoginUsuarios');
+$app->get('/principal',Front::class . ':MenuPrincipal');
   
   
 
@@ -43,6 +44,9 @@ $app->post('/usuarios',Usuario::class . ':AgregarUsuario')->add(MW::class . ':Ve
  $app->get("/login" ,Usuario::class . ':ObtenerPayLoad');
 
  $app->delete("/" ,Auto::class . ':EliminarAuto');
+
+ $app->put("/" ,Auto::class . ':ModificarAuto');
+ 
  
  
 // $app->group('/json_bd',function (RouteCollectorProxy $grupo){

@@ -116,6 +116,9 @@ class Auto
 				$response->getBody()->write(json_encode($datos));
 				return $response->withHeader('Content-Type', 'application/json');
 			}else{
+				$datos->exito = false;
+				$datos->mensaje = "No se especifica que id desea eliminar";
+				$datos->status = 418;
 				$response->getBody()->write(json_encode($datos));
 				return $response->withHeader('Content-Type', 'application/json');
 			}
@@ -138,6 +141,76 @@ class Auto
 		$consulta->bindValue(':id', $idEliminar, PDO::PARAM_INT);
 			
 		return $consulta->execute();				
+	}
+
+	public function ModificarAuto(Request $request, Response $response, array $args){
+		$idAuto = json_decode($request->getBody())->id_auto;
+		$datosAutoModificar = json_decode($request->getBody())->auto;
+		$token = $request->getHeader("token")[0];
+		$datos = new stdClass();
+		try {
+
+			$payload = JWT::decode(
+									$token,
+									self::$secret_key,
+									self::$encrypt
+								);
+			if($idAuto != null && $datosAutoModificar != null){
+				$datosAuto = $payload->data;
+				if($datosAuto[0]->perfil == "encargado"){
+					self::Modificar($idAuto,$datosAutoModificar);
+					$datos->exito = true;
+					$datos->mensaje = "Auto Modificado";
+					$datos->status = 200;
+				}else{
+					$datos->exito = false;
+					$datos->mensaje = $datosAuto[0]->nombre." No pudo modificar el auto porque no es encargado";
+					$datos->status = 418;
+				}
+				
+				$response->getBody()->write(json_encode($datos));
+				return $response->withHeader('Content-Type', 'application/json');
+			}else{
+				$datos->exito = false;
+				$datos->mensaje = "No se especifica que id desea modificar";
+				$datos->status = 418;
+				$response->getBody()->write(json_encode($datos));
+				return $response->withHeader('Content-Type', 'application/json');
+			}
+		}catch (Exception $e) { 
+
+			$datos->mensaje = $e->getMessage();
+			$datos->status = 418;
+			$datos->exito = false;
+			$response->getBody()->write(json_encode($datos));
+		
+			return $response->withHeader('Content-Type', 'application/json');
+		}
+		
+	}
+
+	public static function Modificar($idModificar,$datosModificar){ 
+		$objDatos = DB_PDO::InstanciarObjetoPDO("localhost","root","","concesionaria_bd");
+		 $consulta = $objDatos->RetornarConsulta("UPDATE autos SET color=:color,marca=:marca,precio=:precio,modelo=:modelo WHERE autos.id = :id ");
+
+		 $consulta->bindValue(':color',$datosModificar->color);
+		 $consulta->bindValue(':marca',$datosModificar->marca);
+		 $consulta->bindValue(':precio',$datosModificar->precio);
+		 $consulta->bindValue(':modelo',$datosModificar->modelo);
+
+		 $consulta->bindValue(':id',$idModificar);
+
+		 return $consulta->execute();
+
+		//  if($consulta->rowCount()>0)
+		//  {
+		// 	 return true;
+		//  }else{
+		// 	 echo'No se pudo modificar';
+		//  }
+
+		//  return false;
+		
 	}
 
 	

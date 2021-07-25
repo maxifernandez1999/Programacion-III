@@ -2,59 +2,39 @@
 
 {% block content %}
 
+<body>
+<form>
+    <div class="container" style="background-color:lightpink">
+        <h1>Login</h1>
+            <!-- email -->
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <i class="fas fa-envelope" style="background-color:lightgrey"></i>
+                <input type="email" class="form-control" id="correoLogin" aria-describedby="emailHelp">
+            </div>
+            <!-- clave -->
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <i class="fas fa-key" style="background-color:lightgrey"></i>
+                <input type="password" class="form-control" id="claveLogin">
+            </div>
+            <!-- enviar/limpiar -->
+            <div class="mb-3">
+                <button class="btn btn-primary mr-5 col-md-5 col-sm-4 col-xs-12" type="button" id="btnEnviar">Enviar</button>
+                <button class="btn btn-warning mr-5 col-md-5 col-sm-4 col-xs-12" type="reset" id="btnLimpiar">Limpiar</button>
+            </div>
+            <!-- quiero registrarme -->
+            <div class="mb-3">
+                <button class="btn btn-success col-md-7 ml-auto col-xs-12" type="button" id="btnRegistrar" name="registro" data-toggle="modal" data-target="#myModal">Quiero Registrarme!</button>
+            </div>
+            <div id="danger">
 
-<body class="login">
-    <div class="container">
-        <div class="row">
-            <span class="titulo">LOGIN</span><br>
-            <form class="well form-horizontal" id="formLogin" method="POST" enctype="multipart/form-data">
-                <!-- mail -->
-                <div class="form-group">
-                    <label class="col-md-3 col-sm-1 col-xs-12 control-label">Email</label>
-                    <div class="col-md-8 col-xs-12 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="glyphicon glyphicon-envelope"></i>
-                            </span>
-                            <input name="correoLogin" class="form-control" type="text" id="correoLogin"
-                                placeholder="Correo">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- clave -->
-                <div class="form-group">
-                    <label class="col-md-3 col-sm-1 col-xs-12 control-label">Clave</label>
-                    <div class="col-md-8 col-xs-12 inputGroupContainer">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i>
-                            </span>
-                            <input name="claveLogin" id="claveLogin" placeholder="Clave" class="form-control"
-                                type="password">
-                        </div>
-                    </div>
-                </div>
-
-                <!--botones-->
-                <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12"></label>
-                    <button class="btn btn-primary col-md-4 col-sm-4 col-xs-12" type="submit"
-                        id="enviarLogin" onclick="Login()">Enviar</button>
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12"></label>
-                    <button class="btn btn-warning col-md-4 col-sm-4 col-xs-12" type="reset" id="limpiar">Limpiar</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Quiero registrarme -->
-
-        <div class="col-md-4"></div>
+            </div>
     </div>
-    <div class="row">
-        <label class="col-md-3"></label>
-        <button class="btn btn-success col-md-5 col-xs-12" type="button" id="btnRegistrar" name="registro"
-            data-toggle="modal" data-target="#myModal">Quiero Registrarme!</button>
-    </div>
+</form>
+    
+  
+    
 
     <br>
     <!--alert de error-->
@@ -175,6 +155,6 @@
             </div>
         </div>
     </div>
-</body>
+</body> 
 
 {% endblock %}

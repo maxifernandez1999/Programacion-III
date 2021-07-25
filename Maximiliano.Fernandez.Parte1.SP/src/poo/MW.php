@@ -3,9 +3,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Psr7\Response as ResponseMW;
+use Firebase\JWT\JWT; 
 
 require_once "DB_PDO.php";
     class MW{
+        private static $secret_key = 'ClaveSuperSecreta';
+        private static $encrypt = ['HS256'];
         public function ValidarParametrosUsuario(Request $request, RequestHandler $handler) : ResponseMW{
             
             $datosJSON = isset($request->getParsedBody()['user']) ? $request->getParsedBody()['user'] : null;
@@ -178,6 +181,106 @@ require_once "DB_PDO.php";
             
 
         }
+
+        public function VerificarToken(Request $request,RequestHandler $handler) : ResponseMW
+        {
+            $datos = new stdClass();
+            $token = $request->getHeader("token")[0];
+            if($token != null && isset($token)){
+                try {
+                        $payload = JWT::decode(
+                            $token,
+                            self::$secret_key,
+                            self::$encrypt
+                        );
+                        $response = $handler->handle($request);
+                        return $response;
+                }catch (Exception $e) { 
+                    $datos->mensaje = $e->getMessage();
+                    $datos->status = 403;
+                    $response->getBody()->write(json_encode($datos));
+                    return $response->withHeader('Content-Type', 'application/json');
+                }
+            }
+
+        }
+        public static function VerificarPropietario(Request $request,RequestHandler $handler) : ResponseMW
+        {
+            $datos = new stdClass();
+            $token = $request->getHeader("token")[0];
+            $newResponse = new ResponseMW();
+            if($token != null && isset($token)){
+                try {
+                        $payload = JWT::decode(
+                            $token,
+                            self::$secret_key,
+                            self::$encrypt
+                        );
+                        $datosAuto = $payload->data;
+				        if($datosAuto[0]->perfil == "propietario"){
+					    
+					        $datos->propietario = true;
+					        $datos->mensaje = "Es propietario";
+					        $datos->status = 200;
+                            $newResponse->getBody()->write(json_encode($datos));
+                            return $newResponse->withHeader('Content-Type', 'application/json');
+                        }else{
+                            $datos->propietario = false;
+					        $datos->mensaje = "NO es propietario";
+					        $datos->status = 409;
+                            $newResponse->getBody()->write(json_encode($datos));
+                            return $newResponse->withHeader('Content-Type', 'application/json');
+                            
+                        }
+                        
+                }catch (Exception $e) { 
+                    $datos->mensaje = $e->getMessage();
+                    $datos->status = 409;
+                    $newResponse->getBody()->write(json_encode($datos));
+                    return $newResponse->withHeader('Content-Type', 'application/json');
+                }
+            }
+
+        }
+        public function VerificarEncargado(Request $request,RequestHandler $handler) : ResponseMW
+        {
+            $datos = new stdClass();
+            $token = $request->getHeader("token")[0];
+            $newResponse = new ResponseMW();
+            if($token != null && isset($token)){
+                try {
+                        $payload = JWT::decode(
+                            $token,
+                            self::$secret_key,
+                            self::$encrypt
+                        );
+                        $datosAuto = $payload->data;
+				        if($datosAuto[0]->perfil == "encargado"){
+					    
+					        $datos->propietario = true;
+					        $datos->mensaje = "Es encargado";
+					        $datos->status = 200;
+                            $newResponse->getBody()->write(json_encode($datos));
+                            return $newResponse->withHeader('Content-Type', 'application/json');
+                        }else{
+                            $datos->propietario = false;
+					        $datos->mensaje = "NO es encargado";
+					        $datos->status = 409;
+                            $newResponse->getBody()->write(json_encode($datos));
+                            return $newResponse->withHeader('Content-Type', 'application/json');
+                            
+                        }
+                        
+                }catch (Exception $e) { 
+                    $datos->mensaje = $e->getMessage();
+                    $datos->status = 409;
+                    $newResponse->getBody()->write(json_encode($datos));
+                    return $newResponse->withHeader('Content-Type', 'application/json');
+                }
+            }
+
+        }
+
     }
 
 ?>

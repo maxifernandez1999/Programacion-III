@@ -1,6 +1,6 @@
 /// <reference path="../node_modules/@types/jquery/index.d.ts" />
 
-const APIREST:string = "http://api_slim4_jwt/";
+const APIREST:string = "http://api_slim4_jwt/"    /*  */;
 
 $(function(){
 

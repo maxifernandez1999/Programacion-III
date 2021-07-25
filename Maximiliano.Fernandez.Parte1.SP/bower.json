@@ -16,7 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "4.6.0",
+    "bootstrap": "*",
     "jquery": "*"
   }
 }
