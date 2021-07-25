@@ -4,6 +4,7 @@ var APIREST = "http://2doParcial_api/";
 $(function () {
     $("#btnEnviar").on("click", Manager.Login.Login);
     $("#btnLimpiar").on("click", Manager.Login.Limpiar);
+    $("#btnRegistrar").on("click", Manager.Login.Registrar);
 });
 var Manager;
 (function (Manager) {
@@ -41,6 +42,9 @@ var Manager;
         Login.Limpiar = function () {
             $("#correoLogin").val("");
             $("#claveLogin").val("");
+        };
+        Login.Registrar = function () {
+            $(location).attr('href', APIREST + "loginusuarios");
         };
         return Login;
     }());

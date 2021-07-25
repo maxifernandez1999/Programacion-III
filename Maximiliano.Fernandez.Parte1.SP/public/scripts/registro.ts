@@ -1,9 +1,12 @@
 /// <reference path="../node_modules/@types/jquery/index.d.ts" />
-
+$(function() {
+    $("#btnLimpiarNuevoUsuario").on("click", Manager.Registro.Limpiar);
+    $("#btnRegistrar").on("click", Manager.Registro.AgregarUser);
+    
+});
 namespace Manager{
     export class Registro{
         public static AgregarUser():void {
-            $("#btnRegistrar").on("click", function(){
                 let correo:any = $("#correo").val();
                 let clave:any = $("#clave").val();
                 let nombre:any = $("#nombre").val();
@@ -23,9 +26,6 @@ namespace Manager{
                             '","foto":"' + pathFoto + '"}';
                             form.append("usuario", json);
                             form.append("foto", foto.files[0]);
-                //let data:any = `user={"correo":"${correo}","clave":${clave}}`;
-                
-                ///cambiar a partir de aca
                 $.ajax({
                     type: 'POST',
                     url: APIREST + "usuarios", 
@@ -47,20 +47,17 @@ namespace Manager{
                 .fail(function (jqXHR:any, textStatus:any, errorThrown:any) {
                     alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
                 });    
-            });
 
         
 
         }
         public static Limpiar(){
-            $("#btnLimpiar").on("click", function(){
-                $("#correo").val("");
-                $("#clave").val("");
-                $("#nombre").val("");
-                $("#apellido").val("");
-                $("#perfil").val("");
-                $("#file").val("");
-            });
+            $("#correo").val("");
+            $("#clave").val("");
+            $("#nombre").val("");
+            $("#apellido").val("");
+            $("#perfil").val("");
+            $("#file").val("");
         }
         
     

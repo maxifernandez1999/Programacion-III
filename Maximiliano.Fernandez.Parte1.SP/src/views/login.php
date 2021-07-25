@@ -4,32 +4,33 @@
 
 <body>
 <form>
-    <div class="container" style="background-color:lightpink">
+    <div class="container p-3">
         <h1>Login</h1>
+        <div class="container div p-3">
             <!-- email -->
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <label for="exampleInputEmail1" class="form-label">Correo</label>
                 <i class="fas fa-envelope" style="background-color:lightgrey"></i>
                 <input type="email" class="form-control" id="correoLogin" aria-describedby="emailHelp">
             </div>
             <!-- clave -->
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <label for="exampleInputPassword1" class="form-label">Clave</label>
                 <i class="fas fa-key" style="background-color:lightgrey"></i>
                 <input type="password" class="form-control" id="claveLogin">
             </div>
             <!-- enviar/limpiar -->
-            <div class="mb-3">
+            <div class="mb-3 d-flex justify-content-around">
                 <button class="btn btn-primary mr-5 col-md-5 col-sm-4 col-xs-12" type="button" id="btnEnviar">Enviar</button>
                 <button class="btn btn-warning mr-5 col-md-5 col-sm-4 col-xs-12" type="reset" id="btnLimpiar">Limpiar</button>
             </div>
             <!-- quiero registrarme -->
-            <div class="mb-3">
+            <div class="mb-3 d-flex justify-content-around">
                 <button class="btn btn-success col-md-7 ml-auto col-xs-12" type="button" id="btnRegistrar" name="registro" data-toggle="modal" data-target="#myModal">Quiero Registrarme!</button>
             </div>
-            <div id="danger">
-
-            </div>
+        </div>
+        <div id="danger"><!--Danger message--></div>
+            
     </div>
 </form>
     

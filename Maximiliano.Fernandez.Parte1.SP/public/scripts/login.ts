@@ -3,9 +3,10 @@ const APIREST:string = "http://2doParcial_api/";
 $(function() {
     $("#btnEnviar").on("click",Manager.Login.Login); 
     $("#btnLimpiar").on("click", Manager.Login.Limpiar);
+    $("#btnRegistrar").on("click", Manager.Login.Registrar);
+    
 });
 namespace Manager{
-    
     export class Login{
         public static Login():void {
             let correo:any = $("#correoLogin").val();
@@ -17,7 +18,6 @@ namespace Manager{
                 dataType: "json",
                 data: data, //si es vacio {}
                 async: true
-        
             })
             .done(function (resultado:any) {
                 console.log(resultado);
@@ -36,11 +36,14 @@ namespace Manager{
                 alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
             }); 
         
-            
         }
         public static Limpiar(){
             $("#correoLogin").val("");
             $("#claveLogin").val("");
+        }
+
+        public static Registrar(){ 
+            $(location).attr('href',APIREST + "loginusuarios");    
         }
     }
    

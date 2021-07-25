@@ -20,34 +20,9 @@ namespace Manager{
                     var alert:string = '<div class="alert alert-danger" role="alert">'+resultado.mensaje+'</div>';
                     $('#danger').html(alert);
                 }else{
-                    var table:string = `<table class="table table-dark table-hover">
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Usuario</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Nombre 1</td>
-                        <td>Username 1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Nombre 1</td>
-                        <td>Username 2</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Nombre 3</td>
-                        <td>Username 3</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Nombre 4</td>
-                        <td>Username 4</td>
-                    </tr>
-                </table>`;
-                    $('#tableUser').html(table);
+                    console.log(resultado.dato);
+                    var datos = JSON.parse(resultado.dato);
+                    $('#tableUser').html(Principal.CrearListado(datos));
                 }
                 
             })
@@ -55,6 +30,35 @@ namespace Manager{
                 alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
             });    
         
+        }
+
+        public static CrearListado(datos:any){
+            let cabecera:string = `
+            <tr>
+                <th>Id</th>
+                <th>Correo</th>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Perfil</th>
+                <th>Foto</th>
+            </tr>`;
+            let datoUsuario:string = "";
+            for (const datoUser of datos) {
+                datoUsuario += 
+                `<tr>
+                    <td>${datoUser.id}</td>
+                    <td>${datoUser.correo}</td>
+                    <td>${datoUser.clave}</td>
+                    <td>${datoUser.nombre}</td>
+                    <td>${datoUser.apellido}</td>
+                    <td>${datoUser.perfil}</td>
+                    <td><img src="../../src/fotos/${datoUser.foto}" alt=""></td>
+                </tr>`;
+            }
+            let table:string = '<table class="table table-dark table-hover">'+cabecera+datoUsuario+'</table>';
+
+            return table;
         }
 
     }
