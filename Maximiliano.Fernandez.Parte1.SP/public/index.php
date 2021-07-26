@@ -11,7 +11,6 @@ require __DIR__ . '/../src/poo/Auto.php';
 require __DIR__ . '/../src/poo/Usuario.php';
 require __DIR__ . '/../src/poo/MW.php';
 require __DIR__ . '/../src/poo/Front.php'; ///para laboratorio
-$app = AppFactory::create();
 
 
 $app = AppFactory::create();

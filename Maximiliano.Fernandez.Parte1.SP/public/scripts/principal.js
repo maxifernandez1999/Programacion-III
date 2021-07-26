@@ -93,18 +93,14 @@ var Manager;
             var data = { "id_auto": id_auto };
             var resultado = window.confirm('Estas seguro de que desea eliminar el usuario (id = ' + id_auto + ')?');
             var token = localStorage.getItem("jwt");
-            var form = new FormData();
-            form.append("id_auto", id_auto);
             if (resultado === true) {
                 $.ajax({
                     type: 'DELETE',
                     url: APIREST,
                     dataType: "json",
-                    data: form,
+                    data: data,
                     headers: { "token": token, "content-type": "application/json" },
-                    async: true,
-                    processData: false,
-                    contentType: false
+                    async: true
                 })
                     .done(function (resultado) {
                     console.log(resultado);

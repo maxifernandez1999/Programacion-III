@@ -135,18 +135,14 @@ namespace Manager{
             let data:any = {"id_auto":id_auto};
             let resultado = window.confirm('Estas seguro de que desea eliminar el usuario (id = '+id_auto+')?');
             let token:any = localStorage.getItem("jwt");
-            let form:any = new FormData();
-            form.append("id_auto", id_auto);
             if (resultado === true) {
                 $.ajax({
                     type: 'DELETE',
                     url: APIREST, 
                     dataType: "json",
-                    data: form, //si es vacio {}
+                    data: data, //si es vacio {}
                     headers : {"token":token,"content-type":"application/json"},
-                    async: true,
-                    processData: false, 
-                    contentType: false 
+                    async: true
                 })
                 .done(function (resultado:any) {
                     console.log(resultado);
