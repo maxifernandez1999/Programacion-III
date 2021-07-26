@@ -7,13 +7,13 @@
         <div class="div p-3">
             <!-- email -->
             <div class="m-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <label for="exampleInputEmail1" class="form-label">Correo</label>
                 <i class="fas fa-envelope"></i>
                 <input type="email" class="form-control" id="correo" aria-describedby="emailHelp">
             </div>
             <!-- clave -->
             <div class="m-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <label for="exampleInputPassword1" class="form-label">Clave</label>
                 <i class="fas fa-key"></i>
                 <input type="password" class="form-control" id="clave">
             </div>

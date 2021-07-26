@@ -3,9 +3,16 @@ const APIREST:string = "http://2doParcial_api/";
 $(function() {
     $("#btnEnviar").on("click",Manager.Login.Login); 
     $("#btnLimpiar").on("click", Manager.Login.Limpiar);
-    $("#btnRegistrar").on("click", Manager.Login.Registrar);
+    $("#btnLogin").on("click", Manager.Login.Registrar);
     
 });
+function ArmarAlert(mensaje:string, tipo:string = "success"):string{
+
+    let alerta:string = '<div id="alert_'+tipo+'" class="alert alert-' + tipo + ' alert-dismissable fade show" role="alert">';
+    alerta += `${mensaje}`;
+    alerta += '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    return alerta;
+}
 namespace Manager{
     export class Login{
         public static Login():void {
@@ -23,7 +30,7 @@ namespace Manager{
                 console.log(resultado);
                 //no esta seteado el exito true
                 if(resultado.exito == false || resultado.exito == undefined){
-                    var alert:string = '<div class="alert alert-danger" role="alert">'+resultado.mensaje+'</div>';
+                    let alert:string = ArmarAlert(resultado.mensaje,"danger");
                     $('#danger').html(alert);
                 }else{
                     localStorage.setItem("jwt", resultado.jwt);

@@ -109,7 +109,7 @@ class Auto
 					$datos->status = 200;
 				}else{
 					$datos->exito = false;
-					$datos->mensaje = $datosAuto[0]->nombre." No pudo eliminar el auto porque no es propietario";
+					$datos->mensaje = $datosAuto[0]->nombre."No propietario";
 					$datos->status = 418;
 				}
 				
@@ -124,7 +124,7 @@ class Auto
 			}
 		}catch (Exception $e) { 
 
-			$datos->mensaje = $e->getMessage();
+			$datos->mensaje = "jwt invalido";
 			$datos->status = 418;
 			$datos->exito = false;
 			$response->getBody()->write(json_encode($datos));

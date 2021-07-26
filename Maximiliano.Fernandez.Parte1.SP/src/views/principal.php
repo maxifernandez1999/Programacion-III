@@ -17,6 +17,7 @@
                                 <li><button class="dropdown-item" id="btnUsuarios">Usuarios</button></li>
                             </ul>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Alta Auto</a>
                         </li>
@@ -27,13 +28,14 @@
         </div>
         
         <div class="row">
-            <div class="col bg-danger" id="tableUser">
+            <div class="col bg-danger" id="tableAutos">
                 Izquierda
             </div>
-            <div class="col bg-dark" id="danger">
+            <div class="col bg-dark" id="tableUser">
                 Derecha
             </div>
         </div>
+        <div class="danger"></div>
         
     </div>
 

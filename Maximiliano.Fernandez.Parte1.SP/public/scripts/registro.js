@@ -15,29 +15,29 @@ var Manager;
             var nombre = $("#nombre").val();
             var apellido = $("#apellido").val();
             var perfil = $("#perfil").val();
-            var foto = $("#file");
+            var foto = $("#file")[0];
             var form = new FormData();
-            var fotoName = $("#foto").val();
-            var pathFoto = (fotoName.split('\\'))[2];
             var json = '{"correo":"' + correo +
                 '","clave":"' + clave +
                 '","nombre":"' + nombre +
                 '","apellido":"' + apellido +
                 '","perfil":"' + perfil +
-                '","foto":"' + pathFoto + '"}';
-            form.append("usuario", json);
+                '"}';
+            form.append("user", json);
             form.append("foto", foto.files[0]);
             $.ajax({
                 type: 'POST',
                 url: APIREST + "usuarios",
                 dataType: "json",
                 data: form,
-                async: true
+                async: true,
+                processData: false,
+                contentType: false
             })
                 .done(function (resultado) {
                 console.log(resultado);
                 if (resultado.exito == false || resultado.exito == undefined) {
-                    var alert = '<div class="alert alert-danger" role="alert">' + resultado.mensaje + '</div>';
+                    var alert = ArmarAlert(resultado.mensaje, "danger");
                     $('#danger').html(alert);
                 }
                 else {

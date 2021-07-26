@@ -4,8 +4,15 @@ var APIREST = "http://2doParcial_api/";
 $(function () {
     $("#btnEnviar").on("click", Manager.Login.Login);
     $("#btnLimpiar").on("click", Manager.Login.Limpiar);
-    $("#btnRegistrar").on("click", Manager.Login.Registrar);
+    $("#btnLogin").on("click", Manager.Login.Registrar);
 });
+function ArmarAlert(mensaje, tipo) {
+    if (tipo === void 0) { tipo = "success"; }
+    var alerta = '<div id="alert_' + tipo + '" class="alert alert-' + tipo + ' alert-dismissable fade show" role="alert">';
+    alerta += "" + mensaje;
+    alerta += '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    return alerta;
+}
 var Manager;
 (function (Manager) {
     var Login = /** @class */ (function () {
@@ -26,8 +33,8 @@ var Manager;
                 console.log(resultado);
                 //no esta seteado el exito true
                 if (resultado.exito == false || resultado.exito == undefined) {
-                    var alert = '<div class="alert alert-danger" role="alert">' + resultado.mensaje + '</div>';
-                    $('#danger').html(alert);
+                    var alert_1 = ArmarAlert(resultado.mensaje, "danger");
+                    $('#danger').html(alert_1);
                 }
                 else {
                     localStorage.setItem("jwt", resultado.jwt);

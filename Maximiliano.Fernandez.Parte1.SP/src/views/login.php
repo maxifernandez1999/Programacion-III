@@ -26,7 +26,7 @@
             </div>
             <!-- quiero registrarme -->
             <div class="mb-3 d-flex justify-content-around">
-                <button class="btn btn-success col-md-7 ml-auto col-xs-12" type="button" id="btnRegistrar" name="registro" data-toggle="modal" data-target="#myModal">Quiero Registrarme!</button>
+                <button class="btn btn-success col-md-7 ml-auto col-xs-12" type="button" id="btnLogin" name="registro" data-toggle="modal" data-target="#myModal">Quiero Registrarme!</button>
             </div>
         </div>
         <div id="danger"><!--Danger message--></div>

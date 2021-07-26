@@ -12,32 +12,33 @@ namespace Manager{
                 let nombre:any = $("#nombre").val();
                 let apellido:any = $("#apellido").val();
                 let perfil:any = $("#perfil").val();
-                let foto:any = $("#file");
+                let foto:any = $("#file")[0];
             
             
-                let form : FormData = new FormData(); 
-                let fotoName = <string>$("#foto").val();
-                let pathFoto = (fotoName.split('\\'))[2];
+                let form : FormData = new FormData();
                         let json = '{"correo":"' + correo +
                             '","clave":"' + clave +
                             '","nombre":"' + nombre +
                             '","apellido":"' + apellido +
                             '","perfil":"' + perfil +
-                            '","foto":"' + pathFoto + '"}';
-                            form.append("usuario", json);
+                            '"}';
+                            form.append("user", json);
                             form.append("foto", foto.files[0]);
+
                 $.ajax({
                     type: 'POST',
                     url: APIREST + "usuarios", 
                     dataType: "json",
                     data: form, //si es vacio {}
-                    async: true
+                    async: true,
+                    processData: false, 
+                    contentType: false
             
                 })
                 .done(function (resultado:any) {
                     console.log(resultado);
                     if(resultado.exito == false || resultado.exito == undefined){
-                        var alert:string = '<div class="alert alert-danger" role="alert">'+resultado.mensaje+'</div>';
+                        var alert:string = ArmarAlert(resultado.mensaje,"danger");
                         $('#danger').html(alert);
                     }else{
                         $(location).attr('href',APIREST + "front-end");
