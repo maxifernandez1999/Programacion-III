@@ -29,7 +29,7 @@ $app->group('/perfiles',function (RouteCollectorProxy $grupo){
 
 $app->group('/usuarios',function (RouteCollectorProxy $grupo){
     $grupo->delete('/', \Usuario::class . ':EliminarUsuario');
-    $grupo->put('/', \Usuario::class . ':ModificarUsuario');
+    $grupo->post('/', \Usuario::class . ':ModificarUsuario');
 });
 
 $app->run();

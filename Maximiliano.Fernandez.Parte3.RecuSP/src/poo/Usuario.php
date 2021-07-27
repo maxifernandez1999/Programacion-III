@@ -20,7 +20,7 @@ class Usuario{
         $nameBefore = $file['foto']->getClientFilename();
         $extension = explode(".", $nameBefore);
         $extension = array_reverse($extension);
-        $finalyFile = /* $objUser->id. */"1_".$objUser->apellido. $extension[0];//id???
+        $finalyFile = /* $objUser->id. */"1_".$objUser->apellido.'.'. $extension[0];//id???
                 
 		if(Usuario::AgregarDB($objUser,$finalyFile) != null){
             $file['foto']->moveTo($destiny . $finalyFile);
@@ -211,7 +211,7 @@ class Usuario{
         $nameBefore = $file['foto']->getClientFilename();
         $extension = explode(".", $nameBefore);
         $extension = array_reverse($extension);
-        $newPathFoto = $usuario->id."_".$usuario->apellido. $extension[0];
+        $newPathFoto = $usuario->id."_".$usuario->apellido.'.'.$extension[0];
         $fotoAnterior = self::TraerUnoDB($usuario->id)->foto;
 		$datos = new stdClass();
 		try {
