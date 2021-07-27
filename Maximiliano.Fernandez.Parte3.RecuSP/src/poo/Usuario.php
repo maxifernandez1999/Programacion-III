@@ -4,7 +4,13 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Firebase\JWT\JWT; 
 require 'DB_PDO.php';
 class Usuario{
-
+    public $id;
+    public $correo;
+    public $clave;
+    public $nombre;
+    public $apellido;
+    public $foto;
+    public $id_perfil;
     private static $secret_key = 'ClaveSuperSecreta';
     private static $encrypt = ['HS256'];
     private static $aud = NULL;
@@ -45,7 +51,7 @@ class Usuario{
         $consulta->bindValue(':nombre', $objUser->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':apellido', $objUser->apellido, PDO::PARAM_STR);
         $consulta->bindValue(':foto', $finalyFile, PDO::PARAM_STR);
-        $consulta->bindValue(':id_perfil', $objUser->id_perfil, PDO::PARAM_STR);
+        $consulta->bindValue(':id_perfil', $objUser->id_perfil, PDO::PARAM_INT);
         
         $consulta->execute();		
         return $objetoAccesoDato->RetornarUltimoIdInsertado();//???
@@ -212,7 +218,7 @@ class Usuario{
         $extension = explode(".", $nameBefore);
         $extension = array_reverse($extension);
         $newPathFoto = $usuario->id."_".$usuario->apellido.'.'.$extension[0];
-        $fotoAnterior = self::TraerUnoDB($usuario->id)->foto;
+        $fotoAnterior = self::TraerUnoDB($usuario->id)[0]->foto;
 		$datos = new stdClass();
 		try {
 			$payload = JWT::decode(
