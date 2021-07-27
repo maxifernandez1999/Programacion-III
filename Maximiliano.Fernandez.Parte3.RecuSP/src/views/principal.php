@@ -36,7 +36,46 @@
             </div>
         </div>
         <div class="alertPrincipal"></div>
-        
+
+
+
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- descripcion -->
+        <div class="m-3">
+                <label for="exampleInputEmail1" class="form-label">Descripcion</label>
+                <i class="fas fa-trademark"></i>
+                <input type="text" class="form-control" id="descripcion" aria-describedby="emailHelp">
+            </div>
+            <!-- estado -->
+            <div class="m-3">
+            <label for="exampleInputPassword1" class="form-label">Perfil</label>
+            <i class="fas fa-id-card"></i>
+            <select class="form-select form-select-lg mb-3 far fa-id-card" aria-label=".form-select-lg example" id="estado">
+                <option value="1" selected>Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            </div>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
     </div>
 
     

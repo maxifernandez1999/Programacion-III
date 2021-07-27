@@ -84,7 +84,7 @@ namespace Manager{
                     $('#tablePerfiles').html(Principal.CrearListadoPerfiles(datos));
                     $('[data-action="eliminar"]').on('click', function (e) {
                 
-                        let id_perfil_string:any = $(this).attr("data-auto");
+                        let id_perfil_string:any = $(this).attr("data-perfil");
                         let id_perfil = parseInt(id_perfil_string,10);
                         let resultado = window.confirm('Estas seguro de que desea eliminar el usuario (id = '+id_perfil+')?');  
                         if (resultado === true) {
@@ -94,12 +94,17 @@ namespace Manager{
                         }
                          
                     });
-            
-                    // $('[data-action="modificar"]').on('click', function (e) {
-        
-                    //     let obj_auto_string = $(this).attr("data-auto");
-                    //     let obj_auto = JSON.parse(obj_auto_string);
-                    // });
+                    $('[data-action="modificar"]').on('click', function (e) {
+                
+                        let obj_perfil:any = $(this).attr("data-perfil");
+                        let resultado = window.confirm('Estas seguro de que desea eliminar el usuario (id = '+obj_perfil.id+')?');  
+                        if (resultado === true) {
+                            Principal.ModificarPerfil(obj_perfil);
+                        }else { 
+                            window.alert('Operacion cancelada');
+                        }
+                         
+                    });
                 }
                 
             })
@@ -118,13 +123,13 @@ namespace Manager{
                 <th>Modificar</th>
             </tr>`;
             let datosPerfiles:string = "";
-            for (const datoAuto of datos) {
+            for (const datoPerfil of datos) {
                 datosPerfiles += 
                 `<tr>
-                    <td>${datoAuto.descripcion}</td>
-                    <td>${datoAuto.estado}</td>
-                    <td><button class="btn-danger" data-auto="${datoAuto.id}" data-action='eliminar'>Borrar</button></td>
-                    <td><button class="btn-info">Modificar</button></td>
+                    <td>${datoPerfil.descripcion}</td>
+                    <td>${datoPerfil.estado}</td>
+                    <td><button class="btn-danger" data-perfil="${datoPerfil.id}" data-action='eliminar'>Borrar</button></td>
+                    <td><button class="btn-info" data-perfil="${datoPerfil}" data-action="modificar">Modificar</button></td>
                 </tr>`;
             }
             let table:string = '<table class="table table-striped">'+cabecera+datosPerfiles+'</table>';
@@ -143,6 +148,35 @@ namespace Manager{
                 url: APIREST + "perfiles/", 
                 dataType: "json",
                 data: JSON.stringify(data), //si es vacio {}
+                headers : {"token":token,"content-type":"application/json"},
+                async: true
+            })
+            .done(function (resultado:any) {
+                console.log(resultado);
+                if(resultado.exito == false){
+                    var alert:string = ArmarAlert(resultado.mensaje,"warning");
+                    $('#alertPrincipal').html(alert);
+                }else{
+                    Principal.MostrarPerfiles();
+                }
+                
+            })
+            .fail(function (jqXHR:any, textStatus:any, errorThrown:any) {
+                alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+            });    
+            
+            
+        
+        }
+        public static ModificarPerfil(datosModificar:any):void {
+            
+            let token:any = localStorage.getItem("jwt");
+            
+            $.ajax({
+                type: 'PUT',
+                url: APIREST + "perfiles/", 
+                dataType: "json",
+                data: JSON.stringify(datosModificar), //si es vacio {}
                 headers : {"token":token,"content-type":"application/json"},
                 async: true
             })

@@ -64,7 +64,7 @@ var Manager;
                     var datos = JSON.parse(resultado.dato);
                     $('#tablePerfiles').html(Principal.CrearListadoPerfiles(datos));
                     $('[data-action="eliminar"]').on('click', function (e) {
-                        var id_perfil_string = $(this).attr("data-auto");
+                        var id_perfil_string = $(this).attr("data-perfil");
                         var id_perfil = parseInt(id_perfil_string, 10);
                         var resultado = window.confirm('Estas seguro de que desea eliminar el usuario (id = ' + id_perfil + ')?');
                         if (resultado === true) {
@@ -74,10 +74,16 @@ var Manager;
                             window.alert('Operacion cancelada');
                         }
                     });
-                    // $('[data-action="modificar"]').on('click', function (e) {
-                    //     let obj_auto_string = $(this).attr("data-auto");
-                    //     let obj_auto = JSON.parse(obj_auto_string);
-                    // });
+                    $('[data-action="modificar"]').on('click', function (e) {
+                        var obj_perfil = $(this).attr("data-perfil");
+                        var resultado = window.confirm('Estas seguro de que desea eliminar el usuario (id = ' + obj_perfil.id + ')?');
+                        if (resultado === true) {
+                            Principal.ModificarPerfil(obj_perfil);
+                        }
+                        else {
+                            window.alert('Operacion cancelada');
+                        }
+                    });
                 }
             })
                 .fail(function (jqXHR, textStatus, errorThrown) {
@@ -88,9 +94,9 @@ var Manager;
             var cabecera = "\n            <tr>\n                <th>Descripcion</th>\n                <th>Estado</th>\n                <th>Borrar</th>\n                <th>Modificar</th>\n            </tr>";
             var datosPerfiles = "";
             for (var _i = 0, datos_2 = datos; _i < datos_2.length; _i++) {
-                var datoAuto = datos_2[_i];
+                var datoPerfil = datos_2[_i];
                 datosPerfiles +=
-                    "<tr>\n                    <td>" + datoAuto.descripcion + "</td>\n                    <td>" + datoAuto.estado + "</td>\n                    <td><button class=\"btn-danger\" data-auto=\"" + datoAuto.id + "\" data-action='eliminar'>Borrar</button></td>\n                    <td><button class=\"btn-info\">Modificar</button></td>\n                </tr>";
+                    "<tr>\n                    <td>" + datoPerfil.descripcion + "</td>\n                    <td>" + datoPerfil.estado + "</td>\n                    <td><button class=\"btn-danger\" data-perfil=\"" + datoPerfil.id + "\" data-action='eliminar'>Borrar</button></td>\n                    <td><button class=\"btn-info\" data-perfil=\"" + datoPerfil + "\" data-action=\"modificar\">Modificar</button></td>\n                </tr>";
             }
             var table = '<table class="table table-striped">' + cabecera + datosPerfiles + '</table>';
             return table;
@@ -103,6 +109,30 @@ var Manager;
                 url: APIREST + "perfiles/",
                 dataType: "json",
                 data: JSON.stringify(data),
+                headers: { "token": token, "content-type": "application/json" },
+                async: true
+            })
+                .done(function (resultado) {
+                console.log(resultado);
+                if (resultado.exito == false) {
+                    var alert = ArmarAlert(resultado.mensaje, "warning");
+                    $('#alertPrincipal').html(alert);
+                }
+                else {
+                    Principal.MostrarPerfiles();
+                }
+            })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+            });
+        };
+        Principal.ModificarPerfil = function (datosModificar) {
+            var token = localStorage.getItem("jwt");
+            $.ajax({
+                type: 'PUT',
+                url: APIREST + "perfiles/",
+                dataType: "json",
+                data: JSON.stringify(datosModificar),
                 headers: { "token": token, "content-type": "application/json" },
                 async: true
             })
