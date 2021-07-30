@@ -2,7 +2,7 @@
 /// <reference path="../node_modules/@types/jquery/index.d.ts" />
 var APIREST = "http://2doParcial_api/";
 $(function () {
-    $("#btnEnviar").on("click", Manager.Login.Login);
+    $("#btnEnviar").on("click", Manager.Login.ValidarVacios);
     $("#btnLimpiar").on("click", Manager.Login.Limpiar);
     $("#btnLogin").on("click", Manager.Login.Registrar);
 });
@@ -37,7 +37,7 @@ var Manager;
                     $('#danger').html(alert_1);
                 }
                 else {
-                    localStorage.setItem("jwt", resultado.jwt);
+                    localStorage.setItem("token", resultado.jwt);
                     $(location).attr('href', APIREST + "principal");
                 }
                 console.log(resultado.exito);
@@ -52,6 +52,20 @@ var Manager;
         };
         Login.Registrar = function () {
             $(location).attr('href', APIREST + "loginusuarios");
+        };
+        Login.ValidarVacios = function () {
+            var alert = "";
+            if ($("#correoLogin").val() == "") {
+                alert += ArmarAlert("correo vacio", "danger");
+                $('#danger').html(alert);
+            }
+            if ($("#claveLogin").val() == "") {
+                alert += ArmarAlert("clave vacia", "danger");
+                $('#danger').html(alert);
+            }
+            if (alert == "") {
+                Login.Login();
+            }
         };
         return Login;
     }());

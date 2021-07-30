@@ -2,6 +2,7 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Firebase\JWT\JWT; 
+use Mpdf\Mpdf;
 require 'DB_PDO.php';
 class Usuario{
     public $id;
@@ -20,7 +21,6 @@ class Usuario{
 		$datos = $request->getParsedBody();
 		$objUser = json_decode($datos['usuario']);
 		$stdclass = new stdClass();
-
         $file = $request->getUploadedFiles();//$_FILES
         $destiny = __DIR__ . "/../fotos/";
         $nameBefore = $file['foto']->getClientFilename();
@@ -88,10 +88,10 @@ class Usuario{
         if($json != null){
             $time = time();
             self::$aud = self::Aud();
-            $user = self::TraerCorreoyClave($json);
+            $user = self::TraerDatosUsuario($json);
             $token = array(
                 'iat'=>$time,
-                'exp' => $time + (60)*5,
+                'exp' => $time + (60)*60,
                 'aud' => self::$aud,
                 'data' => $user,
                 'app'=> "API REST 2021"
@@ -108,11 +108,11 @@ class Usuario{
         }
         return $response->withHeader('Content-Type', 'application/json');
     }
-    public static function TraerCorreoyClave($datosJSON) {
+    public static function TraerDatosUsuario($datosJSON) {
         $correo = $datosJSON->correo;
         $clave = $datosJSON->clave;
-        $objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","concesionaria_bd"); 
-        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT usuarios.correo,usuarios.nombre,usuarios.apellido,usuarios.foto FROM usuarios WHERE usuarios.correo=:correo AND usuarios.clave=:clave");
+        $objetoAccesoDato = DB_PDO::InstanciarObjetoPDO("localhost","root","","administracion_bd"); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("SELECT usuarios.id,usuarios.correo,usuarios.nombre,usuarios.apellido,usuarios.foto,usuarios.id_perfil FROM usuarios WHERE usuarios.correo=:correo AND usuarios.clave=:clave");
         $consulta->bindValue(':correo',$correo, PDO::PARAM_STR);
         $consulta->bindValue(':clave', $clave, PDO::PARAM_STR);
         $consulta->execute();
@@ -269,4 +269,53 @@ class Usuario{
 
 		 return $consulta->execute();				
 	}
+    public static function MostrarTodosPdf(Request $request, Response $response, array $args){
+        $token = $request->getHeader("token")[0];
+        $payload = NULL;
+        $listadoUsuarios = null;
+        try {
+            $payload = JWT::decode(
+                                    $token,
+                                    self::$secret_key,
+                                    self::$encrypt
+                                );
+            $listadoUsuarios = $payload->data[0];
+        }catch (Exception $e) { 
+            die();
+        }
+
+        $mpdf = new \Mpdf\Mpdf(['orientation' => 'P', 'nbpgPrefix' => ' / ']);
+        
+        $mpdf->setHeader(ucfirst("Maximiliano Fernandez") . "||{PAGENO}{nbpg}");
+        $fecha = getDate();
+        $mpdf->setFooter("<p style='text-align: center;'>$fecha[mday]/$fecha[mon]/$fecha[year]</p>");
+        
+        $mpdf->WriteHTML("<br><h2 style='text-align: center;'>LISTADO DE USUARIOS:</h2>");
+        $grilla = '<table class="table" border="1" align="center">
+                    <thead>
+                        <tr>
+                            <th>CORREO</th>
+                            <th>CLAVE</th>
+                            <th>NOMBRE</th>
+                            <th>APELLIDO</th>
+                            <th>FOTO</th>
+                            <th>IDPERFIL</th>
+                        </tr> 
+                    </thead>';
+        $listadoUsuarios = Usuario::TraerTodosDB();   	
+        foreach ($listadoUsuarios as $usuario){
+            $grilla .= "<tr>
+                            <td>".$usuario->correo."</td>
+                            <td>".$usuario->clave."</td>
+                            <td>".$usuario->nombre."</td>
+                            <td>".$usuario->apellido."</td>
+                            <td><img src='".$usuario->foto."' width='50px' height='50px'/></td>
+                            <td>".$usuario->id_perfil."</td>
+                        </tr>";
+        }
+        $grilla .= '</table>';
+        $mpdf->WriteHTML("<p>.$grilla</p>");
+
+        $mpdf->Output('mi_pdf.pdf', 'I');
+    }
 }

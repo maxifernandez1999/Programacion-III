@@ -42,6 +42,8 @@ $app->get("/" ,Usuario::class . ':MostrarUsuarios');
 $app->post("/" ,Perfil::class . ':AgregarPerfil')/* ->add(MW::class . ':VerificarToken') */;
 $app->get('/perfil', Perfil::class . ':MostrarPerfiles');
 
+$app->get('/pdf', Usuario::class . ':MostrarTodosPdf');
+
  
 $app->group('/perfiles',function (RouteCollectorProxy $grupo){
     $grupo->delete('/', \Perfil::class . ':EliminarPerfil');

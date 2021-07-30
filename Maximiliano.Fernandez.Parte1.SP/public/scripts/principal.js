@@ -3,14 +3,39 @@
 $(function () {
     $("#btnUsuarios").on("click", Manager.Principal.MostrarUsuarios);
     $("#btnAutos").on("click", Manager.Principal.MostrarAutos);
-    $("#btnDeleteAuto").on("click", Manager.Principal.DeleteAuto);
+    $("#logout").on("click", Manager.Principal.Logout);
 });
 var Manager;
 (function (Manager) {
     var Principal = /** @class */ (function () {
         function Principal() {
         }
+        Principal.Logout = function () {
+            localStorage.removeItem("token");
+            $(location).attr('href', APIREST + "front-end");
+        };
+        Principal.VerificarToken = function () {
+            var token = localStorage.getItem("token");
+            $.ajax({
+                type: 'GET',
+                url: APIREST + "login",
+                dataType: "json",
+                data: {},
+                headers: { "token": token, "content-type": "application/json" },
+                async: true
+            })
+                .done(function (resultado) {
+                console.log(resultado);
+                if (resultado.status == 403) {
+                    $(location).attr('href', APIREST + "front-end");
+                }
+            })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
+            });
+        };
         Principal.MostrarUsuarios = function () {
+            Principal.VerificarToken();
             $.ajax({
                 type: 'GET',
                 url: APIREST,
@@ -63,15 +88,6 @@ var Manager;
                     console.log(resultado.datos);
                     var datos = JSON.parse(resultado.datos);
                     $('#tableAutos').html(Principal.CrearListadoAutos(datos));
-                    $('[data-action="eliminar"]').on('click', function (e) {
-                        var id_auto_string = $(this).attr("data-auto");
-                        var id_auto = parseInt(id_auto_string, 10);
-                        Principal.DeleteAuto(id_auto);
-                    });
-                    // $('[data-action="modificar"]').on('click', function (e) {
-                    //     let obj_auto_string = $(this).attr("data-auto");
-                    //     let obj_auto = JSON.parse(obj_auto_string);
-                    // });
                 }
             })
                 .fail(function (jqXHR, textStatus, errorThrown) {
@@ -79,49 +95,15 @@ var Manager;
             });
         };
         Principal.CrearListadoAutos = function (datos) {
-            var cabecera = "\n            <tr>\n                <th>Marca</th>\n                <th>Color</th>\n                <th>Modelo</th>\n                <th>Precio</th>\n                <th>Borrar</th>\n                <th>Modificar</th>\n            </tr>";
+            var cabecera = "\n            <tr>\n                <th>Marca</th>\n                <th>Color</th>\n                <th>Modelo</th>\n                <th>Precio</th>\n            </tr>";
             var datoAutos = "";
             for (var _i = 0, datos_2 = datos; _i < datos_2.length; _i++) {
                 var datoAuto = datos_2[_i];
                 datoAutos +=
-                    "<tr>\n                    <td>" + datoAuto.marca + "</td>\n                    <td>" + datoAuto.color + "</td>\n                    <td>" + datoAuto.modelo + "</td>\n                    <td>" + datoAuto.precio + "</td>\n                    <td><button class=\"btn-danger\" data-auto=\"" + datoAuto.id + "\" data-action='eliminar'>Borrar</button></td>\n                    <td><button class=\"btn-info\">Modificar</button></td>\n                </tr>";
+                    "<tr>\n                    <td>" + datoAuto.marca + "</td>\n                    <td>" + datoAuto.color + "</td>\n                    <td>" + datoAuto.modelo + "</td>\n                    <td>" + datoAuto.precio + "</td>\n                </tr>";
             }
             var table = '<table class="table table-striped">' + cabecera + datoAutos + '</table>';
             return table;
-        };
-        Principal.DeleteAuto = function (id_auto) {
-            var data = { "id_auto": id_auto };
-            var resultado = window.confirm('Estas seguro de que desea eliminar el usuario (id = ' + id_auto + ')?');
-            var token = localStorage.getItem("jwt");
-            if (resultado === true) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: APIREST,
-                    dataType: "json",
-                    data: data,
-                    headers: { "token": token, "content-type": "application/json" },
-                    async: true
-                })
-                    .done(function (resultado) {
-                    console.log(resultado);
-                    if (resultado.exito == false || resultado.exito == undefined && resultado.mensaje == "No propietario") {
-                        var alert = ArmarAlert(resultado.mensaje, "warning");
-                        $('#danger').html(alert);
-                    }
-                    else if (resultado.exito == false || resultado.exito == undefined && resultado.mensaje == "jwt invalido") {
-                        $(location).attr('href', APIREST + "front-end");
-                    }
-                    else {
-                        Principal.MostrarAutos();
-                    }
-                })
-                    .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
-                });
-            }
-            else {
-                window.alert('Operacion cancelada');
-            }
         };
         return Principal;
     }());

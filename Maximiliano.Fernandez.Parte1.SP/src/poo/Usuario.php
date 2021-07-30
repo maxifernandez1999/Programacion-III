@@ -71,35 +71,40 @@ require_once "DB_PDO.php";
 
 		public function ObtenerPayLoad(Request $request, Response $response, array $args) : object
         {   
-			$token = $request->getHeader("token")[0];
+			$token =  $request->getHeader("token")[0];
             $datos = new stdClass();
             
             $payload = NULL;
             $datos->mensaje = null;
+            if($token != null){
+                try {
 
-            try {
-
-                $payload = JWT::decode(
-                                        $token,
-                                        self::$secret_key,
-                                        self::$encrypt
-                                    );
-				if($payload != null){
-					$datos->mensaje = "JWT correcto";
-					$datos->status = 200;
-					$newResponse = $response->withStatus(200);
-					$newResponse->getBody()->write(json_encode($datos));
-					return $newResponse->withHeader('Content-Type', 'application/json');
-				}
-            }catch (Exception $e) { 
-
-                $datos->mensaje = null;
-				$datos->status = 403;
-				$newResponse = $response->withStatus(403);
-				$newResponse->getBody()->write(json_encode($datos));
-			
-				return $newResponse->withHeader('Content-Type', 'application/json');
+                    $payload = JWT::decode(
+                                            $token,
+                                            self::$secret_key,
+                                            self::$encrypt
+                                        );
+                    if($payload != null){
+                        $datos->mensaje = "JWT correcto";
+                        $datos->status = 200;
+                        $response->getBody()->write(json_encode($datos));
+                        return $response->withHeader('Content-Type', 'application/json');
+                    }
+                }catch (Exception $e) { 
+    
+                    $datos->mensaje = null;
+                    $datos->status = 403;
+                    $response->getBody()->write(json_encode($datos));
+                
+                    return $response->withHeader('Content-Type', 'application/json');
+                }
+            }else{
+                $datos->status = 403;
+                $response->getBody()->write(json_encode($datos));
+                
+                    return $response->withHeader('Content-Type', 'application/json');
             }
+            
 
         }
         public function AgregarUsuario(Request $request, Response $response, array $args){

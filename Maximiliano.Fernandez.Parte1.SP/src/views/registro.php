@@ -50,7 +50,8 @@
                 <button class="btn btn-primary mr-5 col-md-5 col-sm-4 col-xs-12" type="button" id="btnRegistrar">Enviar</button>
                 <button class="btn btn-warning mr-5 col-md-5 col-sm-4 col-xs-12" type="reset" id="btnLimpiarNuevoUsuario">Limpiar</button>
             </div>
-        </div>    
+        </div>
+        <div id="divalertregister"></div>    
     </div>
 </body>
 {% endblock %}

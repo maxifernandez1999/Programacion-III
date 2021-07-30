@@ -13,6 +13,10 @@ function ArmarAlert(mensaje, tipo) {
     alerta += '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
     return alerta;
 }
+function ArmarVentanaModal() {
+    var modal = "\n    <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n      <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n          <div class=\"modal-body\">\n            <!-- descripcion -->\n            <div class=\"m-3\">\n                    <label for=\"exampleInputEmail1\" class=\"form-label\">Descripcion</label>\n                    <i class=\"fas fa-trademark\"></i>\n                    <input type=\"text\" class=\"form-control\" id=\"descripcion\" aria-describedby=\"emailHelp\">\n                </div>\n                <!-- estado -->\n                <div class=\"m-3\">\n                <label for=\"exampleInputPassword1\" class=\"form-label\">Perfil</label>\n                <i class=\"fas fa-id-card\"></i>\n                <select class=\"form-select form-select-lg mb-3 far fa-id-card\" aria-label=\".form-select-lg example\" id=\"estado\">\n                    <option value=\"1\" selected>Activo</option>\n                    <option value=\"0\">Inactivo</option>\n                </select>\n                </div>  \n          </div>\n        </div>\n      </div>\n    </div>";
+    return modal;
+}
 var Manager;
 (function (Manager) {
     var Login = /** @class */ (function () {

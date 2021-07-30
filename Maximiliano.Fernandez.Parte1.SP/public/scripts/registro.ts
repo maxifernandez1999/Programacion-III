@@ -1,7 +1,7 @@
 /// <reference path="../node_modules/@types/jquery/index.d.ts" />
 $(function() {
     $("#btnLimpiarNuevoUsuario").on("click", Manager.Registro.Limpiar);
-    $("#btnRegistrar").on("click", Manager.Registro.AgregarUser);
+    $("#btnRegistrar").on("click", Manager.Registro.AdministradoraDeValidaciones);
     
 });
 namespace Manager{
@@ -37,9 +37,9 @@ namespace Manager{
                 })
                 .done(function (resultado:any) {
                     console.log(resultado);
-                    if(resultado.exito == false || resultado.exito == undefined){
+                    if(resultado.exito == false || resultado.exito == undefined || resultado.status == 403){
                         var alert:string = ArmarAlert(resultado.mensaje,"danger");
-                        $('#danger').html(alert);
+                        $('#divalertregister').html(alert);
                     }else{
                         $(location).attr('href',APIREST + "front-end");
                     }
@@ -60,6 +60,76 @@ namespace Manager{
             $("#perfil").val("");
             $("#file").val("");
         }
+        public static AdministradoraDeValidaciones(){
+            var retorno:boolean = true;
+            var alert:string = "";
+            if(Registro.ValidarCamposVacios(<string>$("#correo").val()) == false){
+                retorno = false;
+                alert += ArmarAlert("campo correo vacio","danger");
+                
+            }
+            if(Registro.ValidarCamposVacios(<string>$("#clave").val()) == false){
+                if(Registro.ValidarCantidadDeCaracteres(<string>$("#clave").val(),4,8) == false){
+                    retorno = false;
+                    alert += ArmarAlert("campo clave vacio o  rango incorrecto","danger");
+                   
+                }
+            }
+            if(Registro.ValidarCamposVacios(<string>$("#nombre").val()) == false){
+                if(Registro.ValidarCantidadDeCaracteres(<string>$("#nombre").val(),4,10) == false){
+                    retorno = false;
+                    alert += ArmarAlert("campo nombre vacio o  rango incorrecto","danger");
+                    
+                }
+            }
+            if(Registro.ValidarCamposVacios(<string>$("#apellido").val()) == false){
+                if(Registro.ValidarCantidadDeCaracteres(<string>$("#apellido").val(),2,15) == false){
+                    retorno = false;
+                    alert += ArmarAlert("campo apellido vacio o  rango incorrecto","danger");
+                    
+                }
+            }
+            if(Registro.ValidarCamposVacios(<string>$("#perfil").val()) == false){
+                if(Registro.ValidarCombo(<string>$("#perfil").val(),"nulo") == false){
+                    retorno = false;
+                    alert += ArmarAlert("campo perfil incorrecto o vacio","danger");
+                    
+                    
+                }
+            }
+            if(Registro.ValidarCamposVacios(<string>$("#file").val()) == false){
+                retorno = false;
+                alert += ArmarAlert("campo file vacio","danger");
+
+            }
+            if(retorno != false){
+                Registro.AgregarUser();
+            }else{
+                $('#divalertregister').html(alert);
+            }
+        }
+
+        public static ValidarCamposVacios(id:string):boolean{
+            if(id != ""){
+                return true;
+            }
+            return false;
+        }
+        public static ValidarCantidadDeCaracteres(valor:string,min:number,max:number):boolean{
+            let valorSplip:string[] = valor.split("");
+            if(valorSplip.length >=min && valorSplip.length <=max){
+                return true;
+            }
+            return false;
+        }
+        public static ValidarCombo(valorid:string,valorNoDeseado:string):boolean{
+            if (valorid == valorNoDeseado) {
+                return false;
+            }
+            return true;
+        }
+
+
         
     
     

@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'f5b967b56b3d7628eddfa5b4e902a1d3054241b5',
+    'reference' => '8d3eb21eef0f374fe160ca0acff52c55b5f9df4d',
     'name' => '__root__',
   ),
   'versions' => 
@@ -44,7 +44,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'f5b967b56b3d7628eddfa5b4e902a1d3054241b5',
+      'reference' => '8d3eb21eef0f374fe160ca0acff52c55b5f9df4d',
     ),
     'fig/http-message-util' => 
     array (
@@ -64,6 +64,28 @@ private static $installed = array (
       ),
       'reference' => 'dccf163dc8ed7ed6a00afc06c51ee5186a428d35',
     ),
+    'mpdf/mpdf' => 
+    array (
+      'pretty_version' => 'v8.0.12',
+      'version' => '8.0.12.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9d94344844c9daec7266eb6dd14448f728aeccb1',
+    ),
+    'myclabs/deep-copy' => 
+    array (
+      'pretty_version' => '1.10.2',
+      'version' => '1.10.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '776f831124e9c62e1a2c601ecc52e776d8bb7220',
+      'replaced' => 
+      array (
+        0 => '1.10.2',
+      ),
+    ),
     'nikic/fast-route' => 
     array (
       'pretty_version' => 'v1.3.0',
@@ -72,6 +94,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '181d480e08d9476e61381e04a71b34dc0432e812',
+    ),
+    'paragonie/random_compat' => 
+    array (
+      'pretty_version' => 'v9.99.100',
+      'version' => '9.99.100.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '996434e5492cb4c3edcb9168db6fbb1359ef965a',
     ),
     'psr/container' => 
     array (
@@ -150,6 +181,15 @@ private static $installed = array (
       ),
       'reference' => '120b605dfeb996808c31b6477290a714d356e822',
     ),
+    'setasign/fpdi' => 
+    array (
+      'pretty_version' => 'v2.3.6',
+      'version' => '2.3.6.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6231e315f73e4f62d72b73f3d6d78ff0eed93c31',
+    ),
     'slim/psr7' => 
     array (
       'pretty_version' => '1.4',
@@ -188,21 +228,21 @@ private static $installed = array (
     ),
     'symfony/polyfill-mbstring' => 
     array (
-      'pretty_version' => 'v1.23.0',
-      'version' => '1.23.0.0',
+      'pretty_version' => 'v1.23.1',
+      'version' => '1.23.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2df51500adbaebdc4c38dea4c89a2e131c45c8a1',
+      'reference' => '9174a3d80210dca8daa7f31fec659150bbeabfc6',
     ),
     'symfony/polyfill-php80' => 
     array (
-      'pretty_version' => 'v1.23.0',
-      'version' => '1.23.0.0',
+      'pretty_version' => 'v1.23.1',
+      'version' => '1.23.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'eca0bf41ed421bed1b57c4958bab16aa86b757d0',
+      'reference' => '1100343ed1a92e3a38f9ae122fc0eb21602547be',
     ),
     'twig/twig' => 
     array (
