@@ -1,7 +1,7 @@
 <?php
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-
+use \App\Models\Usuario as UsuarioORM;
 require_once "DB_PDO.php";
 require_once "Autentificadora.php";
 
@@ -128,6 +128,25 @@ require_once "Autentificadora.php";
             }
             return $response->withHeader('Content-Type', 'application/json');	
         }
+
+        // public function TraerUsuariosORM(Request $request, Response $response, array $args) : Response{
+        //     $stdclass = new stdClass();
+        //     $AllUser = UsuarioORM::all();
+        //     if($AllUser!=null){
+        //         $stdclass->exito = true;
+        //         $stdclass->mensaje = "Ejecutado Correctamente orm";
+        //         $stdclass->dato = $AllUser->toJson();
+        //         $stdclass->status = 200;
+        //         $response->getBody()->write(json_encode($stdclass));
+        //     }else{
+        //         $stdclass->exito = false;
+        //         $stdclass->mensaje = "Error";
+        //         $stdclass->dato = null;
+        //         $stdclass->status = 424;
+        //         $response->getBody()->write(json_encode($stdclass));
+        //     }
+        //     return $response->withHeader('Content-Type', 'application/json');
+        // }
 
 
         public static function TraerTodosDB(){
