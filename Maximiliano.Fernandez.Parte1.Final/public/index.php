@@ -83,7 +83,6 @@ $c['phpErrorHandler'] = function ($c) {
 //************************************************************************************************************// 
 
 $app->post('/usuarios',Usuario::class . ':AgregarUsuario')->add(MW::class . ':VerificarCorreo')->add(MW::class . '::VerificarVacio')->add(MW::class . ':ValidarUsuarioSeteado');
-// // $app->post('/login[/]',Verificadora::class . ':VerificarUsuario')->add(Verificadora::class . ':ValidarParametrosUsuario');
 
  $app->get("/" ,Usuario::class . ':TraerUsuarios');
 
@@ -102,11 +101,11 @@ $app->post('/usuarios',Usuario::class . ':AgregarUsuario')->add(MW::class . ':Ve
  
  
 
-$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-    $name = $args['name'];
-    $response->getBody()->write("Hello, ". $name);
-    return $response;
-});
+// $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+//     $name = $args['name'];
+//     $response->getBody()->write("Hello, ". $name);
+//     return $response;
+// });
  $app->run();
 
 

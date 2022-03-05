@@ -150,7 +150,7 @@ $app->group('/orm', function (RouteCollectorProxy $grupo) {
       return $newResponse->withHeader('Content-Type', 'application/json');
       
     });
-
+    
   //TRAER EL PRIMERO
     $grupo->get('/primero/', function (Request $request, Response $response, array $args) : Response {
   
@@ -166,7 +166,7 @@ $app->group('/orm', function (RouteCollectorProxy $grupo) {
       return $newResponse->withHeader('Content-Type', 'application/json');
   
     });
-
+    
   //TRAER EL ÚLTIMO
     $grupo->get('/ultimo/', function (Request $request, Response $response, array $args) : Response {
   
@@ -237,6 +237,9 @@ $app->group('/orm', function (RouteCollectorProxy $grupo) {
   
     });
 
+
+
+      
   //INTÉRPRETE
     $grupo->get('/interprete/{inter}', function (Request $request, Response $response, array $args) : Response {
   
@@ -285,7 +288,7 @@ $app->group('/orm', function (RouteCollectorProxy $grupo) {
   
     });
   
-  //AGREGAR
+    //AGREGAR
     $grupo->post('/', function (Request $request, Response $response, array $args) : Response {
   
       echo "Agregar un cd. <br>";
@@ -381,7 +384,7 @@ $app->group('/orm', function (RouteCollectorProxy $grupo) {
       return $newResponse->withHeader('Content-Type', 'application/json');
       
     });
-
+    
   //EJECUTAR QUERY O LANZAR EXCEPCIÓN
     $grupo->get('/excepciones/', function (Request $request, Response $response, array $args) : Response {
   
@@ -468,6 +471,7 @@ $app->group('/orm', function (RouteCollectorProxy $grupo) {
   
   });
 
+  
   //EJECUTAR CONSULTA COMO SQL 
     $grupo->get('/select_sql/', function (Request $request, Response $response, array $args) : Response {
   

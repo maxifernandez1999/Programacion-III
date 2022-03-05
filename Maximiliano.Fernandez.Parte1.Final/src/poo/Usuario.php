@@ -131,7 +131,7 @@ require_once "Autentificadora.php";
 
         // public function TraerUsuariosORM(Request $request, Response $response, array $args) : Response{
         //     $stdclass = new stdClass();
-        //     $AllUser = UsuarioORM::all();
+        //     $AllUser = usuarioORM::all();
         //     if($AllUser!=null){
         //         $stdclass->exito = true;
         //         $stdclass->mensaje = "Ejecutado Correctamente orm";
@@ -147,6 +147,45 @@ require_once "Autentificadora.php";
         //     }
         //     return $response->withHeader('Content-Type', 'application/json');
         // }
+        
+      
+      
+    //   public function AgregarUsuarioORM(Request $request, Response $response, array $args) : Response{
+    //     $objJSON = isset($request->getParsedBody()['user']) ? json_decode($request->getParsedBody()['user']) : null;
+    //     $usuario = new usuarioORM();
+  
+    //     $usuario->correo = $objJSON->correo;
+    //     $usuario->clave = $objJSON->clave;
+    //     $usuario->nombre = $objJSON->nombre;
+    //     $usuario->apellido = $objJSON->apellido;
+    //     $usuario->perfil = $objJSON->perfil;
+         
+        
+    //     $file = $request->getUploadedFiles();//$_FILES
+    //     $stdclass = new stdClass();
+        
+    //     $destiny = __DIR__ . "/../fotos/";
+
+    //     $nameBefore = $file['foto']->getClientFilename();
+    //     $extension = explode(".", $nameBefore);
+    //     $extension = array_reverse($extension); 
+
+    //     $finalyFile = $objJSON->correo."_1.". $extension[0];
+    //     if($usuario->save()){
+    //         $file['foto']->moveTo($destiny . $finalyFile);
+    //         $stdclass->exito = true;
+    //         $stdclass->mensaje = "Usuario Agregado";
+    //         $stdclass->exito = 200;
+    //         $response->getBody()->write(json_encode($stdclass));
+    //     }else{
+    //         $stdclass->exito = false;
+    //         $stdclass->mensaje = "Error Agregado";
+    //         $stdclass->exito = 418;
+    //         $response->getBody()->write(json_encode($stdclass));
+    //     }
+            
+    //     return $response->withHeader('Content-Type', 'application/json');
+    //     }
 
 
         public static function TraerTodosDB(){
